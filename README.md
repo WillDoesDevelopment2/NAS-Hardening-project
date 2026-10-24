@@ -11,7 +11,7 @@ The central design principle is that **no NAS service is exposed directly to the
 - **Hardware:** Raspberry Pi 5 in a Pironman 5 kit, with a recycled 1 TB SSD, running OpenMediaVault
 - **Remote access:** Tailscale first, then self-hosted WireGuard, with the two compared
 - **Backups:** Automated backups from my phone and computer, finishing with a tested restore
-- **Method:** Simplified threat analysis and risk assessment, inspired by ISO/SAE 21434 (not a compliance claim)
+- **Method:** Simplified risk assessment structured after ISO/IEC 27005 (and ISO 31000 principles), with requirements mapped to ISO/IEC 27002:2022 controls. Not a compliance claim.
 
 Full detail on the system, assets, trust boundaries and network design is in [`docs/01-scope-and-assets.md`](docs/01-scope-and-assets.md).
 
