@@ -104,26 +104,26 @@ These guide decisions throughout the project, and I will refer back to them when
 |---|---|
 | Operating system | Raspberry Pi OS / Debian base Raspberry Pi OS Lite (64 bit)|
 | NAS software | OpenMediaVault (OMV) Version 7.*|
-| File sharing | **[TODO: confirm protocols in use, for example SMB, NFS, SFTP]** |
+| File sharing | **TO BE DECIDED** |
 | Case control software | Vendor-supplied software for the fan, display and lighting Pironman5 module |
 | Remote access (Phase 1) | Tailscale |
 | Remote access (Phase 2) | Self-hosted WireGuard |
-| Backup tooling (Phase 3) | **[TODO: choose, for example restic, BorgBackup, rsync or a phone backup app]** |
-| Monitoring | **[TODO: decide, for example log review, alerts and Lynis runs]** |
+| Backup tooling (Phase 3) | **TO BE DECIDED** |
+| Monitoring | **TO BE DECIDED**. Most likely logs and Linus runs |
 
 ### 6.3 Service inventory (to complete in Phase 0)
 
 Record what actually runs and listens, using `ss -tulpn`, then compare it with what should. Anything unexpected is a finding.
 
-| Service | Typical port | Needed? | Reachable from (target) | Baseline observed |
+| Service | Typical port | Needed? | Reachable from (target) | Baseline observed **IN PROCESS** |
 |---|---|---|---|---|
-| OMV web interface | 80/443 TCP **[TODO: confirm]** | Yes | LAN and VPN only | [TODO] |
-| SSH | 22/TCP **[TODO: confirm]** | Yes | LAN and VPN only | [TODO] |
-| SMB file sharing | 445/TCP | Yes | LAN and VPN only | [TODO] |
-| Tailscale client | Outbound connections, UDP **[TODO: confirm]** | Phase 1 | Outbound only, no inbound ports | [TODO] |
-| WireGuard | UDP, port chosen by me | Phase 2 | One UDP port from the internet (documented exception) | [TODO] |
-| Case control software | Local only **[TODO: confirm]** | Optional | Nothing | [TODO] |
-| Other (discovery services, media services, etc.) | [TODO] | [TODO] | [TODO] | [TODO] |
+| OMV web interface | 80 | Yes | LAN and VPN only | |
+| SSH | 22/TCP | Yes | LAN and VPN only | |
+| SMB file sharing | 445/TCP | Yes | LAN and VPN only | |
+| Tailscale client | Outbound connections, UDP. **SUBJECT TO CHANGE** | Phase 1 | Outbound only, no inbound ports |  |
+| WireGuard | UDP, port chosen by me | Phase 2 | One UDP port from the internet (documented exception) |  |
+| Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing |  |
+| Other (discovery services, media services, etc.) | |  |  | |
 
 ### 6.4 Users and roles
 
@@ -134,11 +134,10 @@ Record what actually runs and listens, using `ss -tulpn`, then compare it with w
 | Backup client – phone | Automated | Write access to the phone backup location only |
 | Backup client – computer | Automated | Write access to the computer backup location only |
 
-Principle: separate accounts for administration, daily use and automated backups, each with the least privilege it needs. **[TODO: add anyone else who needs access, or state "none"]**
-
+Principle: separate accounts for administration, daily use and automated backups, each with the least privilege it needs.
 ### 6.5 Network and access model
 
-**Current state (baseline):** the NAS is reachable on the home LAN. **[TODO: confirm it is not reachable from the internet]**
+**Current state (baseline):** the NAS is reachable on the home LAN. Backups and tail scale access will be implemented after sufficient hardening of devices
 
 **Target state**
 - No ports forwarded on the router in Phase 1, and UPnP disabled
@@ -176,7 +175,7 @@ Impact ratings use **C** = Confidentiality, **I** = Integrity, **A** = Availabil
 
 | ID | Asset | Description | C | I | A | Rationale | Related threats |
 |---|---|---|---|---|---|---|---|
-| A-01 | Personal files | Documents, photos and other files stored on the NAS **[TODO: does this include IDs, financial documents, or work and study material?]** | H | H | M | Private and often irreplaceable. Short outages are tolerable | T-01, 02, 03, 05, 08, 09, 10, 11, 12, 16, 18 |
+| A-01 | Personal files | Documents, photos, identificaton documents and other files stored on the NAS  | H | H | M | Private and often irreplaceable. Short outages are tolerable | T-01, 02, 03, 05, 08, 09, 10, 11, 12, 16, 18 |
 | A-02 | Phone and computer backups | Backup copies of device data, which may contain app data, messages and saved credentials | H | H | H | Often the most sensitive data, and possibly the only recovery copy. A backup that cannot be restored has no value | T-01, 02, 03, 05, 08, 09, 10, 11, 12, 15, 16, 20 |
 | A-03 | Project and portfolio material | Code, write-ups and game projects | M | H | M | Loss of integrity or availability affects my portfolio | T-03, 09, 11, 16, 21 |
 | A-04 | Credentials and keys | OMV admin password, SSH keys, share credentials, VPN keys, Tailscale account, backup repository passwords and keys | H | H | M | Compromise gives access to everything else. Losing backup keys means losing the backups | T-01, 03, 04, 05, 06, 07, 08, 15, 16, 17, 21 |
