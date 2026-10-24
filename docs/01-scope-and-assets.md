@@ -3,7 +3,7 @@
 > **Status:** Draft v0.2 · Last updated: [date]
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
-> **Note:** This is a starting draft. Replace anything in **[TODO]** or square brackets, correct anything that does not match your real setup, and rewrite sections in your own words. Record meaningful changes in the revision log at the end.
+> **Note:** This is a starting draft.
 
 ---
 
