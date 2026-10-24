@@ -1,1 +1,1 @@
-To analyze threats using a ISO/SAE21434 to feed into document 03-security-requirements.
+To analyze threats using ISO frameworks. May wish to develop an AI dashboard with reports on any changes for relevant assets daily
