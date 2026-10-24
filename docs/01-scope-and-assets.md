@@ -109,7 +109,7 @@ These guide decisions throughout the project, and I will refer back to them when
 | Remote access (Phase 1) | Tailscale |
 | Remote access (Phase 2) | Self-hosted WireGuard |
 | Backup tooling (Phase 3) | **TO BE DECIDED** |
-| Monitoring | **TO BE DECIDED**. Most likely logs and Linus runs |
+| Monitoring | **TO BE DECIDED**. Most likely logs and Lynis |
 
 ### 6.3 Service inventory (to complete in Phase 0)
 
@@ -190,23 +190,23 @@ The related threats column links to the threat register in `02-threat-analysis.m
 
 | Data type | Examples | Sensitivity | Stored on NAS? | Notes |
 |---|---|---|---|---|
-| Identity and financial documents | **[TODO]** | High | **[TODO: yes or no]** | Consider whether these belong on the NAS at all |
-| Personal photos and documents | **[TODO]** | High | Yes | |
-| Phone backups | **[TODO: what will be included]** | High | Yes (Phase 3) | |
-| Computer backups | **[TODO]** | High | Yes (Phase 3) | |
-| Project and portfolio files | Code, game builds | Medium | Yes | |
-| Media | Music, video | Low | Yes | |
+| Identity and financial documents | bank statements | High | No | Consider whether these belong on the NAS at all |
+| Personal photos and documents | Identification documents | High | Yes | stronger access controls for sensitive documents and segmentation  |
+| Phone backups | Contacts, Files, Photos, applications | High | Yes (Phase 3) | Some applications that offer backup functionality should be considered |
+| Computer backups | Files, configuration, snapshots of machine | High | Yes (Phase 3) | snapshots may need to be in a partition with higher access controls |
+| Project and portfolio files | Code, game builds | Medium | Yes | mostly public, less sensitive|
+| Media | Music, video | Low | Yes | most of what will be kept on the NAS |
 
 ## 8. Data flows
 
 | Flow | From | To | Method | Protection (current or target) |
 |---|---|---|---|---|
-| F-1 | Client on home LAN | NAS | SMB or other **[TODO]** | LAN only. Encryption to be decided |
+| F-1 | Client on home LAN | NAS | SMB or other **FURTHER ANALYSIS NEEDED** | LAN only. Encryption to be decided |
 | F-2 | Client away from home | NAS | Through the VPN tunnel | End-to-end encryption by WireGuard (via Tailscale, then self-hosted) |
-| F-3 | Administrator | OMV web interface | HTTP or HTTPS **[TODO: check which]** | Restricted to LAN and VPN. HTTPS to be evaluated |
+| F-3 | Administrator | OMV web interface | HTTP looking at HTTPS later on | Restricted to LAN and VPN. HTTPS to be evaluated |
 | F-4 | Administrator | NAS | SSH | Key-based authentication, restricted to LAN and VPN |
 | F-5 | NAS and clients | Tailscale coordination service | HTTPS | Authentication, key exchange and device discovery |
-| F-6 | Phone and computer | NAS | Backup tool **[TODO]** | Encrypted in transit. Client-side encryption to be evaluated |
+| F-6 | Phone and computer | NAS | Backup tool **To BE DECIDED** | Encrypted in transit. Client-side encryption to be evaluated |
 | F-7 | NAS | Software update servers | HTTPS | Package signature verification |
 
 ## 9. Trust boundaries
@@ -220,18 +220,18 @@ The related threats column links to the threat register in `02-threat-analysis.m
 ## 10. Assumptions and constraints
 
 ### Assumptions
-- I control the router settings and can disable UPnP **[TODO: confirm]**
-- I am the only administrator and the only person with physical access to the NAS **[TODO: confirm]**
-- My phone and computer have screen locks, device encryption and receive updates **[TODO: confirm]**
-- My home network is not already compromised
-- The NAS stays powered on and connected most of the time
+- I control the router settings and can disable UPnP 
+- I am the only administrator and the only person with physical access to the NAS 
+- My phone and computer have screen locks, device encryption and receive updates 
+- My home network is not already compromised **TO CONFIRM**
+- The NAS stays powered on and connected most of the time 
 
 ### Constraints
 - Limited budget: existing hardware and no dedicated firewall appliance
 - The Raspberry Pi 5 limits the performance available for encryption and VPN throughput
 - The SSD is second-hand, so its reliability is unknown
 - One person maintains the system, so routines must be simple enough to follow consistently
-- The ISP may use CGNAT, which would prevent self-hosted WireGuard without extra work **[TODO: check before Phase 2]**
+- The ISP may use CGNAT, which would prevent self-hosted WireGuard without extra work, Tailscale may be needed
 
 ## 11. Dependencies and third parties
 
