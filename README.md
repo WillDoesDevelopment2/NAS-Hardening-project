@@ -1,6 +1,6 @@
 # Home NAS Hardening and Risk Analysis
 
-**Status:** In progress (Phase 0: baseline) | **Started:** October 2026 | **Last updated:** [date]
+**Status:** In progress (Phase 0: baseline) | **Started:** October 2026 | **Last updated:** 24th October
 
 A self-hosted NAS built to replace third-party cloud storage, used as a hands-on project in structured security work: define what needs protecting, analyse threats, set numbered requirements, harden the system, and verify every control with evidence.
 
