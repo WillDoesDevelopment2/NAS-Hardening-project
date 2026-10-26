@@ -1,0 +1,93 @@
+# =============================================================
+# NAS-Hardening-project .gitignore
+# Purpose: keep local tooling files, raw evidence, secrets and
+# private notes out of this PUBLIC repository.
+# Note: .gitignore does NOT remove files that are already tracked
+# (use `git rm --cached <file>`), and `git add -f` bypasses it.
+# Raw evidence should be stored OUTSIDE the repository folder.
+# This file is a backstop, not the main protection.
+# =============================================================
+
+# ---- Claude Code and local AI tooling (local only) ----
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+
+# ---- Raw / unsanitised evidence (backstop only) ----
+raw/
+evidence-raw/
+evidence/**/raw/
+evidence/**/unsanitised/
+evidence/**/unsanitized/
+*-raw.*
+*.raw.txt
+*.raw.xml
+*unsanitised*
+*unsanitized*
+
+# ---- Scan and audit output (review and sanitise before publishing) ----
+*.nmap
+*.gnmap
+nmap-*.xml
+*.pcap
+*.pcapng
+lynis-report.dat
+lynis.log
+lynis-output*.txt
+
+# ---- Disk and SD card images (large, and contain everything) ----
+*.img
+*.img.xz
+*.img.gz
+*.iso
+*.zip.img
+
+# ---- Secrets, keys and credentials ----
+.env
+.env.*
+*.key
+*.pem
+*.ppk
+*.p12
+*.pfx
+*.kdbx
+id_rsa*
+id_ed25519*
+id_ecdsa*
+*.token
+*.secret
+*.secrets
+secrets*
+credentials*
+authkey*
+tailscale-authkey*
+wg*.conf
+*.wg
+wireguard/
+tailscaled.state
+
+# Sanitised example configs with placeholder values ARE allowed
+!*.example
+!*.example.conf
+!*.example.txt
+
+# ---- Private notes and scratch work ----
+private/
+notes-private/
+scratch/
+tmp/
+*.private.md
+*.private.txt
+screenshots-unreviewed/
+
+# ---- Operating system, editor and temp files ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.bak
+*.orig
