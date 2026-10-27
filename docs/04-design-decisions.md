@@ -1,6 +1,6 @@
 # 04 – Design Decisions
 
-> **Status:** Draft v0.3 · Last updated: 27th October 2026
+> **Status:** Draft v0.4 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · 03-security-requirements.md (not yet written) · [05-verification.md](05-verification.md)
 > **Note:** Add one record per meaningful decision, written as it is made, not afterwards. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -21,7 +21,7 @@ Decisions follow the loop used across this project: threat, requirement, control
 
 | ID | Decision | Status | Phase | Related threats |
 |---|---|---|---|---|
-| D-01 | Baseline definition for Phase 0 | **[TODO: Proposed]** | 0 | All |
+| D-01 | Baseline definition for Phase 0 | Accepted | 0 | All |
 | D-02 | | | | |
 
 Status values: **Proposed**, **Accepted**, **Superseded by D-xx**, **Rejected**.
@@ -51,19 +51,24 @@ Copy this block for each decision.
 
 ### D-01 – Baseline definition for Phase 0
 
-- **Date:** [date]
-- **Status:** **[TODO: Proposed]**
+- **Date:** 27th October 2026
+- **Status:** Accepted
 - **Related:** All threats. Phase 0 tests in 05-verification.md
 - **Context:** Phase 0 measures the system before any hardening. Later "before and after" claims only make sense if the baseline is defined precisely.
 - **Options considered:**
   1. **The system exactly as it stands now.** Honest about the real starting point, but may include earlier experiments and changes that are not documented
   2. **A fresh default OMV install on a wiped SD card and SSD.** Reproducible and clean, but not the system I was actually running
   3. **The system as it stands now, with known earlier changes listed before testing.** Same starting point as option 1, but each change I remember making since installation is written down first, so findings can be traced to either a default or my own change. The list may still be incomplete
-- **Draft recommendation [TODO: owner to accept, change or reject]:** Option 3
-- **Decision:** **[TODO]**
-- **Reasoning:** **[DRAFT]** The project question concerns the system I actually run, so option 2 would measure a system that does not exist. Option 3 keeps the real starting point and makes the known history explicit, which supports principle 5 (verify, do not assume). The SD card image taken before Phase 0 lets the baseline be restored and repeated
-- **Trade-offs and residual risk:** **[DRAFT]** Results are not directly comparable with a default OMV install, and undocumented earlier changes may still affect results. Where a finding cannot be traced to a default or a listed change, record it as of unknown origin
-- **Known earlier changes:** **[TODO: owner to list before running Phase 0 tests]**
+- **Decision:** Option 3. The baseline is the system as it stands before Phase 0, captured in the SD card image, with the known earlier changes listed below
+- **Reasoning:** The project question concerns the system I actually run, so option 2 would measure a system that does not exist. Option 3 keeps the real starting point and makes the known history explicit, which supports principle 5 (verify, do not assume). The SD card image taken before Phase 0 lets the baseline be restored and repeated
+- **Trade-offs and residual risk:** Results are not directly comparable with a default OMV install, and undocumented earlier changes may still affect results. Where a finding cannot be traced to a default or a listed change, record it as of unknown origin
+- **Known earlier changes:**
+  1. Raspberry Pi OS Lite (64-bit) written with Raspberry Pi Imager, with SSH enabled and Wi-Fi configured in the Imager settings
+  2. OMV 8 installed with the install script's `-n` option (skips network configuration) **[TODO: confirm]**
+  3. One user account only, used for both administration and daily use
+  4. Direct Ethernet connection set up between the laptop and the NAS
+  5. No router changes. No fixed IP address
+  6. Not yet confirmed: updates installed since setup, case control software installed, SSH login method (password or key) **[TODO]**
 - **Evidence:** Phase 0 results in 05-verification.md. Include the SD card image date and hash
 - **Review trigger:** The baseline is repeated, or the hardware changes
 
@@ -88,3 +93,4 @@ These are not decisions yet. They are placeholders so that each one is recorded 
 | 0.1 | [date] | Template created | Structure agreed before Phase 0 |
 | 0.2 | 27th October 2026 | D-01: added option 3, draft recommendation, reasoning and trade-offs (drafted with AI assistance, decision still open) | Preparation for Phase 0 |
 | 0.3 | 27th October 2026 | Header: link to document 05 and remove template note (drafted with AI assistance) | Out-of-date header |
+| 0.4 | 27th October 2026 | D-01 accepted: option 3, with the list of known earlier changes | Owner decision before Phase 0 |

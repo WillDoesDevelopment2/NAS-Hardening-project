@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.3 · Last updated: 27th October 2026
+> **Status:** Draft v0.4 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -23,7 +23,8 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 27th October 2026 | Document 05, section 4: draft expected results for V-01 to V-15 | Reviewed the staged changes and approved the commit. Expected results are still to be confirmed before any test runs |
 | 27th October 2026 | Created this document | Reviewed the staged changes and approved the commit |
 | 27th October 2026 | Header fixes in documents 02, 04 and 05. Document 01, section 6.3: SMB marked as to be decided. Matrix: Phase 0 test IDs added per threat. Added `evidence/phase0/README.md` | Reviewed the staged changes and approved the commit |
-| 27th October 2026 | Added `scripts/phase0-collect.sh` (read-only collection script, not yet run) and `docs/phase0-checklist.md` | **[TODO: owner review]** |
+| 27th October 2026 | Added `scripts/phase0-collect.sh` (read-only collection script, not yet run) and `docs/phase0-checklist.md` | Reviewed the staged changes and approved the commit |
+| 27th October 2026 | Document 04, D-01: recorded my decision (option 3) and my list of earlier changes, and removed the draft markers from the reasoning | **[TODO: owner review]** |
 
 ## 4. Revision log
 
@@ -32,3 +33,4 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 0.1 | 27th October 2026 | Document created with first log entries (drafted with AI assistance) | Disclose AI assistance |
 | 0.2 | 27th October 2026 | Marked first entries as reviewed and added a log entry for Phase 0 preparation fixes | Keep the log current |
 | 0.3 | 27th October 2026 | Added log entry for the Phase 0 script and checklist | Keep the log current |
+| 0.4 | 27th October 2026 | Added log entry for recording D-01 | Keep the log current |
