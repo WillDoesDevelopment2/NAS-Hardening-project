@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.5 · Last updated: 27th October 2026
+> **Status:** Draft v0.6 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -25,7 +25,8 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 27th October 2026 | Header fixes in documents 02, 04 and 05. Document 01, section 6.3: SMB marked as to be decided. Matrix: Phase 0 test IDs added per threat. Added `evidence/phase0/README.md` | Reviewed the staged changes and approved the commit |
 | 27th October 2026 | Added `scripts/phase0-collect.sh` (read-only collection script, not yet run) and `docs/phase0-checklist.md` | Reviewed the staged changes and approved the commit |
 | 27th October 2026 | Document 04, D-01: recorded my decision (option 3) and my list of earlier changes, and removed the draft markers from the reasoning | Reviewed the staged changes and approved the commit |
-| 27th October 2026 | Document 01: OMV version, baseline account and network state, matching D-01 | **[TODO: owner review]** |
+| 27th October 2026 | Document 01: OMV version, baseline account and network state, matching D-01 | Reviewed the staged changes and approved the commit |
+| 27th October 2026 | Documents 01 and 04: recorded my answers on the network connection, install option and case software | **[TODO: owner review]** |
 
 ## 4. Revision log
 
@@ -36,3 +37,4 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 0.3 | 27th October 2026 | Added log entry for the Phase 0 script and checklist | Keep the log current |
 | 0.4 | 27th October 2026 | Added log entry for recording D-01 | Keep the log current |
 | 0.5 | 27th October 2026 | Added log entry for document 01 update | Keep the log current |
+| 0.6 | 27th October 2026 | Added log entry for owner answers | Keep the log current |

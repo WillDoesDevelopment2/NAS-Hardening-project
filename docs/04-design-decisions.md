@@ -1,6 +1,6 @@
 # 04 – Design Decisions
 
-> **Status:** Draft v0.4 · Last updated: 27th October 2026
+> **Status:** Draft v0.5 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · 03-security-requirements.md (not yet written) · [05-verification.md](05-verification.md)
 > **Note:** Add one record per meaningful decision, written as it is made, not afterwards. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -64,11 +64,13 @@ Copy this block for each decision.
 - **Trade-offs and residual risk:** Results are not directly comparable with a default OMV install, and undocumented earlier changes may still affect results. Where a finding cannot be traced to a default or a listed change, record it as of unknown origin
 - **Known earlier changes:**
   1. Raspberry Pi OS Lite (64-bit) written with Raspberry Pi Imager, with SSH enabled and Wi-Fi configured in the Imager settings
-  2. OMV 8 installed with the install script's `-n` option (skips network configuration) **[TODO: confirm]**
+  2. OMV 8 installed with the install script's `-n` option, which skips OMV's network setup so the existing network configuration is kept
   3. One user account only, used for both administration and daily use
-  4. Direct Ethernet connection set up between the laptop and the NAS
+  4. Direct Ethernet connection set up between the laptop and the NAS. Kept for troubleshooting only and not normally connected. The NAS uses Wi-Fi for the home LAN
   5. No router changes. No fixed IP address
-  6. Not yet confirmed: updates installed since setup, case control software installed, SSH login method (password or key) **[TODO]**
+  6. Case control software installed
+  7. SSH used for administration
+  8. Not yet confirmed: updates installed since setup, SSH login method (password or key) **[TODO]**
 - **Evidence:** Phase 0 results in 05-verification.md. Include the SD card image date and hash
 - **Review trigger:** The baseline is repeated, or the hardware changes
 
@@ -94,3 +96,4 @@ These are not decisions yet. They are placeholders so that each one is recorded 
 | 0.2 | 27th October 2026 | D-01: added option 3, draft recommendation, reasoning and trade-offs (drafted with AI assistance, decision still open) | Preparation for Phase 0 |
 | 0.3 | 27th October 2026 | Header: link to document 05 and remove template note (drafted with AI assistance) | Out-of-date header |
 | 0.4 | 27th October 2026 | D-01 accepted: option 3, with the list of known earlier changes | Owner decision before Phase 0 |
+| 0.5 | 27th October 2026 | D-01: install option, network connection and case software confirmed in the list of known earlier changes | Owner answers |

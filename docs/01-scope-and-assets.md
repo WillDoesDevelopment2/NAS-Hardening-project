@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.4 · Last updated: 27th October 2026
+> **Status:** Draft v0.5 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -141,7 +141,7 @@ Baseline: one account is used for both administration and daily use (see D-01 in
 
 **Current state (baseline):** the NAS is reachable on the home LAN. Backups and tail scale access will be implemented after sufficient hardening of devices
 
-- Wi-Fi was configured at install, and a direct Ethernet connection between the laptop and the NAS was also set up. **[TODO: confirm which connection the NAS uses for the home LAN, and whether the direct connection is still in place]**
+- The NAS connects to the home LAN over Wi-Fi. A direct Ethernet connection to the laptop is kept for troubleshooting only and is not normally connected
 - No fixed IP address. The address is assigned by the router
 - No router changes have been made
 - See D-01 in document 04 for the full list of known earlier changes
@@ -295,3 +295,4 @@ The project succeeds when:
 | 0.2 | [date] | Added objectives, design principles, service inventory, data flows, data inventory, dependencies, repository hygiene and threat links | More detailed scope requested |
 | 0.3 | 27th October 2026 | Section 6.3: SMB marked as to be decided, matching section 6.2 (drafted with AI assistance) | Remove inconsistency before Phase 0 |
 | 0.4 | 27th October 2026 | Section 6.2: OMV 8. Sections 6.4 and 6.5: baseline account and network state from D-01 (drafted with AI assistance) | Match D-01 |
+| 0.5 | 27th October 2026 | Section 6.5: network connection confirmed (drafted with AI assistance) | Owner answers |
