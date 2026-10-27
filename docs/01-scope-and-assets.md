@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.3 · Last updated: 27th October 2026
+> **Status:** Draft v0.4 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -103,7 +103,7 @@ These guide decisions throughout the project, and I will refer back to them when
 | Component | Detail |
 |---|---|
 | Operating system | Raspberry Pi OS / Debian base Raspberry Pi OS Lite (64 bit)|
-| NAS software | OpenMediaVault (OMV) Version 7.*|
+| NAS software | OpenMediaVault (OMV) 8 |
 | File sharing | **TO BE DECIDED** |
 | Case control software | Vendor-supplied software for the fan, display and lighting Pironman5 module |
 | Remote access (Phase 1) | Tailscale |
@@ -135,9 +135,16 @@ Record what actually runs and listens, using `ss -tulpn`, then compare it with w
 | Backup client – computer | Automated | Write access to the computer backup location only |
 
 Principle: separate accounts for administration, daily use and automated backups, each with the least privilege it needs.
+
+Baseline: one account is used for both administration and daily use (see D-01 in document 04).
 ### 6.5 Network and access model
 
 **Current state (baseline):** the NAS is reachable on the home LAN. Backups and tail scale access will be implemented after sufficient hardening of devices
+
+- Wi-Fi was configured at install, and a direct Ethernet connection between the laptop and the NAS was also set up. **[TODO: confirm which connection the NAS uses for the home LAN, and whether the direct connection is still in place]**
+- No fixed IP address. The address is assigned by the router
+- No router changes have been made
+- See D-01 in document 04 for the full list of known earlier changes
 
 **Target state**
 - No ports forwarded on the router in Phase 1, and UPnP disabled
@@ -287,3 +294,4 @@ The project succeeds when:
 | 0.1 | [date] | Initial short draft | |
 | 0.2 | [date] | Added objectives, design principles, service inventory, data flows, data inventory, dependencies, repository hygiene and threat links | More detailed scope requested |
 | 0.3 | 27th October 2026 | Section 6.3: SMB marked as to be decided, matching section 6.2 (drafted with AI assistance) | Remove inconsistency before Phase 0 |
+| 0.4 | 27th October 2026 | Section 6.2: OMV 8. Sections 6.4 and 6.5: baseline account and network state from D-01 (drafted with AI assistance) | Match D-01 |
