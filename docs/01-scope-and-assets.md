@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.2 · Last updated: [date]
+> **Status:** Draft v0.3 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -119,7 +119,7 @@ Record what actually runs and listens, using `ss -tulpn`, then compare it with w
 |---|---|---|---|---|
 | OMV web interface | 80 | Yes | LAN and VPN only | |
 | SSH | 22/TCP | Yes | LAN and VPN only | |
-| SMB file sharing | 445/TCP | Yes | LAN and VPN only | |
+| SMB file sharing | 445/TCP | To be decided (see section 6.2) | LAN and VPN only | |
 | Tailscale client | Outbound connections, UDP. **SUBJECT TO CHANGE** | Phase 1 | Outbound only, no inbound ports |  |
 | WireGuard | UDP, port chosen by me | Phase 2 | One UDP port from the internet (documented exception) |  |
 | Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing |  |
@@ -286,3 +286,4 @@ The project succeeds when:
 |---|---|---|---|
 | 0.1 | [date] | Initial short draft | |
 | 0.2 | [date] | Added objectives, design principles, service inventory, data flows, data inventory, dependencies, repository hygiene and threat links | More detailed scope requested |
+| 0.3 | 27th October 2026 | Section 6.3: SMB marked as to be decided, matching section 6.2 (drafted with AI assistance) | Remove inconsistency before Phase 0 |

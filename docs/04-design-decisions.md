@@ -1,9 +1,9 @@
 # 04 – Design Decisions
 
-> **Status:** Draft v0.2 · Last updated: 27th October 2026
+> **Status:** Draft v0.3 · Last updated: 27th October 2026
 > **Author:** William Drummond
-> **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · 03-security-requirements.md (not yet written) · 05-verification.md (not yet written)
-> **Note:** This is a template. Add one record per meaningful decision, written as it is made, not afterwards. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
+> **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · 03-security-requirements.md (not yet written) · [05-verification.md](05-verification.md)
+> **Note:** Add one record per meaningful decision, written as it is made, not afterwards. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
 
 ---
 
@@ -87,3 +87,4 @@ These are not decisions yet. They are placeholders so that each one is recorded 
 |---|---|---|---|
 | 0.1 | [date] | Template created | Structure agreed before Phase 0 |
 | 0.2 | 27th October 2026 | D-01: added option 3, draft recommendation, reasoning and trade-offs (drafted with AI assistance, decision still open) | Preparation for Phase 0 |
+| 0.3 | 27th October 2026 | Header: link to document 05 and remove template note (drafted with AI assistance) | Out-of-date header |

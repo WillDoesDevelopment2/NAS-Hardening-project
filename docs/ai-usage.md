@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.1 · Last updated: 27th October 2026
+> **Status:** Draft v0.2 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -21,10 +21,12 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 27th October 2026 | Renamed `gitignore` to `.gitignore` and stopped tracking a local tooling file | Reviewed the staged changes and committed them myself |
 | 27th October 2026 | Document 04, D-01: added a third option, a draft recommendation, reasoning and trade-offs | Reviewed the staged changes and approved the commit. The D-01 decision is still open |
 | 27th October 2026 | Document 05, section 4: draft expected results for V-01 to V-15 | Reviewed the staged changes and approved the commit. Expected results are still to be confirmed before any test runs |
-| 27th October 2026 | Created this document | **[TODO: owner review]** |
+| 27th October 2026 | Created this document | Reviewed the staged changes and approved the commit |
+| 27th October 2026 | Header fixes in documents 02, 04 and 05. Document 01, section 6.3: SMB marked as to be decided. Matrix: Phase 0 test IDs added per threat. Added `evidence/phase0/README.md` | **[TODO: owner review]** |
 
 ## 4. Revision log
 
 | Version | Date | Change | Reason |
 |---|---|---|---|
 | 0.1 | 27th October 2026 | Document created with first log entries (drafted with AI assistance) | Disclose AI assistance |
+| 0.2 | 27th October 2026 | Marked first entries as reviewed and added a log entry for Phase 0 preparation fixes | Keep the log current |
