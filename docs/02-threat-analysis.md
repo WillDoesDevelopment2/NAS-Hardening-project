@@ -1,6 +1,6 @@
 # 02 – Threat Analysis
 
-> **Status:** Draft v0.1 · Last updated: 24 October 2026
+> **Status:** Draft v0.1 · Last updated: 24th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (asset IDs, data flows, trust boundaries and phases used here) · 03-security-requirements.md (requirements derived from this analysis, not yet written) · 05-verification.md (tests that confirm each treatment, not yet written)
 > **Note:** This is a starting draft prepared with AI assistance. Every rating and treatment is a proposal. Review each one, change anything that does not match your setup or your own judgement, replace anything in **[TODO]** or square brackets, and record what you accepted, changed or rejected in `docs/ai-usage.md`. Record meaningful changes in the revision log at the end.
