@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.6 · Last updated: 27th October 2026
+> **Status:** Draft v0.7 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -239,7 +239,7 @@ The related threats column links to the threat register in `02-threat-analysis.m
 - The Raspberry Pi 5 limits the performance available for encryption and VPN throughput
 - The SSD is second-hand, so its reliability is unknown
 - One person maintains the system, so routines must be simple enough to follow consistently
-- The ISP may use CGNAT, which would prevent self-hosted WireGuard without extra work, Tailscale may be needed
+- The ISP may use CGNAT, which would prevent self-hosted WireGuard without extra work, Tailscale may be needed. Traceroute on 27th October 2026 was inconclusive. Not yet confirmed
 
 ## 11. Dependencies and third parties
 
@@ -298,3 +298,4 @@ The project succeeds when:
 | 0.4 | 27th October 2026 | Section 6.2: OMV 8. Sections 6.4 and 6.5: baseline account and network state from D-01 (drafted with AI assistance) | Match D-01 |
 | 0.5 | 27th October 2026 | Section 6.5: network connection confirmed (drafted with AI assistance) | Owner answers |
 | 0.6 | 27th October 2026 | Section 10: assumptions confirmed or corrected by the owner. Physical access assumption split, as others also have physical access. Network compromise assumption reworded (drafted with AI assistance) | Owner answers before Phase 0 |
+| 0.7 | 27th October 2026 | Section 10: CGNAT check result added (drafted with AI assistance) | Owner check |
