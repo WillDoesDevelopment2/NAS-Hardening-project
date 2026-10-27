@@ -1,6 +1,6 @@
 # 04 – Design Decisions
 
-> **Status:** Template v0.1 · Last updated: [date]
+> **Status:** Draft v0.2 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · 03-security-requirements.md (not yet written) · 05-verification.md (not yet written)
 > **Note:** This is a template. Add one record per meaningful decision, written as it is made, not afterwards. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -58,9 +58,12 @@ Copy this block for each decision.
 - **Options considered:**
   1. **The system exactly as it stands now.** Honest about the real starting point, but may include earlier experiments and changes that are not documented
   2. **A fresh default OMV install on a wiped SD card and SSD.** Reproducible and clean, but not the system I was actually running
+  3. **The system as it stands now, with known earlier changes listed before testing.** Same starting point as option 1, but each change I remember making since installation is written down first, so findings can be traced to either a default or my own change. The list may still be incomplete
+- **Draft recommendation [TODO: owner to accept, change or reject]:** Option 3
 - **Decision:** **[TODO]**
-- **Reasoning:** **[TODO]**
-- **Trade-offs and residual risk:** **[TODO]**
+- **Reasoning:** **[DRAFT]** The project question concerns the system I actually run, so option 2 would measure a system that does not exist. Option 3 keeps the real starting point and makes the known history explicit, which supports principle 5 (verify, do not assume). The SD card image taken before Phase 0 lets the baseline be restored and repeated
+- **Trade-offs and residual risk:** **[DRAFT]** Results are not directly comparable with a default OMV install, and undocumented earlier changes may still affect results. Where a finding cannot be traced to a default or a listed change, record it as of unknown origin
+- **Known earlier changes:** **[TODO: owner to list before running Phase 0 tests]**
 - **Evidence:** Phase 0 results in 05-verification.md. Include the SD card image date and hash
 - **Review trigger:** The baseline is repeated, or the hardware changes
 
@@ -83,3 +86,4 @@ These are not decisions yet. They are placeholders so that each one is recorded 
 | Version | Date | Change | Reason |
 |---|---|---|---|
 | 0.1 | [date] | Template created | Structure agreed before Phase 0 |
+| 0.2 | 27th October 2026 | D-01: added option 3, draft recommendation, reasoning and trade-offs (drafted with AI assistance, decision still open) | Preparation for Phase 0 |

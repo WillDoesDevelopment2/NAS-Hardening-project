@@ -1,6 +1,6 @@
 # 05 – Verification
 
-> **Status:** Template v0.1 · Last updated: [date]
+> **Status:** Draft v0.2 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (service inventory, phases, success criteria) · [02-threat-analysis.md](02-threat-analysis.md) (threat IDs) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · `requirements-matrix.csv`
 > **Note:** This is a template. The test list in section 4 is a suggested starting point. Add, remove or change tests to fit the real setup, and write each **expected result before running the test**. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -63,23 +63,23 @@ Phase 0 is observation only. If something serious is found, record it first, the
 
 `<NAS-IP>` is a placeholder. Use the real address only in the private raw output.
 
-| Test ID | Threat | What it checks | Tool and command | Run from | Expected result **[TODO: confirm before running]** | Actual result | Pass or fail | Evidence |
+| Test ID | Threat | What it checks | Tool and command | Run from | Expected result **[DRAFT: owner to confirm before running]** | Actual result | Pass or fail | Evidence |
 |---|---|---|---|---|---|---|---|---|
-| V-01 | T-02, T-13 | Open TCP ports | `nmap -sS -p- <NAS-IP>` | Second LAN device | Only the ports in document 01, section 6.3 (22, 80, 445) | | | |
-| V-02 | T-13 | Open UDP ports | `sudo nmap -sU --top-ports 100 <NAS-IP>` | Second LAN device | No unexpected UDP services | | | |
-| V-03 | T-02 | Service versions | `nmap -sV <NAS-IP>` | Second LAN device | Versions match the installed software and are current | | | |
-| V-04 | T-13 | Listening sockets on the NAS | `ss -tulpn` | The NAS | Matches the service inventory in document 01, section 6.3 | | | |
-| V-05 | T-02, T-13, T-14 | System audit | `sudo lynis audit system` | The NAS | Record the score and list the warnings. **[TODO: no target set, only record]** | | | |
-| V-06 | T-10, T-18 | SSD health | `sudo smartctl -a /dev/nvme0` | The NAS | No critical warnings. Record wear and power-on hours | | | |
-| V-07 | T-03, T-19 | Router exposure | Router admin page | Router | No port forwards. UPnP off | | | |
-| V-08 | T-03 | External exposure | Same Nmap scan as V-01 | Outside network (mobile data) | No NAS port reachable | | | |
-| V-09 | T-04 | SSH configuration | `sudo sshd -T` | The NAS | Password login status and root login status recorded | | | |
-| V-10 | T-02, T-14 | Pending updates | `apt list --upgradable` | The NAS | Number and nature of pending updates recorded | | | |
-| V-11 | T-12 | Share permissions | OMV share and ACL review | OMV interface | Only intended accounts have access. No guest access | | | |
-| V-12 | T-01, T-12 | Accounts | User and group list, sudo rights | The NAS | Only expected accounts. Admin and daily use separate | | | |
-| V-13 | T-01 | Default credentials | Check whether the default OMV admin password is still in use | OMV interface | Default changed | | | |
-| V-14 | T-11 | Encryption status | `lsblk -f` | The NAS | Record whether the SSD is encrypted | | | |
-| V-15 | T-10 | Existing copies of data | Manual check | n/a | Record whether any other copy of the data exists | | | |
+| V-01 | T-02, T-13 | Open TCP ports | `nmap -sS -p- <NAS-IP>` | Second LAN device | Only 22 and 80 open, plus 445 if SMB is enabled (file sharing is still to be decided, document 01, section 6.2). Any other open TCP port is a finding | | | |
+| V-02 | T-13 | Open UDP ports | `sudo nmap -sU --top-ports 100 <NAS-IP>` | Second LAN device | Every port reported `open` or `open\|filtered` is matched to a known service, or recorded as unexplained. Unexplained ports are findings | | | |
+| V-03 | T-02 | Service versions | `nmap -sV <NAS-IP>` | Second LAN device | Each detected service matches an installed package (cross-check with V-04). Any service with pending updates in V-10, or past end of support, is a finding. Exact versions stay in the private raw output until fixed | | | |
+| V-04 | T-13 | Listening sockets on the NAS | `ss -tulpn` | The NAS | Every listening socket maps to a row in document 01, section 6.3, including the case control software. Record whether each service listens on all interfaces or on localhost only. Anything unexplained is a finding | | | |
+| V-05 | T-02, T-13, T-14 | System audit | `sudo lynis audit system` | The NAS | Hardening index and every warning recorded. No target score at baseline | | | |
+| V-06 | T-10, T-18 | SSD health | `sudo smartctl -a /dev/nvme0` | The NAS | Critical warning 0, available spare above its threshold and no media or data integrity errors. Percentage used and power-on hours recorded, as the SSD is recycled (document 01, section 6.1) | | | |
+| V-07 | T-03, T-19 | Router exposure | Router admin page | Router | No port forwards to the NAS, no DMZ host set and UPnP off | | | |
+| V-08 | T-03 | External exposure | Same Nmap scan as V-01, against the public address | Outside network (mobile data) | No NAS port reachable. Record whether the connection is behind CGNAT, as this affects how the result can be read | | | |
+| V-09 | T-04 | SSH configuration | `sudo sshd -T` | The NAS | Values of `permitrootlogin`, `passwordauthentication`, `pubkeyauthentication` and any `allowusers` or `allowgroups` recorded. Root login or password login enabled is a finding | | | |
+| V-10 | T-02, T-14 | Pending updates | `apt list --upgradable` | The NAS | Number of pending updates recorded, with security updates listed separately. Any pending security update is a finding | | | |
+| V-11 | T-12 | Share permissions | OMV share and ACL review | OMV interface | Only intended accounts have access and there is no guest access. If no shares exist yet, record that | | | |
+| V-12 | T-01, T-12 | Accounts | User and group list, sudo rights | The NAS | Only expected accounts have a login shell, and only the administrator account has sudo rights. If administration and daily use share one account, that is a finding | | | |
+| V-13 | T-01 | Default credentials | Check whether the publicly documented default OMV admin password is still in use | OMV interface | Default changed | | | |
+| V-14 | T-11 | Encryption status | `lsblk -f` | The NAS | Whether the SSD is encrypted is recorded. An unencrypted SSD holding data is a finding | | | |
+| V-15 | T-10 | Existing copies of data | Manual check | n/a | For each data type in document 01, section 7.1, whether another copy exists is recorded. Data held only on the NAS is a finding | | | |
 
 ## 5. Phase 0 findings
 
@@ -138,3 +138,4 @@ These show that access is allowed where it should be and refused where it should
 | Version | Date | Change | Reason |
 |---|---|---|---|
 | 0.1 | [date] | Template created with suggested Phase 0 tests | Structure agreed before Phase 0 |
+| 0.2 | 27th October 2026 | Section 4: draft expected results for V-01 to V-15 (drafted with AI assistance, not yet confirmed) | Expected results must be written before tests run |
