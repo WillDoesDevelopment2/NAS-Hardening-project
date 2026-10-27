@@ -1,6 +1,6 @@
 # 05 – Verification
 
-> **Status:** Draft v0.4 · Last updated: 27th October 2026
+> **Status:** Draft v0.5 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (service inventory, phases, success criteria) · [02-threat-analysis.md](02-threat-analysis.md) (threat IDs) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [traceability/requirements-matrix.csv](../traceability/requirements-matrix.csv)
 > **Note:** The test list in section 4 is a suggested starting point. Add, remove or change tests to fit the real setup, and write each **expected result before running the test**. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -137,7 +137,8 @@ These show that access is allowed where it should be and refused where it should
 
 | Version | Date | Change | Reason |
 |---|---|---|---|
-| 0.1 | [date] | Template created with suggested Phase 0 tests | Structure agreed before Phase 0 |
+| 0.1 | Not recorded | Template created with suggested Phase 0 tests | Structure agreed before Phase 0 |
 | 0.2 | 27th October 2026 | Section 4: draft expected results for V-01 to V-15 (drafted with AI assistance, not yet confirmed) | Expected results must be written before tests run |
 | 0.3 | 27th October 2026 | Header: correct matrix path and remove template note (drafted with AI assistance) | Out-of-date header |
 | 0.4 | 27th October 2026 | Section 4: draft expected results updated with the known earlier changes in D-01 and confirmed by the owner (drafted with AI assistance) | Match D-01 and confirm before testing |
+| 0.5 | 27th October 2026 | Revision log: date for 0.1 marked as not recorded | Owner confirmed the date was not recorded |

@@ -1,6 +1,6 @@
 # 04 – Design Decisions
 
-> **Status:** Draft v0.7 · Last updated: 27th October 2026
+> **Status:** Draft v0.8 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · 03-security-requirements.md (not yet written) · [05-verification.md](05-verification.md)
 > **Note:** Add one record per meaningful decision, written as it is made, not afterwards. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -92,10 +92,11 @@ These are not decisions yet. They are placeholders so that each one is recorded 
 
 | Version | Date | Change | Reason |
 |---|---|---|---|
-| 0.1 | [date] | Template created | Structure agreed before Phase 0 |
+| 0.1 | Not recorded | Template created | Structure agreed before Phase 0 |
 | 0.2 | 27th October 2026 | D-01: added option 3, draft recommendation, reasoning and trade-offs (drafted with AI assistance, decision still open) | Preparation for Phase 0 |
 | 0.3 | 27th October 2026 | Header: link to document 05 and remove template note (drafted with AI assistance) | Out-of-date header |
 | 0.4 | 27th October 2026 | D-01 accepted: option 3, with the list of known earlier changes | Owner decision before Phase 0 |
 | 0.5 | 27th October 2026 | D-01: install option, network connection and case software confirmed in the list of known earlier changes | Owner answers |
 | 0.6 | 27th October 2026 | D-01: SSH login method confirmed as password | Owner answer |
 | 0.7 | 27th October 2026 | D-01: no updates installed since setup. List of known earlier changes complete | Owner answer |
+| 0.8 | 27th October 2026 | Revision log: date for 0.1 marked as not recorded | Owner confirmed the date was not recorded |

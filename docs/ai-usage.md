@@ -29,7 +29,7 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 27th October 2026 | Documents 01 and 04: recorded my answers on the network connection, install option and case software | Reviewed the staged changes and approved the commits |
 | 27th October 2026 | Document 05, section 4: expected results updated to match D-01, V-13 reworded, draft markers removed. Matrix: draft wording removed | I confirmed the expected results and the V-13 answer, then reviewed the staged changes and approved the commit |
 | 27th October 2026 | Document 01, section 10: recorded my answers on the assumptions and reworded the network compromise assumption as I asked | Reviewed the staged changes and approved the commit |
-| 27th October 2026 | Document 02: T-08, T-11, T-03 and section 9 updated after the document 01 assumptions were confirmed. Document 01: CGNAT note | **[TODO: owner review]** |
+| 27th October 2026 | Document 02: T-08, T-11, T-03 and section 9 updated after the document 01 assumptions were confirmed. Document 01: CGNAT note | Reviewed the staged changes and approved the commit |
 
 ## 4. Revision log
 
