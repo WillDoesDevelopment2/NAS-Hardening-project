@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.5 · Last updated: 27th October 2026
+> **Status:** Draft v0.6 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -227,11 +227,12 @@ The related threats column links to the threat register in `02-threat-analysis.m
 ## 10. Assumptions and constraints
 
 ### Assumptions
-- I control the router settings and can disable UPnP 
-- I am the only administrator and the only person with physical access to the NAS 
-- My phone and computer have screen locks, device encryption and receive updates 
-- My home network is not already compromised **TO CONFIRM**
-- The NAS stays powered on and connected most of the time 
+- I control the router settings and can disable UPnP. Confirmed 27th October 2026
+- I am the only administrator of the NAS. Confirmed 27th October 2026
+- I am not the only person with physical access to the NAS. Confirmed 27th October 2026
+- My phone and computer have screen locks, device encryption and receive updates. Confirmed 27th October 2026
+- No known signs that my home network is compromised. Connected devices checked on 27th October 2026 with nothing unrecognised, and router firmware up to date. Not independently verified
+- The NAS stays powered on and connected most of the time. Confirmed 27th October 2026
 
 ### Constraints
 - Limited budget: existing hardware and no dedicated firewall appliance
@@ -296,3 +297,4 @@ The project succeeds when:
 | 0.3 | 27th October 2026 | Section 6.3: SMB marked as to be decided, matching section 6.2 (drafted with AI assistance) | Remove inconsistency before Phase 0 |
 | 0.4 | 27th October 2026 | Section 6.2: OMV 8. Sections 6.4 and 6.5: baseline account and network state from D-01 (drafted with AI assistance) | Match D-01 |
 | 0.5 | 27th October 2026 | Section 6.5: network connection confirmed (drafted with AI assistance) | Owner answers |
+| 0.6 | 27th October 2026 | Section 10: assumptions confirmed or corrected by the owner. Physical access assumption split, as others also have physical access. Network compromise assumption reworded (drafted with AI assistance) | Owner answers before Phase 0 |

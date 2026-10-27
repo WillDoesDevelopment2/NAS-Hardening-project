@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.7 · Last updated: 27th October 2026
+> **Status:** Draft v0.8 · Last updated: 27th October 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -27,7 +27,8 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 27th October 2026 | Document 04, D-01: recorded my decision (option 3) and my list of earlier changes, and removed the draft markers from the reasoning | Reviewed the staged changes and approved the commit |
 | 27th October 2026 | Document 01: OMV version, baseline account and network state, matching D-01 | Reviewed the staged changes and approved the commit |
 | 27th October 2026 | Documents 01 and 04: recorded my answers on the network connection, install option and case software | Reviewed the staged changes and approved the commits |
-| 27th October 2026 | Document 05, section 4: expected results updated to match D-01, V-13 reworded, draft markers removed. Matrix: draft wording removed | **[TODO: owner review]** I confirmed the expected results and the V-13 answer |
+| 27th October 2026 | Document 05, section 4: expected results updated to match D-01, V-13 reworded, draft markers removed. Matrix: draft wording removed | I confirmed the expected results and the V-13 answer, then reviewed the staged changes and approved the commit |
+| 27th October 2026 | Document 01, section 10: recorded my answers on the assumptions and reworded the network compromise assumption as I asked | **[TODO: owner review]** |
 
 ## 4. Revision log
 
@@ -40,3 +41,4 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 0.5 | 27th October 2026 | Added log entry for document 01 update | Keep the log current |
 | 0.6 | 27th October 2026 | Added log entry for owner answers | Keep the log current |
 | 0.7 | 27th October 2026 | Added log entry for expected results update | Keep the log current |
+| 0.8 | 27th October 2026 | Added log entry for document 01 assumptions | Keep the log current |
