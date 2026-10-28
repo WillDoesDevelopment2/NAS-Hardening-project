@@ -1,6 +1,6 @@
 # 05 – Verification
 
-> **Status:** Draft v0.7 · Last updated: 28th October 2026
+> **Status:** Draft v0.8 · Last updated: 28th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (service inventory, phases, success criteria) · [02-threat-analysis.md](02-threat-analysis.md) (threat IDs) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [traceability/requirements-matrix.csv](../traceability/requirements-matrix.csv)
 > **Note:** The test list in section 4 is a suggested starting point. Add, remove or change tests to fit the real setup, and write each **expected result before running the test**. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -54,14 +54,16 @@ All testing is performed against my own equipment on my own network.
 - [x] Expected results written for every test in section 4
 - [x] `evidence/phase0/` created and raw output location outside the repository chosen
 - [x] Router access confirmed
-- [ ] Second LAN device and an outside network (for example mobile data) available for scanning
-- [ ] No sensitive data on the NAS during the baseline
+- [x] Second LAN device and an outside network (for example mobile data) available for scanning
+- [x] No sensitive data on the NAS during the baseline
 
 ## 4. Phase 0 test plan
 
 Phase 0 is observation only. If something serious is found, record it first, then fix it and log the change with a timestamp.
 
 `<NAS-IP>` is a placeholder. Use the real address only in the private raw output.
+
+"Pass or fail" records whether the control held, not whether the expected result was predicted correctly. A test whose expected result is a finding is recorded as Fail when the finding is confirmed.
 
 | Test ID | Threat | What it checks | Tool and command | Run from | Expected result | Actual result | Pass or fail | Evidence |
 |---|---|---|---|---|---|---|---|---|
@@ -77,7 +79,7 @@ Phase 0 is observation only. If something serious is found, record it first, the
 | V-10 | T-02, T-14 | Pending updates | `apt list --upgradable` | The NAS | Number of pending updates recorded, with security updates listed separately. Pending updates, including security updates, are expected as none have been installed since setup (D-01). Any pending security update is a finding | | | |
 | V-11 | T-12 | Share permissions | OMV share and ACL review | OMV interface | Only intended accounts have access and there is no guest access. If no shares exist yet, record that | | | |
 | V-12 | T-01, T-12 | Accounts | User and group list, sudo rights | The NAS | Only expected accounts have a login shell, and only the administrator account has sudo rights. One account is used for both administration and daily use (D-01), so this is expected to be a finding | | | |
-| V-13 | T-01 | Default credentials | Check whether the publicly documented default OMV admin password is still in use | OMV interface | The default is still in use (known before testing). Expected to be a finding: record it first, then change the password and log the change with a timestamp | | | |
+| V-13 | T-01 | Default credentials | Check whether the publicly documented default OMV admin password is still in use | OMV interface | The default is still in use (known before testing). Expected to be a finding: record it first, then change the password and log the change with a timestamp | Login with the publicly documented default OMV admin credentials succeeded (28th October 2026, 08:45 UK time). Password changed at 09:00 and the re-test was refused, see section 7 | Fail | None, owner observation |
 | V-14 | T-11 | Encryption status | `lsblk -f` | The NAS | Whether the SSD is encrypted is recorded. An unencrypted SSD holding data is a finding | | | |
 | V-15 | T-10 | Existing copies of data | Manual check | n/a | For each data type in document 01, section 7.1, whether another copy exists is recorded. Data held only on the NAS is a finding | | | |
 
@@ -87,7 +89,7 @@ One row per finding. Every finding links to a test, a threat and, once it exists
 
 | ID | Test | Observation | Threat | Effect on rating | Resulting requirement | Status |
 |---|---|---|---|---|---|---|
-| FND-01 | | | | | | Open |
+| FND-01 | V-13 | The publicly documented default OMV admin password was still in use. The password was changed and a re-test with the default credentials failed to log in | T-01 | None. The draft rating stays (owner decision) | **[TODO]** (document 03 not yet written) | Treated |
 
 Status values: **Open**, **Treated**, **Accepted**.
 
@@ -105,7 +107,9 @@ Written as the work happens, not afterwards. A few lines per test is enough.
 
 | Date | Test ID | Command or action | What happened | Deviation or note |
 |---|---|---|---|---|
-| | | | | |
+| 28th October 2026, 08:45 UK time | V-13 | Logged in to the OMV interface with the publicly documented default admin credentials | Login succeeded. Recorded as FND-01 | No evidence saved. Owner observation only |
+| 28th October 2026, 09:00 UK time | V-13 | Changed the OMV admin password | The default password is no longer in use | Change made during Phase 0, as section 4 allows for serious findings |
+| 28th October 2026, 09:03 UK time | V-13 | Re-test: tried to log in to the OMV interface with the default admin credentials | Login refused | No evidence saved. Owner observation only |
 
 ## 8. Stage completion checks (Phase 1 onwards)
 
@@ -144,3 +148,5 @@ These show that access is allowed where it should be and refused where it should
 | 0.5 | 27th October 2026 | Revision log: date for 0.1 marked as not recorded | Owner confirmed the date was not recorded |
 | 0.6 | 28th October 2026 | Sections 2.2 and 3: SD card image date and hash recorded, D-01 ticked | Image taken and verified |
 | 0.7 | 28th October 2026 | Section 3: evidence location and router access ticked | Owner confirmed |
+| 0.8 | 28th October 2026 | Section 3: scanning devices, outside network and no sensitive data ticked. All prerequisites complete | Owner confirmed |
+| 0.9 | 28th October 2026 | V-13 result recorded (Fail), password change and re-test logged, FND-01 added as Treated, meaning of the Pass or fail column stated in section 4 | First Phase 0 test run by the owner |

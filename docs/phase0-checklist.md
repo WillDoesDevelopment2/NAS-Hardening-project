@@ -1,6 +1,6 @@
 # Phase 0 Checklist
 
-> **Status:** Draft v0.3 · Last updated: 28th October 2026
+> **Status:** Draft v0.4 · Last updated: 28th October 2026
 > **Author:** William Drummond
 > **Related:** [05-verification.md](05-verification.md) (test plan V-01 to V-15) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [../scripts/phase0-collect.sh](../scripts/phase0-collect.sh) · [../evidence/phase0/README.md](../evidence/phase0/README.md)
 > **Note:** Step-by-step procedure for running the Phase 0 tests. Phase 0 is observation only. Placeholders such as `<NAS-IP>` stay as placeholders in this file.
@@ -22,9 +22,9 @@ Do not run any test until every item is ticked. These match document 05, section
 - [x] Expected results for V-01 to V-15 confirmed and the `[DRAFT]` marker removed
 - [x] Raw output location chosen, outside the repository
 - [x] Router admin access confirmed
-- [ ] Second LAN device with `nmap` available
-- [ ] Outside network available (for example a laptop tethered to mobile data)
-- [ ] No sensitive data on the NAS
+- [x] Second LAN device with `nmap` available
+- [x] Outside network available (for example a laptop tethered to mobile data)
+- [x] No sensitive data on the NAS
 
 ## 3. Tests collected by script (on the NAS)
 
@@ -99,3 +99,4 @@ Save raw output to the raw output location using the same `V-xx_short-descriptio
 | 0.1 | 27th October 2026 | Checklist created (drafted with AI assistance) | Procedure for running Phase 0 tests |
 | 0.2 | 28th October 2026 | Section 2: SD card image, D-01 and expected results ticked | Prerequisites completed |
 | 0.3 | 28th October 2026 | Section 2: raw output location and router access ticked | Owner confirmed |
+| 0.4 | 28th October 2026 | Section 2: nmap, outside network and no sensitive data ticked. All prerequisites complete | Owner confirmed |
