@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.9 · Last updated: 27th October 2026
+> **Status:** Draft v0.10 · Last updated: 28th October 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -30,6 +30,8 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 27th October 2026 | Document 05, section 4: expected results updated to match D-01, V-13 reworded, draft markers removed. Matrix: draft wording removed | I confirmed the expected results and the V-13 answer, then reviewed the staged changes and approved the commit |
 | 27th October 2026 | Document 01, section 10: recorded my answers on the assumptions and reworded the network compromise assumption as I asked | Reviewed the staged changes and approved the commit |
 | 27th October 2026 | Document 02: T-08, T-11, T-03 and section 9 updated after the document 01 assumptions were confirmed. Document 01: CGNAT note | Reviewed the staged changes and approved the commit |
+| 27th October 2026 | Added `scripts/sanitise.py`, a script that replaces addresses, MAC addresses, keys, serial numbers and mapped values in raw evidence. Tested on made-up data only | Reviewed the changes and approved the commit |
+| 27th October 2026 | Document 02, section 7: checked each Tailscale statement against the Tailscale documentation while I was away, added corrections and sources | Reviewed the changes and approved the commit |
 
 ## 4. Revision log
 
@@ -44,3 +46,4 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 0.7 | 27th October 2026 | Added log entry for expected results update | Keep the log current |
 | 0.8 | 27th October 2026 | Added log entry for document 01 assumptions | Keep the log current |
 | 0.9 | 27th October 2026 | Added log entry for document 02 updates | Keep the log current |
+| 0.10 | 28th October 2026 | Added log entries for the sanitise script and the Tailscale check | Keep the log current |
