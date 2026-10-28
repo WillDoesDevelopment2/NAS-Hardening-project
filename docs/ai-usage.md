@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.12 · Last updated: 28th October 2026
+> **Status:** Draft v0.13 · Last updated: 28th October 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -34,6 +34,7 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 27th October 2026 | Document 02, section 7: checked each Tailscale statement against the Tailscale documentation while I was away, added corrections and sources | Reviewed the changes and approved the commit |
 | 28th October 2026 | Walked me through the SD card hash checks. Recorded the image date and hash I supplied in documents 04 and 05 and ticked the completed prerequisites | I ran the checks, supplied the date and hash, and approved the commit |
 | 28th October 2026 | Document 05: recorded the V-13 result I supplied, drafted FND-01 and the log rows, and added a note on what Pass or fail means. Ticked the remaining prerequisites | I ran V-13, supplied the result, chose Fail, changed the password, re-tested, kept the T-01 rating and reviewed the staged changes |
+| 28th October 2026 | The collection script I had drafted set the permissions of the NAS root folder to 700 when given `/` as its output folder, which locked the system for non-root users. Gave recovery steps, fixed the script so it only creates a new folder in the home folder or `/tmp` and hands the output back to me, updated the checklist and logged the deviation in document 05 | I recovered the NAS, reported the results and approved the commit |
 
 ## 4. Revision log
 
@@ -51,3 +52,4 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 0.10 | 28th October 2026 | Added log entries for the sanitise script and the Tailscale check | Keep the log current |
 | 0.11 | 28th October 2026 | Added log entry for the SD card image record | Keep the log current |
 | 0.12 | 28th October 2026 | Added log entry for the V-13 result | Keep the log current |
+| 0.13 | 28th October 2026 | Added log entry for the collection script defect and fix | Keep the log current |

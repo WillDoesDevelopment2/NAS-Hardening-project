@@ -4,37 +4,75 @@
 # Covers V-04, V-05, V-06, V-09, V-10, V-12 and V-14 in docs/05-verification.md, section 4.
 # The other tests are manual: see docs/phase0-checklist.md.
 #
-# Usage:  sudo ./phase0-collect.sh <output-dir>
+# Usage:  sudo ./phase0-collect.sh [output-dir]
 #
-# - Output is RAW and unsanitised. Keep <output-dir> outside the repository and never commit it
+# - With no argument, output goes to a new folder ~/phase0-raw-<date>-<time> in the home folder
+#   of the user who ran sudo
+# - [output-dir] must not exist yet, and must be inside that user's home folder or /tmp. The script
+#   only ever creates this one new folder. It refuses existing folders, so it can never change the
+#   permissions of /, a system folder or any other existing folder
+# - When finished (or interrupted), the output is handed back to the user who ran sudo: readable
+#   by that user without sudo, and by nobody else
+# - Output is RAW and unsanitised. Keep it outside the repository and never commit it
 # - Installs nothing, updates nothing and changes no configuration. Exceptions: Lynis writes its
-#   own log and report under /var/log, and the output directory is created
+#   own log and report under /var/log, and the output folder is created
 # - A missing tool is recorded as skipped, not installed
 # - Override the SSD device with SSD_DEV=/dev/nvme0n1 if needed (default /dev/nvme0)
 
 set -u
+umask 077
 
-OUT="${1:-}"
 SSD_DEV="${SSD_DEV:-/dev/nvme0}"
-
-if [[ -z "$OUT" ]]; then
-  echo "Usage: sudo $0 <output-dir>" >&2
-  exit 1
-fi
 
 if [[ $EUID -ne 0 ]]; then
   echo "Run with sudo: several tests need root to read the full configuration." >&2
   exit 1
 fi
 
-mkdir -p "$OUT"
-chmod 700 "$OUT"
+# The user who ran sudo gets the output. Running directly as root (no sudo) is refused, so the
+# output never ends up readable only by root
+OWNER="${SUDO_USER:-}"
+if [[ -z "$OWNER" || "$OWNER" == "root" ]]; then
+  echo "Run this with sudo from your own account, not as root, so the output can be handed back to you." >&2
+  exit 1
+fi
+OWNER_HOME="$(getent passwd "$OWNER" | cut -d: -f6)"
+OWNER_GROUP="$(id -gn "$OWNER")"
+
+OUT="${1:-$OWNER_HOME/phase0-raw-$(TZ=Europe/London date +%Y%m%d-%H%M)}"
+
+# Resolve the folder the output would be created in, without creating anything yet
+PARENT="$(realpath -e -- "$(dirname -- "$OUT")" 2>/dev/null)" || {
+  echo "Refusing: the parent folder of $OUT does not exist." >&2
+  exit 1
+}
+OUT="$PARENT/$(basename -- "$OUT")"
+
+if [[ -e "$OUT" || -L "$OUT" ]]; then
+  echo "Refusing: $OUT already exists. Give a new folder name; the script only creates new folders." >&2
+  exit 1
+fi
+
+case "$PARENT/" in
+  "$OWNER_HOME"/*|/tmp/*) ;;
+  *)
+    echo "Refusing: $OUT is not inside $OWNER_HOME or /tmp." >&2
+    exit 1
+    ;;
+esac
 
 # Refuse to write raw output inside a git working tree
-if command -v git >/dev/null 2>&1 && git -C "$OUT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+if command -v git >/dev/null 2>&1 && git -C "$PARENT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   echo "Refusing: $OUT is inside a git repository. Raw output must stay outside the repository." >&2
   exit 1
 fi
+
+# Create only the new folder (no -p), private to its owner
+mkdir -m 700 -- "$OUT" || exit 1
+
+# Hand the output back to the user who ran sudo, even if the script is interrupted
+hand_back() { chown -R -- "$OWNER:$OWNER_GROUP" "$OUT"; }
+trap hand_back EXIT
 
 TS() { TZ=Europe/London date '+%Y-%m-%d %H:%M:%S %Z'; }
 
@@ -118,7 +156,9 @@ run_test V-14 block-devices "lsblk -f"
 # Checksums so the raw files can be shown to be unchanged later
 ( cd "$OUT" && sha256sum -- *.txt *.log *.dat 2>/dev/null > SHA256SUMS )
 
+hand_back
 echo "Finished $(TS)"
+echo "Output folder: $OUT (owned by $OWNER, no sudo needed to read or copy it)"
 echo
 echo "Next: record the Lynis log and report writes in the Phase 0 log (docs/05-verification.md, section 7),"
 echo "then sanitise each file before anything goes into evidence/phase0/."

@@ -1,6 +1,6 @@
 # 05 – Verification
 
-> **Status:** Draft v0.8 · Last updated: 28th October 2026
+> **Status:** Draft v0.10 · Last updated: 28th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (service inventory, phases, success criteria) · [02-threat-analysis.md](02-threat-analysis.md) (threat IDs) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [traceability/requirements-matrix.csv](../traceability/requirements-matrix.csv)
 > **Note:** The test list in section 4 is a suggested starting point. Add, remove or change tests to fit the real setup, and write each **expected result before running the test**. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -110,6 +110,9 @@ Written as the work happens, not afterwards. A few lines per test is enough.
 | 28th October 2026, 08:45 UK time | V-13 | Logged in to the OMV interface with the publicly documented default admin credentials | Login succeeded. Recorded as FND-01 | No evidence saved. Owner observation only |
 | 28th October 2026, 09:00 UK time | V-13 | Changed the OMV admin password | The default password is no longer in use | Change made during Phase 0, as section 4 allows for serious findings |
 | 28th October 2026, 09:03 UK time | V-13 | Re-test: tried to log in to the OMV interface with the default admin credentials | Login refused | No evidence saved. Owner observation only |
+| 28th October 2026, 12:40 UK time (logged at this time, exact time not recorded) | V-04, V-05, V-06, V-09, V-10, V-12, V-14 | Ran `scripts/phase0-collect.sh` with `/` as the output folder | Collection ran as root and wrote its raw output into `/`. smartctl was installed. Lynis was not installed, so V-05 was recorded as skipped | Deviation: the script set the permissions of `/` to 700, so non-root users and services could no longer use the system. Caused by a defect in the script (it accepted an existing folder), now fixed |
+| 28th October 2026, 12:40 UK time (logged at this time, exact time not recorded) | n/a | Recovery: NAS shut down, SD card mounted on the laptop, permissions of the root folder checked and restored, raw output moved off the NAS, NAS booted | Root folder showed 700 before the fix and was set back to 755. Access for the owner account restored | Change made during Phase 0 to undo the deviation. The collected results are expected to be unaffected, because the script ran as root. To be checked during sanitising **[TODO]** |
+| 28th October 2026, 12:40 UK time (logged at this time, exact time not recorded) | V-05 | Installed Lynis | Lynis now installed | Change to the system made during Phase 0 so that V-05 can run. Whether `apt update` was run first **[TODO]**. V-05 still to be run |
 
 ## 8. Stage completion checks (Phase 1 onwards)
 
@@ -150,3 +153,4 @@ These show that access is allowed where it should be and refused where it should
 | 0.7 | 28th October 2026 | Section 3: evidence location and router access ticked | Owner confirmed |
 | 0.8 | 28th October 2026 | Section 3: scanning devices, outside network and no sensitive data ticked. All prerequisites complete | Owner confirmed |
 | 0.9 | 28th October 2026 | V-13 result recorded (Fail), password change and re-test logged, FND-01 added as Treated, meaning of the Pass or fail column stated in section 4 | First Phase 0 test run by the owner |
+| 0.10 | 28th October 2026 | Header version corrected (0.9 was not shown). Section 7: collection script run, the root folder permission deviation and its recovery, and the Lynis install logged | Record the deviation and the changes made during Phase 0 |
