@@ -1,6 +1,6 @@
 # 05 – Verification
 
-> **Status:** Draft v0.6 · Last updated: 28th October 2026
+> **Status:** Draft v0.7 · Last updated: 28th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (service inventory, phases, success criteria) · [02-threat-analysis.md](02-threat-analysis.md) (threat IDs) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [traceability/requirements-matrix.csv](../traceability/requirements-matrix.csv)
 > **Note:** The test list in section 4 is a suggested starting point. Add, remove or change tests to fit the real setup, and write each **expected result before running the test**. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -52,8 +52,8 @@ All testing is performed against my own equipment on my own network.
 - [x] Image of the SD card taken, date and hash recorded (section 2.2)
 - [x] Baseline definition decided and recorded as D-01 in document 04
 - [x] Expected results written for every test in section 4
-- [ ] `evidence/phase0/` created and raw output location outside the repository chosen
-- [ ] Router access confirmed
+- [x] `evidence/phase0/` created and raw output location outside the repository chosen
+- [x] Router access confirmed
 - [ ] Second LAN device and an outside network (for example mobile data) available for scanning
 - [ ] No sensitive data on the NAS during the baseline
 
@@ -143,3 +143,4 @@ These show that access is allowed where it should be and refused where it should
 | 0.4 | 27th October 2026 | Section 4: draft expected results updated with the known earlier changes in D-01 and confirmed by the owner (drafted with AI assistance) | Match D-01 and confirm before testing |
 | 0.5 | 27th October 2026 | Revision log: date for 0.1 marked as not recorded | Owner confirmed the date was not recorded |
 | 0.6 | 28th October 2026 | Sections 2.2 and 3: SD card image date and hash recorded, D-01 ticked | Image taken and verified |
+| 0.7 | 28th October 2026 | Section 3: evidence location and router access ticked | Owner confirmed |
