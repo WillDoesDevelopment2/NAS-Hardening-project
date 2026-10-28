@@ -1,6 +1,6 @@
 # 04 – Design Decisions
 
-> **Status:** Draft v0.8 · Last updated: 27th October 2026
+> **Status:** Draft v0.9 · Last updated: 28th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · 03-security-requirements.md (not yet written) · [05-verification.md](05-verification.md)
 > **Note:** Add one record per meaningful decision, written as it is made, not afterwards. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -71,7 +71,7 @@ Copy this block for each decision.
   6. Case control software installed
   7. SSH used for administration, with password login
   8. No updates installed since setup
-- **Evidence:** Phase 0 results in 05-verification.md. Include the SD card image date and hash
+- **Evidence:** Phase 0 results in 05-verification.md. SD card image taken 28th October 2026, 08:17 UK time, SHA-256 `090dcc27c844456240e0279f80bf0bb753c488bd6cf53fd605fb20f9ab3f741d`. The hash recorded during imaging, the hash of the decompressed image and the hash of the card itself all matched
 - **Review trigger:** The baseline is repeated, or the hardware changes
 
 ## 6. Candidate decisions to expect
@@ -100,3 +100,4 @@ These are not decisions yet. They are placeholders so that each one is recorded 
 | 0.6 | 27th October 2026 | D-01: SSH login method confirmed as password | Owner answer |
 | 0.7 | 27th October 2026 | D-01: no updates installed since setup. List of known earlier changes complete | Owner answer |
 | 0.8 | 27th October 2026 | Revision log: date for 0.1 marked as not recorded | Owner confirmed the date was not recorded |
+| 0.9 | 28th October 2026 | D-01: SD card image date and SHA-256 hash added to the evidence line | Image taken and verified |

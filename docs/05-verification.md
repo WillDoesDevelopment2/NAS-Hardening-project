@@ -1,6 +1,6 @@
 # 05 – Verification
 
-> **Status:** Draft v0.5 · Last updated: 27th October 2026
+> **Status:** Draft v0.6 · Last updated: 28th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (service inventory, phases, success criteria) · [02-threat-analysis.md](02-threat-analysis.md) (threat IDs) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [traceability/requirements-matrix.csv](../traceability/requirements-matrix.csv)
 > **Note:** The test list in section 4 is a suggested starting point. Add, remove or change tests to fit the real setup, and write each **expected result before running the test**. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -32,7 +32,7 @@ Verification here means collecting evidence that specific controls held up again
 - Sanitised evidence goes in `evidence/phase0/` (and `evidence/phase1/` and so on), one file per test, named `V-xx_short-description.ext`
 - Raw, unsanitised output stays outside the repository and is never committed
 - Each evidence file starts with a header: test ID, date, command or tool and version, where it was run from
-- Record the SHA-256 hash of the SD card image taken before Phase 0 **[TODO]**
+- SD card image taken before Phase 0: 28th October 2026, 08:17 UK time, SHA-256 `090dcc27c844456240e0279f80bf0bb753c488bd6cf53fd605fb20f9ab3f741d` (three checks matched: hash recorded during imaging, decompressed image, card)
 
 ### 2.3 Authorisation
 
@@ -49,8 +49,8 @@ All testing is performed against my own equipment on my own network.
 
 ## 3. Before starting Phase 0
 
-- [ ] Image of the SD card taken, date and hash recorded
-- [ ] Baseline definition decided and recorded as D-01 in document 04
+- [x] Image of the SD card taken, date and hash recorded (section 2.2)
+- [x] Baseline definition decided and recorded as D-01 in document 04
 - [x] Expected results written for every test in section 4
 - [ ] `evidence/phase0/` created and raw output location outside the repository chosen
 - [ ] Router access confirmed
@@ -142,3 +142,4 @@ These show that access is allowed where it should be and refused where it should
 | 0.3 | 27th October 2026 | Header: correct matrix path and remove template note (drafted with AI assistance) | Out-of-date header |
 | 0.4 | 27th October 2026 | Section 4: draft expected results updated with the known earlier changes in D-01 and confirmed by the owner (drafted with AI assistance) | Match D-01 and confirm before testing |
 | 0.5 | 27th October 2026 | Revision log: date for 0.1 marked as not recorded | Owner confirmed the date was not recorded |
+| 0.6 | 28th October 2026 | Sections 2.2 and 3: SD card image date and hash recorded, D-01 ticked | Image taken and verified |
