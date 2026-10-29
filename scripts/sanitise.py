@@ -20,7 +20,8 @@ What it replaces, in this order:
 2. Every value in the map file (hostnames and usernames are matched case-insensitively)
 3. Serial numbers and host IDs in labelled fields (smartctl, Lynis), and the host IDs and
    hostname hashes in the Lynis log
-4. MAC addresses                       -> <MAC-n>
+4. Filesystem UUIDs                    -> <UUID-n>, and FAT volume IDs in lsblk output -> <VOLID-n>
+   MAC addresses                       -> <MAC-n>
 5. Remaining IPv6 and IPv4 addresses   -> <IPV6-n> and <IP-n>
    Kept: 0.0.0.0, loopback, netmasks, multicast, documentation ranges, and four-part package
    version numbers (for example "version: 1.2.3.4-1" or "pkg,1.2.3.4+b1")
@@ -84,10 +85,12 @@ RE_TSKEY = re.compile(r"\btskey-[A-Za-z0-9_-]+")
 RE_WGKEY = re.compile(r"(?<![A-Za-z0-9+/])[A-Za-z0-9+/]{42}[AEIMQUYcgkosw048]=(?![A-Za-z0-9+/=])")
 RE_SSHPUB = re.compile(r"\b(ssh-(?:rsa|ed25519|dss)|ecdsa-sha2-[a-z0-9]+|sk-[a-z0-9@.-]+) AAAA[A-Za-z0-9+/=]+")
 RE_LABELLED = re.compile(
-    r"^(\s*(?:Serial Number|Serial number|Serial|LU WWN Device Id|IEEE EUI-64|NGUID|"
+    r"^(\s*(?:Namespace \d+\s+)?(?:Serial Number|Serial number|Serial|LU WWN Device Id|IEEE EUI-64|NGUID|"
     r"hostid2?|hostname|domainname|machine[-_]id|hardware_uuid)\s*[:=]\s*)(\S.*?)\s*$",
     re.M | re.I)
 RE_HOSTID_LOG = re.compile(r"((?:HostID2?|Hash \([^)\n]*\))\s*:?\s*)[0-9A-Fa-f]{32,}", re.I)
+RE_UUID = re.compile(r"(?<![0-9A-Fa-f-])[0-9A-Fa-f]{8}-(?:[0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}(?![0-9A-Fa-f-])")
+RE_FAT_VOLID = re.compile(r"^(.*\b(?:vfat|exfat)\b.*?)(?<![\w-])([0-9A-Fa-f]{4}-[0-9A-Fa-f]{4})(?![\w-])", re.M)
 RE_MAC = re.compile(r"(?<![0-9A-Fa-f:])(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}(?![0-9A-Fa-f:])")
 RE_V6_CAND = re.compile(r"(?<![0-9A-Za-z:.])[0-9A-Fa-f]{0,4}(?::[0-9A-Fa-f]{0,4}){2,7}(?![0-9A-Za-z:.])")
 RE_V4 = re.compile(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d])")
@@ -122,6 +125,11 @@ def sanitise(text, mapping, counts):
 
     text, n = RE_LABELLED.subn(lambda m: m.group(1) + "<REDACTED>", text); count("serial or host ID", n)
     text, n = RE_HOSTID_LOG.subn(lambda m: m.group(1) + "<REDACTED>", text); count("serial or host ID", n)
+
+    uuid = Numberer("UUID")
+    text, n = RE_UUID.subn(lambda m: uuid(m.group(0)), text); count("UUID", n)
+    volid = Numberer("VOLID")
+    text, n = RE_FAT_VOLID.subn(lambda m: m.group(1) + volid(m.group(2)), text); count("FAT volume ID", n)
 
     mac = Numberer("MAC")
     text, n = RE_MAC.subn(lambda m: mac(m.group(0)), text); count("MAC address", n)
