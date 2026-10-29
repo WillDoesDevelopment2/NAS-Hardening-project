@@ -1,0 +1,25 @@
+Test ID: V-14
+Date: 2026-10-28 12:46:48 GMT
+Command: lsblk -f
+Run from: The NAS
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (UUID x2, FAT volume ID x1)
+----------------------------------------
+NAME        FSTYPE FSVER LABEL           UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+loop0       swap   1     origin:rpi-swap                                                     
+mmcblk0                                                                                      
+├─mmcblk0p1 vfat   FAT32 bootfs          <VOLID-1>                             432.9M    14% /boot/firmware
+└─mmcblk0p2 ext4   1.0   rootfs          <UUID-1>  220.3G     2% /run/omv-writecache/var_tmp/lower
+                                                                                             /run/omv-writecache/var_log/lower
+                                                                                             /run/omv-writecache/var_lib_monit/lower
+                                                                                             /run/omv-writecache/var_lib_rrdcached/lower
+                                                                                             /run/omv-writecache/var_lib_openmediavault_rrd/lower
+                                                                                             /run/omv-writecache/var_lib_dpkg_updates/lower
+                                                                                             /run/omv-writecache/var_lib_apt_lists/lower
+                                                                                             /run/omv-writecache/var_cache_samba/lower
+                                                                                             /run/omv-writecache/var_cache_apt_archives/lower
+                                                                                             /
+zram0       swap   1     zram0           <UUID-2>                [SWAP]
+nvme0n1                                                                                      
+----------------------------------------
+Exit code: 0

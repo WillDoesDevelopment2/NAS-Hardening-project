@@ -1,0 +1,23 @@
+Test ID: V-10
+Date: 2026-10-28 12:46:46 GMT
+Command: apt list --upgradable 2>/dev/null
+Run from: The NAS
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (nothing replaced)
+Edited: exact versions reduced to the major version before publishing (unfixed findings rule)
+----------------------------------------
+Listing...
+libcamera-ipa/stable 0.x arm64 [upgradable from: 0.x]
+libcamera0.7/stable 0.x arm64 [upgradable from: 0.x]
+librpicam-app1/stable 1.x arm64 [upgradable from: 1.x]
+linux-base/stable-backports,stable-backports 4.x all [upgradable from: 4.x]
+openmediavault/synchrony 8.x all [upgradable from: 8.x]
+raspi-config-core/stable,stable (date-based) all [upgradable from: (date-based)]
+raspi-config/stable,stable (date-based) all [upgradable from: (date-based)]
+rpi-connect-lite/stable 2.x arm64 [upgradable from: 2.x]
+rpi-eeprom/stable,stable 28.x all [upgradable from: 28.x]
+rpicam-apps-core/stable 1.x arm64 [upgradable from: 1.x]
+rpicam-apps-lite/stable,stable 1.x all [upgradable from: 1.x]
+tzdata/stable-updates,stable-updates (date-based) all [upgradable from: (date-based)]
+----------------------------------------
+Exit code: 0

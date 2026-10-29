@@ -1,0 +1,29 @@
+Test ID: V-10
+Date: 2026-10-28 12:46:46 GMT
+Command: ls -l --time-style=long-iso /var/lib/apt/lists/ | head -n 20
+Run from: The NAS
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (nothing replaced)
+----------------------------------------
+total 128824
+-rw-r--r-- 1 root root     1909 2026-10-25 22:35 _etc_apt_mirrors_omvextras.txt_dists_synchrony_InRelease
+-rw-r--r-- 1 root root    33813 2026-10-25 22:35 _etc_apt_mirrors_omvextras.txt_dists_synchrony_main_binary-arm64_Packages
+-rw-r--r-- 1 root root     6661 2026-10-27 14:39 _etc_apt_mirrors_openmediavault.txt_dists_synchrony_InRelease
+-rw-r--r-- 1 root root    29565 2026-10-27 14:39 _etc_apt_mirrors_openmediavault.txt_dists_synchrony_main_binary-arm64_Packages
+-rw-r--r-- 1 root root        0 2026-10-26 15:43 _var_cache_openmediavault_archives_._Packages
+-rw-r--r-- 1 root root    54881 2026-10-28 08:03 archive.raspberrypi.com_debian_dists_trixie_InRelease
+-rw-r--r-- 1 root root  1690070 2026-10-28 08:03 archive.raspberrypi.com_debian_dists_trixie_main_binary-arm64_Packages
+-rw-r--r-- 1 root root  1622714 2026-10-27 15:27 archive.raspberrypi.com_debian_dists_trixie_main_binary-armhf_Packages
+drwxr-xr-x 1 _apt root       80 2026-10-28 12:46 auxfiles
+-rw-r--r-- 1 root root    43409 2026-10-28 06:47 deb.debian.org_debian-security_dists_trixie-security_InRelease
+-rw-r--r-- 1 root root    12939 2026-10-05 18:37 deb.debian.org_debian-security_dists_trixie-security_contrib_binary-arm64_Packages
+-rw-r--r-- 1 root root    12938 2026-10-05 18:37 deb.debian.org_debian-security_dists_trixie-security_contrib_binary-armhf_Packages
+-rw-r--r-- 1 root root  1892697 2026-10-27 19:47 deb.debian.org_debian-security_dists_trixie-security_main_binary-arm64_Packages
+-rw-r--r-- 1 root root  1780220 2026-10-27 19:47 deb.debian.org_debian-security_dists_trixie-security_main_binary-armhf_Packages
+-rw-r--r-- 1 root root    53962 2026-10-28 08:09 deb.debian.org_debian_dists_trixie-backports_InRelease
+-rw-r--r-- 1 root root    33500 2026-10-17 08:58 deb.debian.org_debian_dists_trixie-backports_contrib_binary-arm64_Packages
+-rw-r--r-- 1 root root    26919 2026-10-15 21:12 deb.debian.org_debian_dists_trixie-backports_contrib_binary-armhf_Packages
+-rw-r--r-- 1 root root  2126959 2026-10-28 02:07 deb.debian.org_debian_dists_trixie-backports_main_binary-arm64_Packages
+-rw-r--r-- 1 root root  1857967 2026-10-28 02:07 deb.debian.org_debian_dists_trixie-backports_main_binary-armhf_Packages
+----------------------------------------
+Exit code: 0

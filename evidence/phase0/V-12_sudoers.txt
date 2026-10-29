@@ -1,0 +1,29 @@
+Test ID: V-12
+Date: 2026-10-28 12:46:48 GMT
+Command: grep -vE '^\s*(#|$)' /etc/sudoers; for f in /etc/sudoers.d/*; do [ -f "$f" ] && echo "== $f" && grep -vE '^\s*(#|$)' "$f"; done
+Run from: The NAS
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (nothing replaced)
+----------------------------------------
+Defaults	env_reset
+Defaults	mail_badpass
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Defaults	use_pty
+root	ALL=(ALL:ALL) ALL
+%sudo	ALL=(ALL:ALL) ALL
+@includedir /etc/sudoers.d
+== /etc/sudoers.d/010_at-export
+Defaults env_keep += "NO_AT_BRIDGE"
+== /etc/sudoers.d/010_dpkg-threads
+Defaults env_keep += "DPKG_DEB_THREADS_MAX"
+== /etc/sudoers.d/010_global-tty
+Defaults timestamp_type=global
+== /etc/sudoers.d/010_proxy
+Defaults env_keep += "http_proxy HTTP_PROXY"
+Defaults env_keep += "https_proxy HTTPS_PROXY"
+Defaults env_keep += "ftp_proxy FTP_PROXY"
+Defaults env_keep += "RSYNC_PROXY"
+Defaults env_keep += "no_proxy NO_PROXY"
+== /etc/sudoers.d/README
+----------------------------------------
+Exit code: 1
