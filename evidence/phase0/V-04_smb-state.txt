@@ -1,0 +1,13 @@
+Test ID: V-04
+Date: 2026-10-28 12:45:52 GMT
+Command: systemctl is-active smbd nmbd 2>&1; systemctl is-enabled smbd nmbd 2>&1
+Run from: The NAS
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (nothing replaced)
+----------------------------------------
+inactive
+inactive
+disabled
+disabled
+----------------------------------------
+Exit code: 1

@@ -1,0 +1,13 @@
+Test ID: V-12
+Date: 2026-10-28 12:46:48 GMT
+Command: getent group sudo adm openmediavault-admin ssh _ssh 2>&1
+Run from: The NAS
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (map: <USER> x3)
+----------------------------------------
+sudo:x:27:<USER>
+adm:x:4:<USER>
+openmediavault-admin:x:980:admin
+_ssh:x:101:<USER>
+----------------------------------------
+Exit code: 2

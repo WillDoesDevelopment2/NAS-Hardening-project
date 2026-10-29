@@ -1,0 +1,10 @@
+Test ID: V-10
+Date: 2026-10-28 12:46:47 GMT
+Command: apt list --upgradable 2>/dev/null | grep -i security || echo 'None listed'
+Run from: The NAS
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (nothing replaced)
+----------------------------------------
+None listed
+----------------------------------------
+Exit code: 0

@@ -1,8 +1,8 @@
 # 02 – Threat Analysis
 
-> **Status:** Draft v0.1 · Last updated: 24 October 2026
+> **Status:** Draft v0.4 · Last updated: 28th October 2026
 > **Author:** William Drummond
-> **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (asset IDs, data flows, trust boundaries and phases used here) · 03-security-requirements.md (requirements derived from this analysis, not yet written) · 05-verification.md (tests that confirm each treatment, not yet written)
+> **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (asset IDs, data flows, trust boundaries and phases used here) · 03-security-requirements.md (requirements derived from this analysis, not yet written) · [05-verification.md](05-verification.md) (tests that confirm each treatment)
 > **Note:** This is a starting draft prepared with AI assistance. Every rating and treatment is a proposal. Review each one, change anything that does not match your setup or your own judgement, replace anything in **[TODO]** or square brackets, and record what you accepted, changed or rejected in `docs/ai-usage.md`. Record meaningful changes in the revision log at the end.
 
 ---
@@ -128,15 +128,15 @@ Each rating below is a draft. The right-hand column states what the Phase 0 base
 |---|---|---|
 | T-01 | Default OMV administrator credentials are publicly documented, and the admin interface is reachable from the whole LAN over HTTP | Confirm whether the default password has been changed **[TODO]**. Nmap service scan and `ss -tulpn` for the admin interface |
 | T-02 | OMV, Debian, Samba and OpenSSH all receive regular security fixes, and the patch level at baseline is unknown | Nmap version detection, `apt list --upgradable`, Lynis report |
-| T-03 | UPnP and port forwarding are common causes of accidental exposure. CGNAT, if present, may reduce this | Router check for port forwards and UPnP. External scan from outside the LAN (for example from mobile data) **[TODO: check for CGNAT]** |
+| T-03 | UPnP and port forwarding are common causes of accidental exposure. CGNAT, if present, may reduce this | Router check for port forwards and UPnP. External scan from outside the LAN (for example from mobile data) **[TODO: check for CGNAT. Traceroute on 27th October 2026 was inconclusive]** |
 | T-04 | Nothing is exposed at baseline and SSH is LAN only. Becomes Medium likelihood if T-03 occurs | `sshd -T`, `ss -tulpn`, check whether any lockout or rate limiting exists |
 | T-05 | Writable SMB shares mounted on a client are reachable by ransomware, and any backup written to the same share can be overwritten | Share and permission review. Phase 3 restore test from a copy that clients cannot overwrite |
 | T-06 | The case vendor software controls fan, display and lighting but runs on the NAS, possibly with elevated privileges | Inventory of vendor packages, their listening ports and the user they run as **[TODO: confirm]** |
 | T-07 | Other home devices share the LAN, and VLAN support is unknown | Router capability check. Nmap from a second LAN device. Decision recorded under document 01, section 5.3 |
-| T-08 | Depends on the assumptions in document 01, section 10 (screen locks and device encryption) | Confirm those assumptions **[TODO]**. Later, test revoking a device |
+| T-08 | Depends on the assumptions in document 01, section 10 (screen locks, device encryption and updates), confirmed on 27th October 2026 | Later, test revoking a device |
 | T-09 | One person makes manual changes, and no versioned or snapshot copy exists at baseline | Check whether snapshots or versioning exist. Phase 3 restore test |
 | T-10 | The SSD is second-hand with unknown wear, and the NAS is currently one copy, not a backup | SMART data (wear, reallocated sectors, power-on hours). Record whether any other copy of the data exists |
-| T-11 | I am the only person with access and the device is at home, but the data is likely unencrypted at baseline | Encryption status of the SSD **[TODO]**. Record of how the SSD was wiped before reuse |
+| T-11 | I am the only administrator, but not the only person with physical access (document 01, section 10). The device is at home, the data is likely unencrypted at baseline, and the boot SD card can be removed and read on another computer. **[TODO: owner to review the likelihood rating in light of this]** | Encryption status of the SSD **[TODO]**. Record of how the SSD was wiped before reuse |
 | T-12 | Default share settings may allow guest access or broad group access | Share and ACL review. Test access using an account that should be refused |
 | T-13 | The OMV admin interface uses HTTP on port 80 (document 01, section 6.3), and other default services may be running | Compare `ss -tulpn` and Nmap output with the service inventory in document 01, section 6.3 |
 | T-14 | One maintainer and no defined update routine yet | Date of last update, unattended-upgrades configuration, Lynis findings |
@@ -202,13 +202,13 @@ A check that every asset has at least one threat and that nothing is missing fro
 
 ## 7. Tailscale trust analysis
 
-This section supports threat T-16 and the Phase 1 to Phase 2 comparison. **[TODO: verify each statement against the current Tailscale documentation before finalising. Features and defaults change.]**
+This section supports threat T-16 and the Phase 1 to Phase 2 comparison. Statements were checked against the Tailscale documentation on 27th October 2026 (sources in section 7.5). Features and defaults change, so check again before Phase 1 **[TODO]**.
 
 ### 7.1 What Tailscale does
 
 - **Data plane:** Devices connect to each other through WireGuard tunnels. Traffic between my devices is encrypted end to end, and the private keys stay on the devices.
-- **Control plane:** A coordination service run by Tailscale handles login, distributes public keys and network configuration, and helps devices find each other.
-- **Relays:** If a direct connection fails, traffic can pass through Tailscale relay servers. They carry encrypted traffic.
+- **Control plane:** A coordination service run by Tailscale handles login, distributes public keys, network configuration and access rules, and helps devices find each other. It carries no user traffic.
+- **Relays:** If a direct connection fails, traffic can pass through a relay: a peer relay (another device in the tailnet) or a Tailscale DERP relay server. Relays forward traffic that is already encrypted and cannot decrypt it.
 
 ### 7.2 What I am trusting
 
@@ -216,25 +216,41 @@ This section supports threat T-16 and the Phase 1 to Phase 2 comparison. **[TODO
 |---|---|---|
 | Coordination service | To distribute only the correct public keys and not add devices to my network | An attacker or a malicious operator could add a device that I did not approve |
 | Identity provider account | To authenticate me correctly | Account takeover lets an attacker add devices to my tailnet |
-| Relay servers | To pass traffic without being able to read it | Metadata exposure (who connects, when). Content stays encrypted |
+| Relay servers | To pass traffic without being able to read it | Metadata exposure (who connects, when). Content stays encrypted. The DERP documentation does not say what metadata a relay can see |
 | Tailscale client software | To behave correctly on my NAS and clients | A flaw in the client could affect the device it runs on |
-| Metadata held by the vendor | Device names, addresses and connection times are visible to the service | Privacy exposure, not data exposure |
+| Metadata held by the vendor | By default each client sends its logs to Tailscale, including open and close events for connections. Client logging can be turned off per device (`--no-logs-no-support`), but Tailscale may then not be able to give support | Privacy exposure, not data exposure |
 
 ### 7.3 Risks and mitigations
 
 | Risk | Mitigation to evaluate | Residual position |
 |---|---|---|
-| Identity provider account takeover | Strong unique password and multi-factor authentication on the identity provider. Device approval for new devices | Reduced, depends on one account |
-| Unwanted device added to the tailnet | Device approval, key expiry, and access rules that allow only the NAS ports I need from the devices I choose | Reduced |
-| Compromised or malicious coordination service | Evaluate Tailnet Lock. Keep OMV and SSH authentication in place, so a tailnet device alone is not enough | Partly accepted. This is the main reason to compare against self-hosted WireGuard in Phase 2 |
+| Identity provider account takeover | Tailscale has no passwords of its own, so login depends on the identity provider. Strong unique password and multi-factor authentication there, or a passkey. Device approval or Tailnet Lock for new devices (they cannot both be enabled, see below) | Reduced, depends on one account |
+| Unwanted device added to the tailnet | Device approval or Tailnet Lock, key expiry (180 days by default, can be turned off per device), and access rules that allow only the NAS ports I need from the devices I choose. The default policy allows all traffic between devices, so rules must be written | Reduced |
+| Compromised or malicious coordination service | Evaluate Tailnet Lock: new devices must be signed by trusted keys held on my own devices, so the coordination service cannot add devices by itself. It needs at least two signing devices, its disablement secrets must be stored safely (without them the tailnet may not be recoverable), and it cannot be used together with device approval **[TODO: decide between device approval and Tailnet Lock]**. Keep OMV and SSH authentication in place, so a tailnet device alone is not enough | Partly accepted. This is the main reason to compare against self-hosted WireGuard in Phase 2 |
 | Metadata exposure | Neutral device names. Accept the remainder | Accepted |
-| Vendor outage or account lockout | LAN access still works. Self-hosted WireGuard as an alternative path in Phase 2 | Accepted, linked to T-17 and A-08 |
+| Vendor outage or account lockout | LAN access still works. During a coordination service outage, existing tailnet connections mostly keep working, as access rules are cached on each device, but new devices cannot be added and keys cannot be refreshed, so access is gradually lost as keys expire. Self-hosted WireGuard as an alternative path in Phase 2 | Accepted, linked to T-17 and A-08 |
 | Extra features widening the attack surface | Do not enable features I do not need. Keep SSH as OpenSSH with keys unless there is a reason to change **[TODO: decide]** | Reduced |
 
 ### 7.4 Questions for the Phase 2 comparison
 
 - What does self-hosted WireGuard remove from the trust list above, and what new work does it add (key management, one open UDP port, CGNAT handling)?
 - Is the extra control worth the extra maintenance for a single-person home system?
+
+### 7.5 Sources
+
+Checked on 27th October 2026. Pages from the Tailscale website only.
+
+| Topic | Source |
+|---|---|
+| Keys stay on devices, control plane and data plane | [How Tailscale works](https://tailscale.com/blog/how-tailscale-works) |
+| Relays cannot decrypt traffic, peer relays | [DERP servers](https://tailscale.com/docs/reference/derp-servers) |
+| Coordination service outage | [What happens if the coordination server is down?](https://tailscale.com/kb/1091/what-happens-if-the-coordination-server-is-down) |
+| Tailnet Lock, and that it cannot be used with device approval | [Tailnet Lock](https://tailscale.com/kb/1226/tailnet-lock) |
+| Device approval | [Device approval](https://tailscale.com/kb/1099/device-approval) |
+| Key expiry | [Key expiry](https://tailscale.com/kb/1028/key-expiry) |
+| Default allow-all policy, rules enforced on each device | [Access control lists](https://tailscale.com/kb/1018/acls) |
+| No Tailscale passwords, MFA and passkeys | [Identity providers](https://tailscale.com/kb/1013/sso-providers) |
+| Client logging and opt-out | [Logging](https://tailscale.com/kb/1011/log-mgmt) |
 
 ## 8. Treatment plan
 
@@ -268,7 +284,7 @@ Treatment options are **Reduce** (add a control), **Avoid** (remove the cause), 
 
 - Ratings are qualitative judgements and are not measured probabilities
 - Baseline ratings assume the current state: default OMV setup on the LAN, with nothing exposed to the internet
-- The assumptions in document 01, section 10 still need confirming **[TODO]**. Several ratings (T-08, T-11) depend on them
+- The assumptions in document 01, section 10 were confirmed or corrected on 27th October 2026. Others also have physical access to the NAS, which affects T-11
 - Targeted attacks by a well-resourced adversary are out of scope, so ratings do not reflect that
 - Router and other-device security are verified only for their effect on the NAS
 - This register is not exhaustive. Threats found during Phase 0 and later phases will be added with new IDs, and existing IDs will not be reused
@@ -302,3 +318,6 @@ Residual risk after Phase 4, and any risk accepted knowingly, is recorded in `07
 | Version | Date | Change | Reason |
 |---|---|---|---|
 | 0.1 | 24 October 2026 | Initial draft: method, threat sources, rating method, register T-01 to T-21, Tailscale trust analysis, treatment plan | Threat IDs follow the asset mapping in document 01, section 7 |
+| 0.2 | 27th October 2026 | Header: link to document 05, which now exists (drafted with AI assistance) | Out-of-date reference |
+| 0.3 | 27th October 2026 | T-08 and section 9: assumptions confirmed. T-11 rationale updated for physical access, likelihood flagged for owner review. T-03: CGNAT check inconclusive (drafted with AI assistance) | Owner answers on document 01, section 10 |
+| 0.4 | 28th October 2026 | Section 7: Tailscale statements checked against the Tailscale documentation, corrections added, sources added as section 7.5 (drafted with AI assistance) | Resolve the verification TODO in section 7 |

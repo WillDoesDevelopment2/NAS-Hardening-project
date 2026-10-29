@@ -1,9 +1,9 @@
 # 05 – Verification
 
-> **Status:** Template v0.1 · Last updated: [date]
+> **Status:** Draft v0.12 · Last updated: 29th October 2026
 > **Author:** William Drummond
-> **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (service inventory, phases, success criteria) · [02-threat-analysis.md](02-threat-analysis.md) (threat IDs) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · `requirements-matrix.csv`
-> **Note:** This is a template. The test list in section 4 is a suggested starting point. Add, remove or change tests to fit the real setup, and write each **expected result before running the test**. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
+> **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (service inventory, phases, success criteria) · [02-threat-analysis.md](02-threat-analysis.md) (threat IDs) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [traceability/requirements-matrix.csv](../traceability/requirements-matrix.csv)
+> **Note:** The test list in section 4 is a suggested starting point. Add, remove or change tests to fit the real setup, and write each **expected result before running the test**. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
 
 ---
 
@@ -32,7 +32,7 @@ Verification here means collecting evidence that specific controls held up again
 - Sanitised evidence goes in `evidence/phase0/` (and `evidence/phase1/` and so on), one file per test, named `V-xx_short-description.ext`
 - Raw, unsanitised output stays outside the repository and is never committed
 - Each evidence file starts with a header: test ID, date, command or tool and version, where it was run from
-- Record the SHA-256 hash of the SD card image taken before Phase 0 **[TODO]**
+- SD card image taken before Phase 0: 28th October 2026, 08:17 UK time, SHA-256 `090dcc27c844456240e0279f80bf0bb753c488bd6cf53fd605fb20f9ab3f741d` (three checks matched: hash recorded during imaging, decompressed image, card)
 
 ### 2.3 Authorisation
 
@@ -49,13 +49,13 @@ All testing is performed against my own equipment on my own network.
 
 ## 3. Before starting Phase 0
 
-- [ ] Image of the SD card taken, date and hash recorded
-- [ ] Baseline definition decided and recorded as D-01 in document 04
-- [ ] Expected results written for every test in section 4
-- [ ] `evidence/phase0/` created and raw output location outside the repository chosen
-- [ ] Router access confirmed
-- [ ] Second LAN device and an outside network (for example mobile data) available for scanning
-- [ ] No sensitive data on the NAS during the baseline
+- [x] Image of the SD card taken, date and hash recorded (section 2.2)
+- [x] Baseline definition decided and recorded as D-01 in document 04
+- [x] Expected results written for every test in section 4
+- [x] `evidence/phase0/` created and raw output location outside the repository chosen
+- [x] Router access confirmed
+- [x] Second LAN device and an outside network (for example mobile data) available for scanning
+- [x] No sensitive data on the NAS during the baseline
 
 ## 4. Phase 0 test plan
 
@@ -63,23 +63,25 @@ Phase 0 is observation only. If something serious is found, record it first, the
 
 `<NAS-IP>` is a placeholder. Use the real address only in the private raw output.
 
-| Test ID | Threat | What it checks | Tool and command | Run from | Expected result **[TODO: confirm before running]** | Actual result | Pass or fail | Evidence |
+"Pass or fail" records whether the control held, not whether the expected result was predicted correctly. A test whose expected result is a finding is recorded as Fail when the finding is confirmed.
+
+| Test ID | Threat | What it checks | Tool and command | Run from | Expected result | Actual result | Pass or fail | Evidence |
 |---|---|---|---|---|---|---|---|---|
-| V-01 | T-02, T-13 | Open TCP ports | `nmap -sS -p- <NAS-IP>` | Second LAN device | Only the ports in document 01, section 6.3 (22, 80, 445) | | | |
-| V-02 | T-13 | Open UDP ports | `sudo nmap -sU --top-ports 100 <NAS-IP>` | Second LAN device | No unexpected UDP services | | | |
-| V-03 | T-02 | Service versions | `nmap -sV <NAS-IP>` | Second LAN device | Versions match the installed software and are current | | | |
-| V-04 | T-13 | Listening sockets on the NAS | `ss -tulpn` | The NAS | Matches the service inventory in document 01, section 6.3 | | | |
-| V-05 | T-02, T-13, T-14 | System audit | `sudo lynis audit system` | The NAS | Record the score and list the warnings. **[TODO: no target set, only record]** | | | |
-| V-06 | T-10, T-18 | SSD health | `sudo smartctl -a /dev/nvme0` | The NAS | No critical warnings. Record wear and power-on hours | | | |
-| V-07 | T-03, T-19 | Router exposure | Router admin page | Router | No port forwards. UPnP off | | | |
-| V-08 | T-03 | External exposure | Same Nmap scan as V-01 | Outside network (mobile data) | No NAS port reachable | | | |
-| V-09 | T-04 | SSH configuration | `sudo sshd -T` | The NAS | Password login status and root login status recorded | | | |
-| V-10 | T-02, T-14 | Pending updates | `apt list --upgradable` | The NAS | Number and nature of pending updates recorded | | | |
-| V-11 | T-12 | Share permissions | OMV share and ACL review | OMV interface | Only intended accounts have access. No guest access | | | |
-| V-12 | T-01, T-12 | Accounts | User and group list, sudo rights | The NAS | Only expected accounts. Admin and daily use separate | | | |
-| V-13 | T-01 | Default credentials | Check whether the default OMV admin password is still in use | OMV interface | Default changed | | | |
-| V-14 | T-11 | Encryption status | `lsblk -f` | The NAS | Record whether the SSD is encrypted | | | |
-| V-15 | T-10 | Existing copies of data | Manual check | n/a | Record whether any other copy of the data exists | | | |
+| V-01 | T-02, T-13 | Open TCP ports | `nmap -sS -p- <NAS-IP>` | Second LAN device | Only 22 and 80 open, plus 445 if SMB is enabled (file sharing is still to be decided, document 01, section 6.2). Any other open TCP port, including one opened by the case control software, is a finding | Run 29th October 2026, 13:17 UK time, from the laptop over Wi-Fi. Open: 22 (ssh), 80 (http), 111 (rpcbind) and 5355 (LLMNR). All other TCP ports closed. 111 and 5355 are outside the expected result (FND-04). No port for SMB or for case control software. Run as a connect scan (`-sT`) instead of `-sS`, see section 7 | **[TODO]** (owner) | `evidence/phase0/V-01_tcp-scan.txt` |
+| V-02 | T-13 | Open UDP ports | `sudo nmap -sU --top-ports 100 <NAS-IP>` | Second LAN device | Every port reported `open` or `open\|filtered` is matched to a known service, or recorded as unexplained (for example mDNS on 5353 if a discovery service runs). Unexplained ports are findings | Run 29th October 2026, 13:43 UK time, from the laptop over Wi-Fi. Open: 111/UDP (rpcbind) and 5353/UDP (mDNS, reported as zeroconf). The other 98 ports closed, none `open\|filtered`. Both match known services from V-04, so no unexplained ports. LLMNR (5355/UDP) and the DHCPv6 client (546/UDP) are not in the top 100 UDP ports and were not covered by this scan | **[TODO]** (owner) | `evidence/phase0/V-02_udp-scan.txt` |
+| V-03 | T-02 | Service versions | `nmap -sV <NAS-IP>` | Second LAN device | Each detected service matches an installed package (cross-check with V-04). No updates have been installed since setup (D-01), so versions behind current releases are expected. Any service with pending updates in V-10, or past end of support, is a finding. Exact versions stay in the private raw output until fixed | Network scan 29th October 2026, 13:17 UK time, from the laptop: SSH is OpenSSH 10.x (Debian build), HTTP is nginx with no version shown, rpcbind reports RPC versions 2 to 4. 5355 is outside the default port list and was not version-scanned (identified as LLMNR by V-01 and V-04). Installed versions from the collection script (28th October 2026, 12:45 UK time): openmediavault 8.x, openssh-server 10.x, samba 4.x, matching the SSH service. openmediavault, which serves the web interface behind nginx, has a pending update in V-10 (FND-06). Major versions only in the repository | **[TODO]** (owner) | `evidence/phase0/V-03_service-versions.txt`, `V-03_installed-versions.txt` |
+| V-04 | T-13 | Listening sockets on the NAS | `ss -tulpn` | The NAS | Every listening socket maps to a row in document 01, section 6.3, including the case control software, which is installed (D-01). Record whether each service listens on all interfaces or on localhost only. The Ethernet port is not normally connected, so services are reached over Wi-Fi. Anything unexplained is a finding | Run 28th October 2026, 12:45 UK time. On all interfaces (IPv4 and IPv6): SSH on 22/TCP, the OMV web interface (nginx) on 80/TCP, rpcbind on 111/TCP and UDP, LLMNR (systemd-resolved) on 5355/TCP and UDP, and mDNS (Avahi) on 5353/UDP plus one random high UDP port. DHCPv6 client (NetworkManager) on 546/UDP, link-local address. Localhost only: DNS stub resolver (53) and chrony (323). SMB not running (smbd and nmbd inactive and disabled). Bluetooth service running. No service or listening socket for the case control software was seen. The owner confirmed on 29th October 2026 that it is not installed, so D-01 has been corrected. rpcbind, LLMNR, mDNS and the DHCPv6 client have no completed row in document 01, section 6.3 (FND-04) | **[TODO]** (owner) | `evidence/phase0/V-04_listening-sockets.txt`, `V-04_running-services.txt`, `V-04_smb-state.txt` |
+| V-05 | T-02, T-13, T-14 | System audit | `sudo lynis audit system` | The NAS | Hardening index and every warning recorded. No target score at baseline | Run 28th October 2026, 12:45 UK time (Lynis 3.x, `lynis audit system --quick`). Hardening index 63, 269 tests performed, 1 warning (KRNL-5830, reboot of the system most likely needed, not yet investigated **[TODO]**) and 51 suggestions | **[TODO]** (owner) | Summary only. The sanitised output stays outside the repository, as it is long and contains exact versions |
+| V-06 | T-10, T-18 | SSD health | `sudo smartctl -a /dev/nvme0` | The NAS | Critical warning 0, available spare above its threshold and no media or data integrity errors. Percentage used and power-on hours recorded, as the SSD is recycled (document 01, section 6.1) | Run 28th October 2026, 12:45 UK time. SMART overall health PASSED, critical warning 0x00, available spare 100% (threshold 10%), media and data integrity errors 0. Percentage used 0%, power-on hours 625. Also recorded: 179 unsafe shutdowns and 151,204 error log entries. Checked on 29th October 2026: the error log holds one entry type, "Invalid Field in Command" with no disk location, meaning commands the drive rejected, not media errors. The SSD was previously used in a laptop (14,580 power cycles), so the unsafe shutdown count cannot be attributed to the NAS. 179 is kept as the baseline for later comparison | **[TODO]** (owner) | `evidence/phase0/V-06_ssd-health.txt` |
+| V-07 | T-03, T-19 | Router exposure | Router admin page | Router | No port forwards to the NAS, no DMZ host set and UPnP off | | | |
+| V-08 | T-03 | External exposure | Same Nmap scan as V-01, against the public address | Outside network (mobile data) | No NAS port reachable. Record whether the connection is behind CGNAT, as this affects how the result can be read | | | |
+| V-09 | T-04 | SSH configuration | `sudo sshd -T` | The NAS | Values of `permitrootlogin`, `passwordauthentication`, `pubkeyauthentication` and any `allowusers` or `allowgroups` recorded. Password login is expected to be enabled, as it is used today (D-01). Root login or password login enabled is a finding | Run 28th October 2026, 12:45 UK time. `permitrootlogin yes`, `passwordauthentication yes`, `pubkeyauthentication yes`, `kbdinteractiveauthentication no`, `allowgroups root` and `_ssh`, no `allowusers`. Listens on 22/TCP on all interfaces. Root login and password login are enabled (FND-02, FND-03). Checked on 29th October 2026: the root password is locked (`passwd -S` shows `L`), so root cannot log in with a password, but `/root/.ssh/authorized_keys` exists, so root may be able to log in with a key. Contents not yet reviewed **[TODO]** | **[TODO]** (owner) | `evidence/phase0/V-09_sshd-config.txt` |
+| V-10 | T-02, T-14 | Pending updates | `apt list --upgradable` | The NAS | Number of pending updates recorded, with security updates listed separately. Pending updates, including security updates, are expected as none have been installed since setup (D-01). Any pending security update is a finding | Run 28th October 2026, 12:45 UK time, after the owner ran `apt update`. 12 pending updates, none from a security suite. They include openmediavault (minor version) and Raspberry Pi packages. Unattended upgrades are enabled (`APT::Periodic::Unattended-Upgrade "1"`) and have run (3 log files), but the logs show no packages upgraded, which matches D-01 (checked 29th October 2026) | **[TODO]** (owner) | `evidence/phase0/V-10_pending-updates.txt`, `V-10_pending-security-updates.txt`, `V-10_package-list-age.txt` |
+| V-11 | T-12 | Share permissions | OMV share and ACL review | OMV interface | Only intended accounts have access and there is no guest access. If no shares exist yet, record that | | | |
+| V-12 | T-01, T-12 | Accounts | User and group list, sudo rights | The NAS | Only expected accounts have a login shell, and only the administrator account has sudo rights. One account is used for both administration and daily use (D-01), so this is expected to be a finding | Run 28th October 2026, 12:45 UK time. Accounts with a login shell: root and one user account (`<USER>`, uid 1000). `<USER>` is in the `sudo`, `adm` and `_ssh` groups. The OMV admin group contains only the built-in `admin` web account. One account is used for both administration and daily use, as expected (FND-05). The account for Claude Code was created after this run (section 7, D-02) | **[TODO]** (owner) | `evidence/phase0/V-12_login-accounts.txt`, `V-12_privileged-groups.txt`, `V-12_sudoers.txt` |
+| V-13 | T-01 | Default credentials | Check whether the publicly documented default OMV admin password is still in use | OMV interface | The default is still in use (known before testing). Expected to be a finding: record it first, then change the password and log the change with a timestamp | Login with the publicly documented default OMV admin credentials succeeded (28th October 2026, 08:45 UK time). Password changed at 09:00 and the re-test was refused, see section 7 | Fail | None, owner observation |
+| V-14 | T-11 | Encryption status | `lsblk -f` | The NAS | Whether the SSD is encrypted is recorded. An unencrypted SSD holding data is a finding | Run 28th October 2026, 12:45 UK time. No disk is encrypted. The root file system (ext4) is on the SD card. The SSD has no partitions or file system, so it holds no data yet. Any data stored on the NAS at baseline is on the unencrypted SD card **[TODO: owner to decide whether this is a finding]** | **[TODO]** (owner) | `evidence/phase0/V-14_block-devices.txt` |
+| V-15 | T-10 | Existing copies of data | Manual check | n/a | For each data type in document 01, section 7.1, whether another copy exists is recorded. Data held only on the NAS is a finding | | | |
 
 ## 5. Phase 0 findings
 
@@ -87,7 +89,12 @@ One row per finding. Every finding links to a test, a threat and, once it exists
 
 | ID | Test | Observation | Threat | Effect on rating | Resulting requirement | Status |
 |---|---|---|---|---|---|---|
-| FND-01 | | | | | | Open |
+| FND-01 | V-13 | The publicly documented default OMV admin password was still in use. The password was changed and a re-test with the default credentials failed to log in | T-01 | None. The draft rating stays (owner decision) | **[TODO]** (document 03 not yet written) | Treated |
+| FND-02 | V-09 | SSH permits root login (`permitrootlogin yes`). The root password is locked, but `/root/.ssh/authorized_keys` exists, contents not yet reviewed **[TODO]** | T-04 | **[TODO]** (owner decision) | **[TODO]** (document 03 not yet written) | Open |
+| FND-03 | V-09 | SSH password login is enabled (`passwordauthentication yes`). Expected, as password login is used today (D-01) | T-04 | **[TODO]** (owner decision) | **[TODO]** (document 03 not yet written) | Open |
+| FND-04 | V-04 | Network-facing services that are not in the service inventory (document 01, section 6.3) listen on all interfaces: rpcbind (111/TCP and UDP), LLMNR (5355/TCP and UDP), mDNS (5353/UDP) and a DHCPv6 client (546/UDP, link-local) | T-13 | **[TODO]** (owner decision) | **[TODO]** (document 03 not yet written) | Open |
+| FND-05 | V-12 | One account is used for both administration and daily use, and has sudo rights. Expected (D-01) | T-01, T-12 | **[TODO]** (owner decision) | **[TODO]** (document 03 not yet written) | Open |
+| FND-06 | V-03, V-10 | openmediavault, which serves the web interface, has a pending update. No pending update is listed from a security suite | T-02, T-14 | **[TODO]** (owner decision) | **[TODO]** (document 03 not yet written) | Open |
 
 Status values: **Open**, **Treated**, **Accepted**.
 
@@ -105,7 +112,21 @@ Written as the work happens, not afterwards. A few lines per test is enough.
 
 | Date | Test ID | Command or action | What happened | Deviation or note |
 |---|---|---|---|---|
-| | | | | |
+| 28th October 2026, 08:45 UK time | V-13 | Logged in to the OMV interface with the publicly documented default admin credentials | Login succeeded. Recorded as FND-01 | No evidence saved. Owner observation only |
+| 28th October 2026, 09:00 UK time | V-13 | Changed the OMV admin password | The default password is no longer in use | Change made during Phase 0, as section 4 allows for serious findings |
+| 28th October 2026, 09:03 UK time | V-13 | Re-test: tried to log in to the OMV interface with the default admin credentials | Login refused | No evidence saved. Owner observation only |
+| 28th October 2026, 12:40 UK time (logged at this time, exact time not recorded) | V-04, V-05, V-06, V-09, V-10, V-12, V-14 | Ran `scripts/phase0-collect.sh` with `/` as the output folder | Collection ran as root and wrote its raw output into `/`. smartctl was installed. Lynis was not installed, so V-05 was recorded as skipped | Deviation: the script set the permissions of `/` to 700, so non-root users and services could no longer use the system. Caused by a defect in the script (it accepted an existing folder), now fixed |
+| 28th October 2026, 12:40 UK time (logged at this time, exact time not recorded) | n/a | Recovery: NAS shut down, SD card mounted on the laptop, permissions of the root folder checked and restored, raw output moved off the NAS, NAS booted | Root folder showed 700 before the fix and was set back to 755. Access for the owner account restored | Change made during Phase 0 to undo the deviation. The output of this first run was deleted by the owner and not used. All script results come from the second run at 12:45 |
+| 28th October 2026, 12:40 UK time (logged at this time, exact time not recorded) | V-05 | Installed Lynis | Lynis now installed | Change to the system made during Phase 0 so that V-05 can run. The owner ran `apt update` first, which also refreshed the package lists used by V-10 |
+| 28th October 2026, 12:45 UK time (from the evidence file timestamps) | V-03, V-04, V-05, V-06, V-09, V-10, V-12, V-14 | Second run of `scripts/phase0-collect.sh`, fixed version, default output folder | All tests completed, including Lynis | Lynis wrote its log and report under `/var/log`. The owner recalled the run as 13:30. The evidence timestamps are used |
+| 28th October 2026, time not recorded | V-03, V-04, V-05, V-06, V-09, V-10, V-12, V-14 | Raw output copied off the NAS to the raw evidence location on the laptop | Checked against `SHA256SUMS` on 29th October 2026 before sanitising: all 17 files matched | Deleted from the NAS afterwards (owner confirmed 29th October 2026, time not recorded) |
+| 28th October 2026, 14:00 UK time | n/a | Created a separate NAS account for Claude Code: SSH group only, no sudo (D-02) | Account created | Change made during Phase 0, after the collection run, so it is not part of the V-12 baseline |
+| Date and time not recorded | n/a | Installed an SSH public key for the Claude Code account, limited to the laptop's address with `from=`, with agent, port and X11 forwarding disabled | Key login refused at first because the `from=` address was wrong. Corrected, then key login worked | Change made during Phase 0 (D-02) |
+| 29th October 2026, 10:55 UK time | n/a | Claude Code connected over SSH with the dedicated key, with the owner's approval, and ran read-only checks: `whoami`, `id`, a hostname check, `uptime` and `sudo -n true` | Logged in as the dedicated account, groups `users` and `_ssh` only, no sudo rights | No change made. `uptime` showed 2 users logged in, expected to be the owner's sessions **[TODO: owner to confirm]** |
+| 29th October 2026, 12:44 UK time | V-03, V-04, V-06, V-09, V-10, V-12, V-14 | Raw output sanitised on the laptop with `scripts/sanitise.py`. 13 files added to `evidence/phase0/`, with exact versions reduced to major versions | Sanitiser gaps found and fixed before publishing (Lynis log host IDs, SSD identifier, file system UUIDs) | No change to the NAS. V-05 output and the full V-09 output stay outside the repository |
+| 29th October 2026, 13:17 UK time | V-01, V-03 | Claude Code ran `nmap -sT -p- <NAS-IP>` and then `nmap -sV <NAS-IP>` from the laptop, with the owner's approval. Raw output to the raw evidence location | Both completed in under 10 seconds each | Deviation: V-01 run as a connect scan (`-sT`) instead of `-sS`, which needs sudo. For finding open TCP ports the result is equivalent. A first run a few seconds earlier stamped its output in the laptop's time zone, so both scans were rerun with UK time and only the rerun is kept |
+| 29th October 2026, 13:43 UK time | V-02 | Owner ran `sudo nmap -sU --top-ports 100 <NAS-IP>` from the laptop | Completed in about 104 seconds | An earlier run the same afternoon stamped its output in the laptop's time zone and was replaced by this rerun |
+| 29th October 2026, time not recorded | V-04, V-06, V-09, V-10 | Owner ran read-only checks on the NAS: case control software, unattended upgrades configuration and logs, `passwd -S root`, the contents of `/root/.ssh/` and the SSD error log | Case control software not installed. Unattended upgrades enabled, no packages upgraded. Root password locked. `/root/.ssh/authorized_keys` exists. SSD error log holds command rejections only | No change made. Results recorded in section 4 |
 
 ## 8. Stage completion checks (Phase 1 onwards)
 
@@ -137,4 +158,15 @@ These show that access is allowed where it should be and refused where it should
 
 | Version | Date | Change | Reason |
 |---|---|---|---|
-| 0.1 | [date] | Template created with suggested Phase 0 tests | Structure agreed before Phase 0 |
+| 0.1 | Not recorded | Template created with suggested Phase 0 tests | Structure agreed before Phase 0 |
+| 0.2 | 27th October 2026 | Section 4: draft expected results for V-01 to V-15 (drafted with AI assistance, not yet confirmed) | Expected results must be written before tests run |
+| 0.3 | 27th October 2026 | Header: correct matrix path and remove template note (drafted with AI assistance) | Out-of-date header |
+| 0.4 | 27th October 2026 | Section 4: draft expected results updated with the known earlier changes in D-01 and confirmed by the owner (drafted with AI assistance) | Match D-01 and confirm before testing |
+| 0.5 | 27th October 2026 | Revision log: date for 0.1 marked as not recorded | Owner confirmed the date was not recorded |
+| 0.6 | 28th October 2026 | Sections 2.2 and 3: SD card image date and hash recorded, D-01 ticked | Image taken and verified |
+| 0.7 | 28th October 2026 | Section 3: evidence location and router access ticked | Owner confirmed |
+| 0.8 | 28th October 2026 | Section 3: scanning devices, outside network and no sensitive data ticked. All prerequisites complete | Owner confirmed |
+| 0.9 | 28th October 2026 | V-13 result recorded (Fail), password change and re-test logged, FND-01 added as Treated, meaning of the Pass or fail column stated in section 4 | First Phase 0 test run by the owner |
+| 0.10 | 28th October 2026 | Header version corrected (0.9 was not shown). Section 7: collection script run, the root folder permission deviation and its recovery, and the Lynis install logged | Record the deviation and the changes made during Phase 0 |
+| 0.11 | 29th October 2026 | Section 4: actual results for V-03 (partial), V-04, V-05, V-06, V-09, V-10, V-12 and V-14 recorded from the sanitised evidence, pass or fail left for the owner. Section 5: FND-02 to FND-05 added as Open. Section 7: second collection run, Claude Code account, key and access test, and sanitising logged. Two TODOs resolved (drafted with AI assistance) | Results of the script-collected Phase 0 tests |
+| 0.12 | 29th October 2026 | Section 4: V-01, V-02 and V-03 results recorded, and owner checks added to V-04, V-06, V-09 and V-10. Section 5: FND-02 updated, FND-06 added. Section 7: scans and owner checks logged, deletion from the NAS confirmed (drafted with AI assistance) | Network scans and owner answers |

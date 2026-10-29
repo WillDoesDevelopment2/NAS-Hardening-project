@@ -1,0 +1,18 @@
+Test ID: V-09
+Date: 2026-10-28 12:46:46 GMT
+Command: sshd -T | grep -iE '^(permitrootlogin|passwordauthentication|pubkeyauthentication|kbdinteractiveauthentication|allowusers|allowgroups|port|listenaddress) '
+Run from: The NAS
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (nothing replaced)
+----------------------------------------
+port 22
+listenaddress [::]:22
+listenaddress 0.0.0.0:22
+permitrootlogin yes
+pubkeyauthentication yes
+passwordauthentication yes
+kbdinteractiveauthentication no
+allowgroups root
+allowgroups _ssh
+----------------------------------------
+Exit code: 0

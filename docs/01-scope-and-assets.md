@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.2 · Last updated: [date]
+> **Status:** Draft v0.10 · Last updated: 29th October 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -103,9 +103,9 @@ These guide decisions throughout the project, and I will refer back to them when
 | Component | Detail |
 |---|---|
 | Operating system | Raspberry Pi OS / Debian base Raspberry Pi OS Lite (64 bit)|
-| NAS software | OpenMediaVault (OMV) Version 7.*|
+| NAS software | OpenMediaVault (OMV) 8 |
 | File sharing | **TO BE DECIDED** |
-| Case control software | Vendor-supplied software for the fan, display and lighting Pironman5 module |
+| Case control software | Vendor-supplied software for the fan, display and lighting Pironman5 module. Not installed at baseline (owner confirmed 29th October 2026) |
 | Remote access (Phase 1) | Tailscale |
 | Remote access (Phase 2) | Self-hosted WireGuard |
 | Backup tooling (Phase 3) | **TO BE DECIDED** |
@@ -117,13 +117,18 @@ Record what actually runs and listens, using `ss -tulpn`, then compare it with w
 
 | Service | Typical port | Needed? | Reachable from (target) | Baseline observed **IN PROCESS** |
 |---|---|---|---|---|
-| OMV web interface | 80 | Yes | LAN and VPN only | |
-| SSH | 22/TCP | Yes | LAN and VPN only | |
-| SMB file sharing | 445/TCP | Yes | LAN and VPN only | |
-| Tailscale client | Outbound connections, UDP. **SUBJECT TO CHANGE** | Phase 1 | Outbound only, no inbound ports |  |
-| WireGuard | UDP, port chosen by me | Phase 2 | One UDP port from the internet (documented exception) |  |
-| Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing |  |
-| Other (discovery services, media services, etc.) | |  |  | |
+| OMV web interface | 80 | Yes | LAN and VPN only | nginx on 80/TCP, all interfaces (IPv4 and IPv6), plain HTTP (V-04) |
+| SSH | 22/TCP | Yes | LAN and VPN only | 22/TCP, all interfaces (IPv4 and IPv6). Root login and password login enabled (V-09) |
+| SMB file sharing | 445/TCP | To be decided (see section 6.2) | LAN and VPN only | Not running: smbd and nmbd inactive and disabled (V-04) |
+| Tailscale client | Outbound connections, UDP. **SUBJECT TO CHANGE** | Phase 1 | Outbound only, no inbound ports | Not running (V-04) |
+| WireGuard | UDP, port chosen by me | Phase 2 | One UDP port from the internet (documented exception) | Not running (V-04) |
+| Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing | Not installed (owner confirmed 29th October 2026). No service or open port (V-01, V-04) |
+| Other (discovery services, media services, etc.) | |  |  | See the rows below |
+| rpcbind | 111/TCP and UDP | **[TODO]** | | All interfaces, open from the LAN (V-01, V-02, V-04, FND-04) |
+| mDNS (Avahi) | 5353/UDP and one random high UDP port | **[TODO]** | | All interfaces, 5353 open from the LAN (V-02, V-04, FND-04) |
+| LLMNR (systemd-resolved) | 5355/TCP and UDP | **[TODO]** | | All interfaces, 5355/TCP open from the LAN (V-01, V-04, FND-04) |
+| DHCPv6 client (NetworkManager) | 546/UDP | **[TODO]** | | Link-local address (V-04, FND-04) |
+| DNS stub resolver, chrony | 53, 323 | | | Localhost only (V-04) |
 
 ### 6.4 Users and roles
 
@@ -135,9 +140,18 @@ Record what actually runs and listens, using `ss -tulpn`, then compare it with w
 | Backup client – computer | Automated | Write access to the computer backup location only |
 
 Principle: separate accounts for administration, daily use and automated backups, each with the least privilege it needs.
+
+Baseline: one account is used for both administration and daily use (see D-01 in document 04).
+
+Since 28th October 2026 there is also a separate account for Claude Code, with SSH key login only and no sudo rights, until Tailscale is set up (see D-02 in document 04).
 ### 6.5 Network and access model
 
 **Current state (baseline):** the NAS is reachable on the home LAN. Backups and tail scale access will be implemented after sufficient hardening of devices
+
+- The NAS connects to the home LAN over Wi-Fi. A direct Ethernet connection to the laptop is kept for troubleshooting only and is not normally connected
+- No fixed IP address. The address is assigned by the router
+- No router changes have been made
+- See D-01 in document 04 for the full list of known earlier changes
 
 **Target state**
 - No ports forwarded on the router in Phase 1, and UPnP disabled
@@ -220,18 +234,19 @@ The related threats column links to the threat register in `02-threat-analysis.m
 ## 10. Assumptions and constraints
 
 ### Assumptions
-- I control the router settings and can disable UPnP 
-- I am the only administrator and the only person with physical access to the NAS 
-- My phone and computer have screen locks, device encryption and receive updates 
-- My home network is not already compromised **TO CONFIRM**
-- The NAS stays powered on and connected most of the time 
+- I control the router settings and can disable UPnP. Confirmed 27th October 2026
+- I am the only administrator of the NAS. Confirmed 27th October 2026
+- I am not the only person with physical access to the NAS. Confirmed 27th October 2026
+- My phone and computer have screen locks, device encryption and receive updates. Confirmed 27th October 2026
+- No known signs that my home network is compromised. Connected devices checked on 27th October 2026 with nothing unrecognised, and router firmware up to date. Not independently verified
+- The NAS stays powered on and connected most of the time. Confirmed 27th October 2026
 
 ### Constraints
 - Limited budget: existing hardware and no dedicated firewall appliance
 - The Raspberry Pi 5 limits the performance available for encryption and VPN throughput
 - The SSD is second-hand, so its reliability is unknown
 - One person maintains the system, so routines must be simple enough to follow consistently
-- The ISP may use CGNAT, which would prevent self-hosted WireGuard without extra work, Tailscale may be needed
+- The ISP may use CGNAT, which would prevent self-hosted WireGuard without extra work, Tailscale may be needed. Traceroute on 27th October 2026 was inconclusive. Not yet confirmed
 
 ## 11. Dependencies and third parties
 
@@ -277,12 +292,20 @@ The project succeeds when:
 - [ ] Will the SSD be encrypted, and how will it be unlocked after a reboot?
 - [ ] Which backup tool will be used for the phone and the computer?
 - [ ] Is there an offline or off-site copy of the backups?
-- [ ] What does the case vendor software need to run, and does it need network access?
+- [ ] What does the case vendor software need to run, and does it need network access? (Not installed at baseline, owner confirmed 29th October 2026. Only relevant if it is installed later)
 - [ ] Was the SSD securely wiped before reuse?
 
 ## 15. Revision log
 
 | Version | Date | Change | Reason |
 |---|---|---|---|
-| 0.1 | [date] | Initial short draft | |
-| 0.2 | [date] | Added objectives, design principles, service inventory, data flows, data inventory, dependencies, repository hygiene and threat links | More detailed scope requested |
+| 0.1 | Not recorded | Initial short draft | |
+| 0.2 | Not recorded | Added objectives, design principles, service inventory, data flows, data inventory, dependencies, repository hygiene and threat links | More detailed scope requested |
+| 0.3 | 27th October 2026 | Section 6.3: SMB marked as to be decided, matching section 6.2 (drafted with AI assistance) | Remove inconsistency before Phase 0 |
+| 0.4 | 27th October 2026 | Section 6.2: OMV 8. Sections 6.4 and 6.5: baseline account and network state from D-01 (drafted with AI assistance) | Match D-01 |
+| 0.5 | 27th October 2026 | Section 6.5: network connection confirmed (drafted with AI assistance) | Owner answers |
+| 0.6 | 27th October 2026 | Section 10: assumptions confirmed or corrected by the owner. Physical access assumption split, as others also have physical access. Network compromise assumption reworded (drafted with AI assistance) | Owner answers before Phase 0 |
+| 0.7 | 27th October 2026 | Section 10: CGNAT check result added (drafted with AI assistance) | Owner check |
+| 0.8 | 27th October 2026 | Revision log: dates for 0.1 and 0.2 marked as not recorded | Owner confirmed the dates were not recorded |
+| 0.9 | 29th October 2026 | Section 6.3: baseline observed from V-04 and V-09, rows added for services not in the inventory. Section 6.4: Claude Code account noted (drafted with AI assistance) | Phase 0 results |
+| 0.10 | 29th October 2026 | Sections 6.2, 6.3 and 14: case control software not installed. Section 6.3: scan results added to the extra service rows (drafted with AI assistance) | Owner confirmed, V-01 and V-02 results |

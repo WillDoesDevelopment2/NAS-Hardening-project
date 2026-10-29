@@ -1,0 +1,13 @@
+Test ID: V-03
+Date: 2026-10-28 12:45:52 GMT
+Command: dpkg-query -W -f='${Package} ${Version}\n' openmediavault openssh-server samba 2>&1
+Run from: The NAS
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (nothing replaced)
+Edited: exact versions reduced to the major version before publishing (unfixed findings rule)
+----------------------------------------
+openmediavault 8.x
+openssh-server 10.x
+samba 4.x
+----------------------------------------
+Exit code: 0
