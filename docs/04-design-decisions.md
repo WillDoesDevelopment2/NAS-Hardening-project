@@ -1,6 +1,6 @@
 # 04 – Design Decisions
 
-> **Status:** Draft v0.10 · Last updated: 29th October 2026
+> **Status:** Draft v0.11 · Last updated: 29th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · 03-security-requirements.md (not yet written) · [05-verification.md](05-verification.md)
 > **Note:** Add one record per meaningful decision, written as it is made, not afterwards. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -68,7 +68,7 @@ Copy this block for each decision.
   3. One user account only, used for both administration and daily use
   4. Direct Ethernet connection set up between the laptop and the NAS. Kept for troubleshooting only and not normally connected. The NAS uses Wi-Fi for the home LAN
   5. No router changes. No fixed IP address
-  6. Case control software installed
+  6. ~~Case control software installed~~ Corrected on 29th October 2026: the case control software is not installed (owner confirmed during Phase 0, matching V-01 and V-04)
   7. SSH used for administration, with password login
   8. No updates installed since setup
 - **Evidence:** Phase 0 results in 05-verification.md. SD card image taken 28th October 2026, 08:17 UK time, SHA-256 `090dcc27c844456240e0279f80bf0bb753c488bd6cf53fd605fb20f9ab3f741d`. The hash recorded during imaging, the hash of the decompressed image and the hash of the card itself all matched
@@ -118,3 +118,4 @@ These are not decisions yet. They are placeholders so that each one is recorded 
 | 0.8 | 27th October 2026 | Revision log: date for 0.1 marked as not recorded | Owner confirmed the date was not recorded |
 | 0.9 | 28th October 2026 | D-01: SD card image date and SHA-256 hash added to the evidence line | Image taken and verified |
 | 0.10 | 29th October 2026 | D-02 drafted: temporary SSH access for Claude Code, status Proposed (drafted with AI assistance) | Record the access set up during Phase 0 |
+| 0.11 | 29th October 2026 | D-01: item 6 corrected, the case control software is not installed (drafted with AI assistance) | Owner confirmed during Phase 0 |

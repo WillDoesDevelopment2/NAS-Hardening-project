@@ -1,0 +1,20 @@
+Test ID: V-03
+Date: Thu Oct 29 13:17:55 2026 GMT (UK time)
+Command: nmap -sV <NAS-IP>
+Run from: Laptop on the home LAN (Wi-Fi)
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<NAS-IP>, <USER>)
+Edited: NAS hostname shown as nas.example; exact versions reduced to the major version (unfixed findings rule)
+----------------------------------------
+# Nmap 7.94SVN scan initiated Thu Oct 29 13:17:55 2026 as: nmap -sV -oN /home/<USER>/NAS-Evidence/phase0/manual/V-03_service-versions.txt <NAS-IP>
+Nmap scan report for nas.example (<NAS-IP>)
+Host is up (0.0074s latency).
+Not shown: 997 closed tcp ports (conn-refused)
+PORT    STATE SERVICE VERSION
+22/tcp  open  ssh     OpenSSH 10.x Debian (protocol 2.0)
+80/tcp  open  http    nginx
+111/tcp open  rpcbind 2-4 (RPC #100000)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Thu Oct 29 13:18:02 2026 -- 1 IP address (1 host up) scanned in 6.63 seconds

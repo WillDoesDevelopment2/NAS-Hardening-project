@@ -1,0 +1,19 @@
+Test ID: V-01
+Date: Thu Oct 29 13:17:50 2026 GMT (UK time)
+Command: nmap -sT -p- <NAS-IP> (connect scan, run without sudo)
+Run from: Laptop on the home LAN (Wi-Fi)
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<NAS-IP>, <USER>)
+Edited: NAS hostname shown as nas.example
+----------------------------------------
+# Nmap 7.94SVN scan initiated Thu Oct 29 13:17:50 2026 as: nmap -sT -p- -oN /home/<USER>/NAS-Evidence/phase0/manual/V-01_tcp-scan.txt <NAS-IP>
+Nmap scan report for nas.example (<NAS-IP>)
+Host is up (0.016s latency).
+Not shown: 65531 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+111/tcp  open  rpcbind
+5355/tcp open  llmnr
+
+# Nmap done at Thu Oct 29 13:17:55 2026 -- 1 IP address (1 host up) scanned in 5.05 seconds

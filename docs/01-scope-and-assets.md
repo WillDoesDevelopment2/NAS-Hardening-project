@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.9 · Last updated: 29th October 2026
+> **Status:** Draft v0.10 · Last updated: 29th October 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -105,7 +105,7 @@ These guide decisions throughout the project, and I will refer back to them when
 | Operating system | Raspberry Pi OS / Debian base Raspberry Pi OS Lite (64 bit)|
 | NAS software | OpenMediaVault (OMV) 8 |
 | File sharing | **TO BE DECIDED** |
-| Case control software | Vendor-supplied software for the fan, display and lighting Pironman5 module |
+| Case control software | Vendor-supplied software for the fan, display and lighting Pironman5 module. Not installed at baseline (owner confirmed 29th October 2026) |
 | Remote access (Phase 1) | Tailscale |
 | Remote access (Phase 2) | Self-hosted WireGuard |
 | Backup tooling (Phase 3) | **TO BE DECIDED** |
@@ -122,11 +122,11 @@ Record what actually runs and listens, using `ss -tulpn`, then compare it with w
 | SMB file sharing | 445/TCP | To be decided (see section 6.2) | LAN and VPN only | Not running: smbd and nmbd inactive and disabled (V-04) |
 | Tailscale client | Outbound connections, UDP. **SUBJECT TO CHANGE** | Phase 1 | Outbound only, no inbound ports | Not running (V-04) |
 | WireGuard | UDP, port chosen by me | Phase 2 | One UDP port from the internet (documented exception) | Not running (V-04) |
-| Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing | No service or listening socket seen **[TODO: owner to confirm]** (V-04) |
+| Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing | Not installed (owner confirmed 29th October 2026). No service or open port (V-01, V-04) |
 | Other (discovery services, media services, etc.) | |  |  | See the rows below |
-| rpcbind | 111/TCP and UDP | **[TODO]** | | All interfaces (V-04, FND-04) |
-| mDNS (Avahi) | 5353/UDP and one random high UDP port | **[TODO]** | | All interfaces (V-04, FND-04) |
-| LLMNR (systemd-resolved) | 5355/TCP and UDP | **[TODO]** | | All interfaces (V-04, FND-04) |
+| rpcbind | 111/TCP and UDP | **[TODO]** | | All interfaces, open from the LAN (V-01, V-02, V-04, FND-04) |
+| mDNS (Avahi) | 5353/UDP and one random high UDP port | **[TODO]** | | All interfaces, 5353 open from the LAN (V-02, V-04, FND-04) |
+| LLMNR (systemd-resolved) | 5355/TCP and UDP | **[TODO]** | | All interfaces, 5355/TCP open from the LAN (V-01, V-04, FND-04) |
 | DHCPv6 client (NetworkManager) | 546/UDP | **[TODO]** | | Link-local address (V-04, FND-04) |
 | DNS stub resolver, chrony | 53, 323 | | | Localhost only (V-04) |
 
@@ -292,7 +292,7 @@ The project succeeds when:
 - [ ] Will the SSD be encrypted, and how will it be unlocked after a reboot?
 - [ ] Which backup tool will be used for the phone and the computer?
 - [ ] Is there an offline or off-site copy of the backups?
-- [ ] What does the case vendor software need to run, and does it need network access?
+- [ ] What does the case vendor software need to run, and does it need network access? (Not installed at baseline, owner confirmed 29th October 2026. Only relevant if it is installed later)
 - [ ] Was the SSD securely wiped before reuse?
 
 ## 15. Revision log
@@ -308,3 +308,4 @@ The project succeeds when:
 | 0.7 | 27th October 2026 | Section 10: CGNAT check result added (drafted with AI assistance) | Owner check |
 | 0.8 | 27th October 2026 | Revision log: dates for 0.1 and 0.2 marked as not recorded | Owner confirmed the dates were not recorded |
 | 0.9 | 29th October 2026 | Section 6.3: baseline observed from V-04 and V-09, rows added for services not in the inventory. Section 6.4: Claude Code account noted (drafted with AI assistance) | Phase 0 results |
+| 0.10 | 29th October 2026 | Sections 6.2, 6.3 and 14: case control software not installed. Section 6.3: scan results added to the extra service rows (drafted with AI assistance) | Owner confirmed, V-01 and V-02 results |
