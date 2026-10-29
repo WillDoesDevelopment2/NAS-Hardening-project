@@ -18,10 +18,12 @@ Usage:  python3 -I scripts/sanitise.py <raw-input> <output> --map <map-file> [--
 What it replaces, in this order:
 1. Private key blocks, Tailscale auth keys, WireGuard-style keys and SSH public keys
 2. Every value in the map file (hostnames and usernames are matched case-insensitively)
-3. Serial numbers and host IDs in labelled fields (smartctl, Lynis)
+3. Serial numbers and host IDs in labelled fields (smartctl, Lynis), and the host IDs and
+   hostname hashes in the Lynis log
 4. MAC addresses                       -> <MAC-n>
 5. Remaining IPv6 and IPv4 addresses   -> <IPV6-n> and <IP-n>
-   Kept: 0.0.0.0, loopback, netmasks, multicast, documentation ranges
+   Kept: 0.0.0.0, loopback, netmasks, multicast, documentation ranges, and four-part package
+   version numbers (for example "version: 1.2.3.4-1" or "pkg,1.2.3.4+b1")
 
 The same value always gets the same placeholder within one file. Afterwards the output is
 re-checked with the repository's leak checks and anything suspicious is listed for manual
@@ -85,9 +87,23 @@ RE_LABELLED = re.compile(
     r"^(\s*(?:Serial Number|Serial number|Serial|LU WWN Device Id|IEEE EUI-64|NGUID|"
     r"hostid2?|hostname|domainname|machine[-_]id|hardware_uuid)\s*[:=]\s*)(\S.*?)\s*$",
     re.M | re.I)
+RE_HOSTID_LOG = re.compile(r"((?:HostID2?|Hash \([^)\n]*\))\s*:?\s*)[0-9A-Fa-f]{32,}", re.I)
 RE_MAC = re.compile(r"(?<![0-9A-Fa-f:])(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}(?![0-9A-Fa-f:])")
 RE_V6_CAND = re.compile(r"(?<![0-9A-Za-z:.])[0-9A-Fa-f]{0,4}(?::[0-9A-Fa-f]{0,4}){2,7}(?![0-9A-Za-z:.])")
 RE_V4 = re.compile(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d])")
+# Package versions are recognised by what comes before them: "version: " or "(version: ", or a
+# package name in a Lynis list ("|name,") followed by a Debian revision or suffix ("-3", "+b1").
+# An address on its own, or in a range such as "192.0.2.5-10", is still replaced
+RE_VERSION_HEAD = re.compile(r"version[:=]?\s*\(?\s*$", re.I)
+RE_PKG_LIST_HEAD = re.compile(r"\|[a-z0-9][a-z0-9.+:-]*,$")
+RE_VERSION_TAIL = re.compile(r"\d*(?:-\d|[+~][A-Za-z0-9])")
+
+
+def is_package_version(text, start, end):
+    """True if the dotted number at text[start:end] is a package version, not an address."""
+    before = text[max(0, start - 60):start]
+    return bool(RE_VERSION_HEAD.search(before)
+                or (RE_PKG_LIST_HEAD.search(before) and RE_VERSION_TAIL.match(text, end)))
 
 
 def sanitise(text, mapping, counts):
@@ -105,6 +121,7 @@ def sanitise(text, mapping, counts):
         text, n = pat.subn(placeholder, text); count(f"map: {placeholder}", n)
 
     text, n = RE_LABELLED.subn(lambda m: m.group(1) + "<REDACTED>", text); count("serial or host ID", n)
+    text, n = RE_HOSTID_LOG.subn(lambda m: m.group(1) + "<REDACTED>", text); count("serial or host ID", n)
 
     mac = Numberer("MAC")
     text, n = RE_MAC.subn(lambda m: mac(m.group(0)), text); count("MAC address", n)
@@ -129,7 +146,7 @@ def sanitise(text, mapping, counts):
             addr = ipaddress.IPv4Address(s)
         except ValueError:
             return s
-        if any(addr in net for net in KEEP_V4):
+        if any(addr in net for net in KEEP_V4) or is_package_version(m.string, m.start(), m.end()):
             return s
         count("IPv4 address")
         return v4(s)
@@ -148,6 +165,8 @@ def review(text):
 
     def unexpected_ipv4(line):
         for m in ipv4_like.finditer(line):
+            if is_package_version(line, m.start(), m.end()):
+                continue
             try:
                 addr = ipaddress.IPv4Address(m.group(0))
             except ValueError:
