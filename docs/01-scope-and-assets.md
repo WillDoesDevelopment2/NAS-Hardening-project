@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.8 · Last updated: 27th October 2026
+> **Status:** Draft v0.9 · Last updated: 29th October 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -117,13 +117,18 @@ Record what actually runs and listens, using `ss -tulpn`, then compare it with w
 
 | Service | Typical port | Needed? | Reachable from (target) | Baseline observed **IN PROCESS** |
 |---|---|---|---|---|
-| OMV web interface | 80 | Yes | LAN and VPN only | |
-| SSH | 22/TCP | Yes | LAN and VPN only | |
-| SMB file sharing | 445/TCP | To be decided (see section 6.2) | LAN and VPN only | |
-| Tailscale client | Outbound connections, UDP. **SUBJECT TO CHANGE** | Phase 1 | Outbound only, no inbound ports |  |
-| WireGuard | UDP, port chosen by me | Phase 2 | One UDP port from the internet (documented exception) |  |
-| Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing |  |
-| Other (discovery services, media services, etc.) | |  |  | |
+| OMV web interface | 80 | Yes | LAN and VPN only | nginx on 80/TCP, all interfaces (IPv4 and IPv6), plain HTTP (V-04) |
+| SSH | 22/TCP | Yes | LAN and VPN only | 22/TCP, all interfaces (IPv4 and IPv6). Root login and password login enabled (V-09) |
+| SMB file sharing | 445/TCP | To be decided (see section 6.2) | LAN and VPN only | Not running: smbd and nmbd inactive and disabled (V-04) |
+| Tailscale client | Outbound connections, UDP. **SUBJECT TO CHANGE** | Phase 1 | Outbound only, no inbound ports | Not running (V-04) |
+| WireGuard | UDP, port chosen by me | Phase 2 | One UDP port from the internet (documented exception) | Not running (V-04) |
+| Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing | No service or listening socket seen **[TODO: owner to confirm]** (V-04) |
+| Other (discovery services, media services, etc.) | |  |  | See the rows below |
+| rpcbind | 111/TCP and UDP | **[TODO]** | | All interfaces (V-04, FND-04) |
+| mDNS (Avahi) | 5353/UDP and one random high UDP port | **[TODO]** | | All interfaces (V-04, FND-04) |
+| LLMNR (systemd-resolved) | 5355/TCP and UDP | **[TODO]** | | All interfaces (V-04, FND-04) |
+| DHCPv6 client (NetworkManager) | 546/UDP | **[TODO]** | | Link-local address (V-04, FND-04) |
+| DNS stub resolver, chrony | 53, 323 | | | Localhost only (V-04) |
 
 ### 6.4 Users and roles
 
@@ -137,6 +142,8 @@ Record what actually runs and listens, using `ss -tulpn`, then compare it with w
 Principle: separate accounts for administration, daily use and automated backups, each with the least privilege it needs.
 
 Baseline: one account is used for both administration and daily use (see D-01 in document 04).
+
+Since 28th October 2026 there is also a separate account for Claude Code, with SSH key login only and no sudo rights, until Tailscale is set up (see D-02 in document 04).
 ### 6.5 Network and access model
 
 **Current state (baseline):** the NAS is reachable on the home LAN. Backups and tail scale access will be implemented after sufficient hardening of devices
@@ -300,3 +307,4 @@ The project succeeds when:
 | 0.6 | 27th October 2026 | Section 10: assumptions confirmed or corrected by the owner. Physical access assumption split, as others also have physical access. Network compromise assumption reworded (drafted with AI assistance) | Owner answers before Phase 0 |
 | 0.7 | 27th October 2026 | Section 10: CGNAT check result added (drafted with AI assistance) | Owner check |
 | 0.8 | 27th October 2026 | Revision log: dates for 0.1 and 0.2 marked as not recorded | Owner confirmed the dates were not recorded |
+| 0.9 | 29th October 2026 | Section 6.3: baseline observed from V-04 and V-09, rows added for services not in the inventory. Section 6.4: Claude Code account noted (drafted with AI assistance) | Phase 0 results |

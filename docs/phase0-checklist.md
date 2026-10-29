@@ -1,6 +1,6 @@
 # Phase 0 Checklist
 
-> **Status:** Draft v0.5 · Last updated: 28th October 2026
+> **Status:** Draft v0.6 · Last updated: 29th October 2026
 > **Author:** William Drummond
 > **Related:** [05-verification.md](05-verification.md) (test plan V-01 to V-15) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [../scripts/phase0-collect.sh](../scripts/phase0-collect.sh) · [../evidence/phase0/README.md](../evidence/phase0/README.md)
 > **Note:** Step-by-step procedure for running the Phase 0 tests. Phase 0 is observation only. Placeholders such as `<NAS-IP>` stay as placeholders in this file.
@@ -30,12 +30,12 @@ Do not run any test until every item is ticked. These match document 05, section
 
 Covers V-04, V-05, V-06, V-09, V-10, V-12 and V-14, plus installed package versions for V-03.
 
-- [ ] Copy `scripts/phase0-collect.sh` to the NAS
-- [ ] Check whether `lynis` and `smartctl` are installed. The script skips a missing tool rather than installing it. Installing one is a change to the system: decide, then record it in the Phase 0 log
-- [ ] Decide whether to run `sudo apt update` before V-10. It refreshes the package lists only, but it is still a change. Record the decision in the Phase 0 log. The script records the age of the existing lists either way
-- [ ] Run `sudo ./phase0-collect.sh` from your own account. With no argument it creates a new folder `~/phase0-raw-<date>-<time>` and hands it back to you, so no sudo is needed to read or copy it. A folder name can be given instead, but it must be new and inside your home folder or `/tmp`. Never give `/` or a system folder. Use `SSD_DEV=/dev/nvme0n1` in front of the command if `/dev/nvme0` is not the SSD
+- [x] Copy `scripts/phase0-collect.sh` to the NAS
+- [x] Check whether `lynis` and `smartctl` are installed. The script skips a missing tool rather than installing it. Installing one is a change to the system: decide, then record it in the Phase 0 log
+- [x] Decide whether to run `sudo apt update` before V-10. It refreshes the package lists only, but it is still a change. Record the decision in the Phase 0 log. The script records the age of the existing lists either way
+- [x] Run `sudo ./phase0-collect.sh` from your own account. With no argument it creates a new folder `~/phase0-raw-<date>-<time>` and hands it back to you, so no sudo is needed to read or copy it. A folder name can be given instead, but it must be new and inside your home folder or `/tmp`. Never give `/` or a system folder. Use `SSD_DEV=/dev/nvme0n1` in front of the command if `/dev/nvme0` is not the SSD
 - [ ] Copy the output folder off the NAS to the raw output location, check it with `sha256sum -c SHA256SUMS`, then delete it from the NAS
-- [ ] Record in the Phase 0 log that Lynis wrote its log and report under `/var/log`
+- [x] Record in the Phase 0 log that Lynis wrote its log and report under `/var/log`
 
 ## 4. Manual tests
 
@@ -101,3 +101,4 @@ Save raw output to the raw output location using the same `V-xx_short-descriptio
 | 0.3 | 28th October 2026 | Section 2: raw output location and router access ticked | Owner confirmed |
 | 0.4 | 28th October 2026 | Section 2: nmap, outside network and no sensitive data ticked. All prerequisites complete | Owner confirmed |
 | 0.5 | 28th October 2026 | Section 3: run step updated for the safer collection script (default output folder, output handed back to the owner) and a delete step added (drafted with AI assistance) | The first run with `/` as the output folder locked the NAS root folder |
+| 0.6 | 29th October 2026 | Section 3: completed steps ticked. Copy and delete step left open until deletion from the NAS is confirmed | Script-collected tests run |

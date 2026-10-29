@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.13 · Last updated: 28th October 2026
+> **Status:** Draft v0.14 · Last updated: 29th October 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -35,6 +35,9 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 28th October 2026 | Walked me through the SD card hash checks. Recorded the image date and hash I supplied in documents 04 and 05 and ticked the completed prerequisites | I ran the checks, supplied the date and hash, and approved the commit |
 | 28th October 2026 | Document 05: recorded the V-13 result I supplied, drafted FND-01 and the log rows, and added a note on what Pass or fail means. Ticked the remaining prerequisites | I ran V-13, supplied the result, chose Fail, changed the password, re-tested, kept the T-01 rating and reviewed the staged changes |
 | 28th October 2026 | The collection script I had drafted set the permissions of the NAS root folder to 700 when given `/` as its output folder, which locked the system for non-root users. Gave recovery steps, fixed the script so it only creates a new folder in the home folder or `/tmp` and hands the output back to me, updated the checklist and logged the deviation in document 05 | I recovered the NAS, reported the results and approved the commit |
+| 29th October 2026 | Guided me through creating a separate NAS account and SSH key for Claude Code, and drafted the NAS access rules in my local working rules. Connected once, at 10:55 UK time, to run the read-only checks I approved | I created the account and key, approved the exact commands and confirmed the result |
+| 29th October 2026 | Ran `scripts/sanitise.py` on the raw collection output with my map file, found and fixed gaps in the script (Lynis log host IDs, version numbers read as addresses, the SSD identifier, file system UUIDs), and prepared 13 sanitised files for `evidence/phase0/` with exact versions reduced to major versions | I wrote the map file, chose to keep the SSD firmware version and the `admin` group entry, and approved the commits |
+| 29th October 2026 | Documents 01, 04 and 05, the matrix, the Phase 0 checklist and the evidence README: recorded the script-collected results from the evidence, drafted FND-02 to FND-05 and D-02, and logged the Phase 0 changes. Pass or fail and effects on ratings left for me | Reviewed the staged changes and approved the commit |
 
 ## 4. Revision log
 
@@ -53,3 +56,4 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 0.11 | 28th October 2026 | Added log entry for the SD card image record | Keep the log current |
 | 0.12 | 28th October 2026 | Added log entry for the V-13 result | Keep the log current |
 | 0.13 | 28th October 2026 | Added log entry for the collection script defect and fix | Keep the log current |
+| 0.14 | 29th October 2026 | Added log entries for the Claude Code access, sanitising and Phase 0 results | Keep the log current |

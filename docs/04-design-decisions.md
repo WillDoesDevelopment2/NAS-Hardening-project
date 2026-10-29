@@ -1,6 +1,6 @@
 # 04 – Design Decisions
 
-> **Status:** Draft v0.9 · Last updated: 28th October 2026
+> **Status:** Draft v0.10 · Last updated: 29th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · 03-security-requirements.md (not yet written) · [05-verification.md](05-verification.md)
 > **Note:** Add one record per meaningful decision, written as it is made, not afterwards. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -22,7 +22,7 @@ Decisions follow the loop used across this project: threat, requirement, control
 | ID | Decision | Status | Phase | Related threats |
 |---|---|---|---|---|
 | D-01 | Baseline definition for Phase 0 | Accepted | 0 | All |
-| D-02 | | | | |
+| D-02 | Temporary SSH access for Claude Code | Proposed | 0 | T-01, T-04, T-12 |
 
 Status values: **Proposed**, **Accepted**, **Superseded by D-xx**, **Rejected**.
 
@@ -74,6 +74,22 @@ Copy this block for each decision.
 - **Evidence:** Phase 0 results in 05-verification.md. SD card image taken 28th October 2026, 08:17 UK time, SHA-256 `090dcc27c844456240e0279f80bf0bb753c488bd6cf53fd605fb20f9ab3f741d`. The hash recorded during imaging, the hash of the decompressed image and the hash of the card itself all matched
 - **Review trigger:** The baseline is repeated, or the hardware changes
 
+### D-02 – Temporary SSH access for Claude Code
+
+- **Date:** 28th October 2026
+- **Status:** Proposed (drafted with AI assistance, owner to confirm)
+- **Related:** T-01, T-04, T-12. V-09, V-12. FND-03, FND-05
+- **Context:** Claude Code runs on my laptop on the home LAN. Until Tailscale is set up, I want it to be able to run checks on the NAS that I approve from my phone when I am not at the laptop
+- **Options considered:**
+  1. **Claude Code uses my own account.** Nothing to set up, but it would have my sudo rights, and its actions could not be told apart from mine
+  2. **A separate account for Claude Code with an SSH key.** No sudo rights, actions can be attributed, and the key works only from the laptop's address. More to set up, and an extra account and key to remove later
+  3. **No direct access.** I run the commands and pass on sanitised output. Adds nothing to the NAS, but is slower and needs me at the laptop
+- **Decision:** Option 2
+- **Reasoning:** Separate accounts with the least privilege they need (document 01, section 6.4). The key is limited with `from=` to the laptop's address, with agent, port and X11 forwarding disabled. Every session is approved by me in advance, limited to the commands I approve, read-only unless I approve a specific change, and logged in document 05, section 7
+- **Trade-offs and residual risk:** Adds an account and a key to the system during Phase 0, after the baseline collection run. The account can read files that all users can read. SSH password login is still enabled for other accounts (FND-03). If the laptop is compromised, the key gives a foothold on the NAS
+- **Evidence:** Access test on 29th October 2026, 10:55 UK time (document 05, section 7): key login worked, groups `users` and `_ssh` only, no sudo rights
+- **Review trigger:** Tailscale is in place, or 5th January 2027, whichever comes first. The key is then removed and the removal logged
+
 ## 6. Candidate decisions to expect
 
 These are not decisions yet. They are placeholders so that each one is recorded when it is made.
@@ -101,3 +117,4 @@ These are not decisions yet. They are placeholders so that each one is recorded 
 | 0.7 | 27th October 2026 | D-01: no updates installed since setup. List of known earlier changes complete | Owner answer |
 | 0.8 | 27th October 2026 | Revision log: date for 0.1 marked as not recorded | Owner confirmed the date was not recorded |
 | 0.9 | 28th October 2026 | D-01: SD card image date and SHA-256 hash added to the evidence line | Image taken and verified |
+| 0.10 | 29th October 2026 | D-02 drafted: temporary SSH access for Claude Code, status Proposed (drafted with AI assistance) | Record the access set up during Phase 0 |

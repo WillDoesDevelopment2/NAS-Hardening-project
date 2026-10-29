@@ -14,8 +14,12 @@ Each evidence file starts with:
 
 ```
 Test ID:
-Date:
-Command or tool and version:
+Date: (UK time)
+Command:
 Run from:
-Sanitised by: (what was replaced or removed)
+Status: Sanitised
+Sanitised by: (what scripts/sanitise.py replaced)
+Edited: (only if changed by hand after sanitising, for example versions reduced to major versions)
 ```
+
+Files from `scripts/phase0-collect.sh` were sanitised with `scripts/sanitise.py`. Tool versions are left out of the header where they would show exact versions.
