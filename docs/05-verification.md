@@ -1,6 +1,6 @@
 # 05 – Verification
 
-> **Status:** Draft v0.12 · Last updated: 29th October 2026
+> **Status:** Draft v0.13 · Last updated: 30th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (service inventory, phases, success criteria) · [02-threat-analysis.md](02-threat-analysis.md) (threat IDs) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [traceability/requirements-matrix.csv](../traceability/requirements-matrix.csv)
 > **Note:** The test list in section 4 is a suggested starting point. Add, remove or change tests to fit the real setup, and write each **expected result before running the test**. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -134,7 +134,7 @@ Each stage is complete when its criteria are verified, with evidence.
 
 | Stage | Completion criterion | Verified by | Evidence | Date | Done |
 |---|---|---|---|---|---|
-| Phase 0 | All tests in section 4 run, findings logged, ratings reviewed | | | | [ ] |
+| Phase 0 | All tests in section 4 run, findings logged, ratings reviewed | Owner review of sections 4, 5 and 6 **[TODO]**. 11 of 15 tests run (V-07, V-08, V-11 and V-15 to do) | `evidence/phase0/` | **[TODO]** | [ ] |
 | Phase 1 | **[TODO: write when requirements exist]** | | | | [ ] |
 | Phase 2 | | | | | [ ] |
 | Phase 3 | Restore test passed, including a copy that clients cannot overwrite | | | | [ ] |
@@ -170,3 +170,4 @@ These show that access is allowed where it should be and refused where it should
 | 0.10 | 28th October 2026 | Header version corrected (0.9 was not shown). Section 7: collection script run, the root folder permission deviation and its recovery, and the Lynis install logged | Record the deviation and the changes made during Phase 0 |
 | 0.11 | 29th October 2026 | Section 4: actual results for V-03 (partial), V-04, V-05, V-06, V-09, V-10, V-12 and V-14 recorded from the sanitised evidence, pass or fail left for the owner. Section 5: FND-02 to FND-05 added as Open. Section 7: second collection run, Claude Code account, key and access test, and sanitising logged. Two TODOs resolved (drafted with AI assistance) | Results of the script-collected Phase 0 tests |
 | 0.12 | 29th October 2026 | Section 4: V-01, V-02 and V-03 results recorded, and owner checks added to V-04, V-06, V-09 and V-10. Section 5: FND-02 updated, FND-06 added. Section 7: scans and owner checks logged, deletion from the NAS confirmed (drafted with AI assistance) | Network scans and owner answers |
+| 0.13 | 29th October 2026 | Section 8: Phase 0 progress noted (drafted with AI assistance) | Track completion |
