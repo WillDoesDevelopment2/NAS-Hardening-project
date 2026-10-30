@@ -1,8 +1,8 @@
 # 04 – Design Decisions
 
-> **Status:** Draft v0.11 · Last updated: 29th October 2026
+> **Status:** Draft v0.12 · Last updated: 30th October 2026
 > **Author:** William Drummond
-> **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · 03-security-requirements.md (not yet written) · [05-verification.md](05-verification.md)
+> **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · [03-security-requirements.md](03-security-requirements.md) · [05-verification.md](05-verification.md)
 > **Note:** Add one record per meaningful decision, written as it is made, not afterwards. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
 
 ---
@@ -23,6 +23,7 @@ Decisions follow the loop used across this project: threat, requirement, control
 |---|---|---|---|---|
 | D-01 | Baseline definition for Phase 0 | Accepted | 0 | All |
 | D-02 | Temporary SSH access for Claude Code | Proposed | 0 | T-01, T-04, T-12 |
+| D-03 | Vulnerability monitoring dashboard | Proposed | 1 | T-02, T-06, T-14 |
 
 Status values: **Proposed**, **Accepted**, **Superseded by D-xx**, **Rejected**.
 
@@ -90,6 +91,22 @@ Copy this block for each decision.
 - **Evidence:** Access test on 29th October 2026, 10:55 UK time (document 05, section 7): key login worked, groups `users` and `_ssh` only, no sudo rights
 - **Review trigger:** Tailscale is in place, or 5th January 2027, whichever comes first. The key is then removed and the removal logged
 
+### D-03 – Vulnerability monitoring dashboard
+
+- **Date:** 30th October 2026
+- **Status:** Proposed (drafted with AI assistance, owner to confirm). Nothing is installed or scheduled until this is accepted. Creating the account and key is a change to the NAS, so it happens after Phase 0, or is logged as a deviation
+- **Related:** T-02, T-06, T-14. V-03, V-10. FND-06. SR-14 (document 03, draft)
+- **Context:** I want a local dashboard that checks the software on the NAS for known vulnerabilities every 12 hours, so I do not depend on remembering to look. Phase 0 showed a pending openmediavault update (FND-06) and that unattended upgrades are enabled but have installed nothing. Installing anything is a change, so this belongs to Phase 1 or later
+- **Options considered:**
+  1. **Run on the NAS.** A timer runs `debsecan` and `apt list --upgradable` and writes a page. Most accurate, needs no remote access. Adds a package and a timer to the NAS, and serving the page would add a service to protect (T-13)
+  2. **Run on the laptop, using the temporary Claude Code key (D-02).** Nothing to set up. But D-02 and my working rules allow that key only for sessions I approve one by one, with the commands listed, so an unattended job every 12 hours would break that rule. The NAS logs would show the Claude Code account logging in when Claude Code is not working. The key is removed when Tailscale is in place or on 5th January 2027, so the dashboard would then stop
+  3. **Run on the laptop, using a dedicated monitoring key.** A separate key in `authorized_keys`, limited with `restrict`, `from=` (laptop only) and `command=` to the one read-only command, so it cannot open a shell or forward anything. Adds nothing to the NAS except one key line. Needs a change on the NAS after Phase 0, which is logged. Only runs while the laptop is on
+- **Decision:** Option 3 (owner, 30th October 2026, by messaging app). My first preference was option 2. Claude Code pointed out the conflict with D-02 and my working rules, and I chose a dedicated key instead. Which account holds the key is **[TODO]** (owner): a separate unprivileged account is suggested, so the logs show the dashboard as itself and it does not end with D-02
+- **Reasoning:** The dashboard only needs to read the installed software and versions, so a key limited to that one read-only command is enough, and it can run unattended without using the Claude Code access
+- **Trade-offs and residual risk:** For options 2 and 3, package names and versions are sent to OSV (a public API run by Google). No hostnames, addresses or usernames are sent. The dashboard output lists unfixed vulnerabilities and exact versions, so it stays in the raw evidence location and is never published. Packages from openmediavault and Raspberry Pi repositories are not covered by the Debian data and stay as manual checks. The dashboard shows only publicly known issues
+- **Evidence:** Draft script `scripts/vuln-dashboard/`, tested on 30th October 2026 with made-up package data only. Not run against the NAS
+- **Review trigger:** Tailscale is in place (the access path may change), D-02 ends, or the dashboard misses an update that V-10 finds
+
 ## 6. Candidate decisions to expect
 
 These are not decisions yet. They are placeholders so that each one is recorded when it is made.
@@ -119,3 +136,4 @@ These are not decisions yet. They are placeholders so that each one is recorded 
 | 0.9 | 28th October 2026 | D-01: SD card image date and SHA-256 hash added to the evidence line | Image taken and verified |
 | 0.10 | 29th October 2026 | D-02 drafted: temporary SSH access for Claude Code, status Proposed (drafted with AI assistance) | Record the access set up during Phase 0 |
 | 0.11 | 29th October 2026 | D-01: item 6 corrected, the case control software is not installed (drafted with AI assistance) | Owner confirmed during Phase 0 |
+| 0.12 | 30th October 2026 | D-03 drafted: vulnerability monitoring dashboard, three options, status Proposed. Header link to document 03 (drafted with AI assistance) | Owner request for 12-hourly vulnerability checks |

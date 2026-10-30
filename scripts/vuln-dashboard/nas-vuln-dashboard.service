@@ -1,0 +1,11 @@
+# systemd user service: runs one dashboard update. Started by nas-vuln-dashboard.timer
+# Install: see scripts/vuln-dashboard/README.md. Replace <NAS-HOST-ALIAS> with the SSH host alias
+# chosen in D-03 (docs/04-design-decisions.md) and <REPO> with the path to this repository
+[Unit]
+Description=NAS vulnerability dashboard update
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -I <REPO>/scripts/vuln-dashboard/vuln_dashboard.py --host <NAS-HOST-ALIAS>

@@ -18,7 +18,8 @@ Usage:  python3 -I scripts/sanitise.py <raw-input> <output> --map <map-file> [--
 What it replaces, in this order:
 1. Private key blocks, Tailscale auth keys, WireGuard-style keys and SSH public keys
 2. Every value in the map file (hostnames and usernames are matched case-insensitively)
-3. Serial numbers and host IDs in labelled fields (smartctl, Lynis), and the host IDs and
+3. Reverse DNS names in Nmap output     -> <RDNS-NAME-n> (ISP names often contain the address)
+   Serial numbers and host IDs in labelled fields (smartctl, Lynis), and the host IDs and
    hostname hashes in the Lynis log
 4. Filesystem UUIDs                    -> <UUID-n>, and FAT volume IDs in lsblk output -> <VOLID-n>
    MAC addresses                       -> <MAC-n>
@@ -94,6 +95,10 @@ RE_FAT_VOLID = re.compile(r"^(.*\b(?:vfat|exfat)\b.*?)(?<![\w-])([0-9A-Fa-f]{4}-
 RE_MAC = re.compile(r"(?<![0-9A-Fa-f:])(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}(?![0-9A-Fa-f:])")
 RE_V6_CAND = re.compile(r"(?<![0-9A-Za-z:.])[0-9A-Fa-f]{0,4}(?::[0-9A-Fa-f]{0,4}){2,7}(?![0-9A-Za-z:.])")
 RE_V4 = re.compile(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d])")
+# Reverse DNS names in Nmap output. ISP names often contain the address itself, written with
+# dashes (for example "host-192-0-2-5.isp.example"), which the address checks above cannot see
+RE_NMAP_RDNS = re.compile(r"^((?:Nmap scan report for|rDNS record for \S+:)\s+)(?!nas\.example\b)(?=[^\s(]*[A-Za-z])([^\s(<]+\.[^\s(]+)(?=\s|$)", re.M)
+RE_DASHED_ADDR = re.compile(r"(?<![\d.])(?:\d{1,3}-){3}\d{1,3}(?!\d)|(?<![0-9a-f])[0-9a-f]{1,4}(?:-[0-9a-f]{1,4}){3,7}(?![0-9a-f])", re.I)
 # Package versions are recognised by what comes before them: "version: " or "(version: ", or a
 # package name in a Lynis list ("|name,") followed by a Debian revision or suffix ("-3", "+b1").
 # An address on its own, or in a range such as "192.0.2.5-10", is still replaced
@@ -122,6 +127,9 @@ def sanitise(text, mapping, counts):
         flags = 0 if re.fullmatch(r"[\d.:a-fA-F]+", real) else re.I
         pat = re.compile(r"(?<![A-Za-z0-9_.-])" + re.escape(real) + r"(?![A-Za-z0-9_-])", flags)
         text, n = pat.subn(placeholder, text); count(f"map: {placeholder}", n)
+
+    rdns = Numberer("RDNS-NAME")
+    text, n = RE_NMAP_RDNS.subn(lambda m: m.group(1) + rdns(m.group(2)), text); count("reverse DNS name", n)
 
     text, n = RE_LABELLED.subn(lambda m: m.group(1) + "<REDACTED>", text); count("serial or host ID", n)
     text, n = RE_HOSTID_LOG.subn(lambda m: m.group(1) + "<REDACTED>", text); count("serial or host ID", n)
@@ -190,6 +198,7 @@ def review(text):
         (lambda l: re.search(r"\b\d+\.\d+\.\d+[\w.+~-]*", ipv4_like.sub("", l)),
          "exact version (reduce to major version if unfixed)"),
         (re.compile(r"/home/(?!<USER>)[^/\s]+").search, "home directory path"),
+        (RE_DASHED_ADDR.search, "address written with dashes (for example in a hostname)"),
         (re.compile(r"(?=[A-Za-z0-9+]*\d)(?=[A-Za-z0-9+]*[A-Za-z])[A-Za-z0-9+]{32,}={0,2}").search,
          "long encoded string"),
     ]
