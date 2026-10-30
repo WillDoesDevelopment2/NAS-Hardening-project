@@ -1,6 +1,6 @@
 # 02 – Threat Analysis
 
-> **Status:** Draft v0.5 · Last updated: 30th October 2026
+> **Status:** Draft v0.6 · Last updated: 30th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (asset IDs, data flows, trust boundaries and phases used here) · 03-security-requirements.md (requirements derived from this analysis, not yet written) · [05-verification.md](05-verification.md) (tests that confirm each treatment)
 > **Note:** This is a starting draft prepared with AI assistance. Every rating and treatment is a proposal. Review each one, change anything that does not match your setup or your own judgement, replace anything in **[TODO]** or square brackets, and record what you accepted, changed or rejected in `docs/ai-usage.md`. Record meaningful changes in the revision log at the end.
@@ -171,7 +171,7 @@ What the Phase 0 tests in document 05, section 4, have shown for each threat. Ra
 |---|---|---|---|
 | T-01 | V-12, V-13 | The default OMV admin password was still in use and was changed on 28th October 2026 (FND-01). One account is used for administration and daily use, with sudo rights (FND-05). The admin interface is served over HTTP on all interfaces (V-01, V-04) | No change (owner decision, 28th October 2026) |
 | T-02 | V-01, V-03, V-05, V-10 | SSH (OpenSSH 10.x) and nginx (version hidden) are reachable from the LAN. openmediavault has a pending update (FND-06). No updates pending from a security suite. Lynis hardening index 63 | **[TODO]** (owner) |
-| T-04 | V-04, V-09 | Root login and password login are enabled (FND-02, FND-03). The root password is locked, but root has an `authorized_keys` file, not yet reviewed **[TODO]**. No fail2ban or similar service is running | **[TODO]** (owner) |
+| T-04 | V-04, V-09 | Root login and password login are enabled (FND-02, FND-03). The root password is locked and root's `authorized_keys` file is empty (reviewed 30th October 2026), so root has no working login method today. No fail2ban or similar service is running | **[TODO]** (owner) |
 | T-06 | V-01, V-04 | The case control software is not installed (owner confirmed 29th October 2026). No vendor service or port seen | **[TODO]** (owner). The likelihood could be reviewed while no third-party software is installed |
 | T-10 | V-06 | SSD health within the expected limits (no media errors, 0% used), but the SSD is not yet in use (V-14). V-15 not yet run | **[TODO]** (owner) |
 | T-11 | V-14 | No disk is encrypted. The system and any data are on the SD card. The SSD holds no data yet | **[TODO]** (owner), together with the likelihood review in section 5.2 |
@@ -340,3 +340,4 @@ Residual risk after Phase 4, and any risk accepted knowingly, is recorded in `07
 | 0.3 | 27th October 2026 | T-08 and section 9: assumptions confirmed. T-11 rationale updated for physical access, likelihood flagged for owner review. T-03: CGNAT check inconclusive (drafted with AI assistance) | Owner answers on document 01, section 10 |
 | 0.4 | 28th October 2026 | Section 7: Tailscale statements checked against the Tailscale documentation, corrections added, sources added as section 7.5 (drafted with AI assistance) | Resolve the verification TODO in section 7 |
 | 0.5 | 29th October 2026 | Section 5.4 added: Phase 0 results so far, per threat, ratings unchanged and left for the owner. Section 5.2 and 11: answered items marked (drafted with AI assistance) | Phase 0 results |
+| 0.6 | 30th October 2026 | Section 5.4, T-04: root `authorized_keys` review result added (drafted with AI assistance) | Phase 0 results |
