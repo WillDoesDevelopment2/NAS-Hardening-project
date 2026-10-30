@@ -1,6 +1,6 @@
 # Phase 0 Checklist
 
-> **Status:** Draft v0.7 · Last updated: 29th October 2026
+> **Status:** Draft v0.8 · Last updated: 30th October 2026
 > **Author:** William Drummond
 > **Related:** [05-verification.md](05-verification.md) (test plan V-01 to V-15) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [../scripts/phase0-collect.sh](../scripts/phase0-collect.sh) · [../evidence/phase0/README.md](../evidence/phase0/README.md)
 > **Note:** Step-by-step procedure for running the Phase 0 tests. Phase 0 is observation only. Placeholders such as `<NAS-IP>` stay as placeholders in this file.
@@ -57,16 +57,16 @@ Save raw output to the raw output location using the same `V-xx_short-descriptio
 
 ### V-07 Router exposure (router admin page)
 
-- [ ] Port forwarding rules: none to the NAS
-- [ ] DMZ host: not set
-- [ ] UPnP: off
+- [x] Port forwarding rules: none to the NAS
+- [x] DMZ host: not set
+- [x] UPnP: off. Checked: on, with no mappings (FND-07)
 - [ ] Take screenshots to the raw output location. Review them before any are sanitised (addresses, MAC addresses, network names)
 
 ### V-08 External exposure (outside network)
 
 - [ ] Find the public address from the router status page. Do not record it in the repository
 - [ ] From the outside network: `sudo nmap -sS -p- <PUBLIC-IP> -oN <RAW-DIR>/V-08_external-scan.txt`
-- [ ] Record whether the router's WAN address is a CGNAT address (`100.64.0.0/10`). If it is, note that the scan may not reach the router at all
+- [x] Record whether the router's WAN address is a CGNAT address (`100.64.0.0/10`). If it is, note that the scan may not reach the router at all. Not behind CGNAT
 
 ### V-11 Share permissions (OMV interface)
 
@@ -103,3 +103,4 @@ Save raw output to the raw output location using the same `V-xx_short-descriptio
 | 0.5 | 28th October 2026 | Section 3: run step updated for the safer collection script (default output folder, output handed back to the owner) and a delete step added (drafted with AI assistance) | The first run with `/` as the output folder locked the NAS root folder |
 | 0.6 | 29th October 2026 | Section 3: completed steps ticked. Copy and delete step left open until deletion from the NAS is confirmed | Script-collected tests run |
 | 0.7 | 29th October 2026 | Section 3: copy and delete step ticked. Section 4: V-01 to V-03 ticked, V-01 deviation noted | Owner confirmed deletion. Scans run |
+| 0.8 | 30th October 2026 | Section 4: V-07 and the CGNAT check ticked | Owner results |

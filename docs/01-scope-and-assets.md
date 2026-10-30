@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.10 · Last updated: 29th October 2026
+> **Status:** Draft v0.11 · Last updated: 30th October 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -246,7 +246,7 @@ The related threats column links to the threat register in `02-threat-analysis.m
 - The Raspberry Pi 5 limits the performance available for encryption and VPN throughput
 - The SSD is second-hand, so its reliability is unknown
 - One person maintains the system, so routines must be simple enough to follow consistently
-- The ISP may use CGNAT, which would prevent self-hosted WireGuard without extra work, Tailscale may be needed. Traceroute on 27th October 2026 was inconclusive. Not yet confirmed
+- The ISP may use CGNAT, which would prevent self-hosted WireGuard without extra work, Tailscale may be needed. Traceroute on 27th October 2026 was inconclusive. Confirmed on 30th October 2026: the connection is not behind CGNAT (V-07)
 
 ## 11. Dependencies and third parties
 
@@ -287,7 +287,7 @@ The project succeeds when:
 ## 14. Open questions
 
 - [ ] Which data will be stored, and how sensitive is it?
-- [ ] Is my connection behind CGNAT?
+- [x] Is my connection behind CGNAT? No (V-07, 30th October 2026)
 - [ ] Does my router support VLANs or guest network isolation?
 - [ ] Will the SSD be encrypted, and how will it be unlocked after a reboot?
 - [ ] Which backup tool will be used for the phone and the computer?
@@ -309,3 +309,4 @@ The project succeeds when:
 | 0.8 | 27th October 2026 | Revision log: dates for 0.1 and 0.2 marked as not recorded | Owner confirmed the dates were not recorded |
 | 0.9 | 29th October 2026 | Section 6.3: baseline observed from V-04 and V-09, rows added for services not in the inventory. Section 6.4: Claude Code account noted (drafted with AI assistance) | Phase 0 results |
 | 0.10 | 29th October 2026 | Sections 6.2, 6.3 and 14: case control software not installed. Section 6.3: scan results added to the extra service rows (drafted with AI assistance) | Owner confirmed, V-01 and V-02 results |
+| 0.11 | 30th October 2026 | Sections 10 and 14: CGNAT answered from V-07 (drafted with AI assistance) | Owner check |

@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.17 · Last updated: 30th October 2026
+> **Status:** Draft v0.18 · Last updated: 30th October 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -41,6 +41,7 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 29th October 2026 | Ran the V-01 and V-03 network scans from the laptop, sanitised them and my V-02 scan, gave me the read-only checks to run on the NAS, and recorded the results in documents 01, 04 and 05 and the matrix, including the D-01 correction and FND-06 | I approved the scans, ran V-02 and the NAS checks, supplied the answers, chose to show the hostname as `nas.example` and approved the commit |
 | 29th October 2026 | While I was away (asked over a messaging app): re-checked the published evidence for leaks, drafted section 5.4 of document 02 (Phase 0 results per threat, ratings left for me), noted Phase 0 progress in document 05 and the README, and prepared a list of the remaining Phase 0 steps | Reviewed the staged changes and approved the commit |
 | 30th October 2026 | Gave me read-only commands to check root's `authorized_keys` file without showing any key data, and recorded the result in documents 02 and 05 and the matrix | I ran the checks on the NAS, supplied the result and approved the commit |
+| 30th October 2026 | Recorded my V-07 router results in documents 01, 02 and 05, the checklist, the matrix and the README, drafted FND-07 for UPnP being on, and pointed out that the NAS has public IPv6 addresses, which matters for V-08. It asked again for answers I had already given, and I corrected it | I checked the router, supplied the results and reviewed the staged changes |
 
 ## 4. Revision log
 
@@ -63,3 +64,4 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 0.15 | 29th October 2026 | Added log entry for the network scans and owner checks | Keep the log current |
 | 0.16 | 29th October 2026 | Added log entry for the Phase 0 progress drafts | Keep the log current |
 | 0.17 | 30th October 2026 | Added log entry for the root `authorized_keys` review | Keep the log current |
+| 0.18 | 30th October 2026 | Added log entry for the V-07 results | Keep the log current |

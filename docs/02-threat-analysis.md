@@ -1,6 +1,6 @@
 # 02 – Threat Analysis
 
-> **Status:** Draft v0.6 · Last updated: 30th October 2026
+> **Status:** Draft v0.7 · Last updated: 30th October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (asset IDs, data flows, trust boundaries and phases used here) · 03-security-requirements.md (requirements derived from this analysis, not yet written) · [05-verification.md](05-verification.md) (tests that confirm each treatment)
 > **Note:** This is a starting draft prepared with AI assistance. Every rating and treatment is a proposal. Review each one, change anything that does not match your setup or your own judgement, replace anything in **[TODO]** or square brackets, and record what you accepted, changed or rejected in `docs/ai-usage.md`. Record meaningful changes in the revision log at the end.
@@ -179,7 +179,7 @@ What the Phase 0 tests in document 05, section 4, have shown for each threat. Ra
 | T-13 | V-01, V-02, V-04, V-05 | rpcbind, LLMNR and mDNS listen on all interfaces and are reachable from the LAN (FND-04). HTTP admin interface. SMB not running. Bluetooth running | **[TODO]** (owner) |
 | T-14 | V-05, V-10 | 12 pending updates, none from a security suite. Unattended upgrades enabled, but none installed. openmediavault update pending (FND-06) | **[TODO]** (owner) |
 | T-18 | V-05, V-06 | 179 unsafe shutdowns over the SSD's life, not attributable to the NAS as the SSD was used in a laptop before. Lynis reports a reboot is likely needed, not yet investigated | **[TODO]** (owner) |
-| T-03, T-19 | V-07, V-08 | Not yet run | Wait for V-07 and V-08 |
+| T-03, T-19 | V-07, V-08 | V-07: no port forwards, no DMZ host, DDNS off, not behind CGNAT. UPnP is on, with no mappings (FND-07). The NAS has public IPv6 addresses, so exposure depends on the router's IPv6 firewall. V-08 not yet run | Wait for V-08 |
 
 ## 6. High-rated threats in detail
 
@@ -341,3 +341,4 @@ Residual risk after Phase 4, and any risk accepted knowingly, is recorded in `07
 | 0.4 | 28th October 2026 | Section 7: Tailscale statements checked against the Tailscale documentation, corrections added, sources added as section 7.5 (drafted with AI assistance) | Resolve the verification TODO in section 7 |
 | 0.5 | 29th October 2026 | Section 5.4 added: Phase 0 results so far, per threat, ratings unchanged and left for the owner. Section 5.2 and 11: answered items marked (drafted with AI assistance) | Phase 0 results |
 | 0.6 | 30th October 2026 | Section 5.4, T-04: root `authorized_keys` review result added (drafted with AI assistance) | Phase 0 results |
+| 0.7 | 30th October 2026 | Section 5.4, T-03 and T-19: V-07 result added (drafted with AI assistance) | Phase 0 results |

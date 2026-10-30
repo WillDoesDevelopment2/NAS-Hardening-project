@@ -19,7 +19,7 @@ Full detail on the system, assets, trust boundaries and network design is in [`d
 
 - [x] Scope and assets defined
 - [x] Initial threat analysis drafted
-- [ ] Phase 0: Baseline measurements before any changes (in progress: 11 of 15 tests run, 6 findings so far, see [`docs/05-verification.md`](docs/05-verification.md))
+- [ ] Phase 0: Baseline measurements before any changes (in progress: 12 of 15 tests run, 7 findings so far, see [`docs/05-verification.md`](docs/05-verification.md))
 - [ ] Security requirements written
 - [ ] Phase 1: Hardening and Tailscale remote access
 - [ ] Phase 2: Self-hosted WireGuard and comparison with Tailscale
