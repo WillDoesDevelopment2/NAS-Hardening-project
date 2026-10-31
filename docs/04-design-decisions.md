@@ -1,6 +1,6 @@
 # 04 – Design Decisions
 
-> **Status:** Draft v0.12 · Last updated: 30th October 2026
+> **Status:** Draft v0.13 · Last updated: 31st October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) · [03-security-requirements.md](03-security-requirements.md) · [05-verification.md](05-verification.md)
 > **Note:** Add one record per meaningful decision, written as it is made, not afterwards. Replace anything in **[TODO]** or square brackets. Record meaningful changes in the revision log at the end.
@@ -120,6 +120,9 @@ These are not decisions yet. They are placeholders so that each one is recorded 
 - Network isolation: VLAN or guest network if the router supports it, otherwise accept the risk
 - Update routine, including unattended security updates
 - Case vendor software: keep, restrict or remove
+- NAS network connection: Wi-Fi or Ethernet to the router, and which unused radios and interfaces are disabled (Bluetooth, Wi-Fi if Ethernet is chosen, the direct troubleshooting link to the laptop). Related: T-07, T-13, T-18 (Phase 1)
+- Offsite copy: cloud provider and how it is chosen (for example certification to ISO/IEC 27001, 27017 and 27018, and where the data is stored), with encryption before upload and where that key is kept. Related: T-10, T-15 (Phase 3)
+- Offsite copy protection: immutable or versioned storage (object lock or append-only access) and a separate access key per device with no delete rights, so a compromised client cannot delete backups. Related: T-05, T-09 (Phase 3)
 
 ## 7. Revision log
 
@@ -137,3 +140,4 @@ These are not decisions yet. They are placeholders so that each one is recorded 
 | 0.10 | 29th October 2026 | D-02 drafted: temporary SSH access for Claude Code, status Proposed (drafted with AI assistance) | Record the access set up during Phase 0 |
 | 0.11 | 29th October 2026 | D-01: item 6 corrected, the case control software is not installed (drafted with AI assistance) | Owner confirmed during Phase 0 |
 | 0.12 | 30th October 2026 | D-03 drafted: vulnerability monitoring dashboard, three options, status Proposed. Header link to document 03 (drafted with AI assistance) | Owner request for 12-hourly vulnerability checks |
+| 0.13 | 30th October 2026 | Section 6: candidate decisions added for the NAS network connection and the offsite copy (drafted with AI assistance) | Owner request |

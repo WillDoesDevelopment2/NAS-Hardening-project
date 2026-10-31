@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.19 · Last updated: 30th October 2026
+> **Status:** Draft v0.21 · Last updated: 31st October 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -43,6 +43,8 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 30th October 2026 | Gave me read-only commands to check root's `authorized_keys` file without showing any key data, and recorded the result in documents 02 and 05 and the matrix | I ran the checks on the NAS, supplied the result and approved the commit |
 | 30th October 2026 | Recorded my V-07 router results in documents 01, 02 and 05, the checklist, the matrix and the README, drafted FND-07 for UPnP being on, and pointed out that the NAS has public IPv6 addresses, which matters for V-08. It asked again for answers I had already given, and I corrected it | I checked the router, supplied the results and reviewed the staged changes |
 | 30th October 2026 | While I was away (asked over a messaging app): tested `scripts/sanitise.py` on made-up IPv6 scan output and fixed two gaps (reverse DNS names that contain the address, and addresses written with dashes). Drafted an IPv6 addition to V-08 and its checklist steps for me to confirm. Drafted an outline of document 03 (SR-01 to SR-16, all Proposed). Drafted D-03 and a vulnerability dashboard script with a 12-hour timer, tested with made-up package data only, not against the NAS. When I first chose to run the dashboard with the Claude Code key, it pointed out that this would break D-02 and my working rules, and I chose a dedicated key instead | Reviewed the staged changes, confirmed the IPv6 addition to V-08, chose option 3 for D-03 and committed them |
+| 30th October 2026 | Answered my questions on cloud storage standards and common practice (checked current ISO/IEC and NIST editions online), and on Wi-Fi or Ethernet for the NAS. Added candidate decisions in document 04 for the NAS network connection and the offsite copy | Asked for the candidate decisions and reviewed the staged changes |
+| 31st October 2026 | Recorded my V-11 and V-15 results and other answers in documents 01, 02, 03 and 05, the checklist, the matrix and the README. Drafted FND-08 from my decision on the SD card. Pointed out that OMV showing SMB as enabled differs from V-04 and V-01. Gave me the commands for V-08 and for investigating the Lynis warning | I checked OMV, supplied the results and made the decisions. Staged changes for me to review |
 
 ## 4. Revision log
 
@@ -67,3 +69,5 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 0.17 | 30th October 2026 | Added log entry for the root `authorized_keys` review | Keep the log current |
 | 0.18 | 30th October 2026 | Added log entry for the V-07 results | Keep the log current |
 | 0.19 | 30th October 2026 | Added log entry for the sanitiser fix, V-08 draft, document 03 outline and D-03 | Keep the log current |
+| 0.20 | 30th October 2026 | Added log entry for the new candidate decisions | Keep the log current |
+| 0.21 | 31st October 2026 | Added log entry for the V-11, V-15 and FND-08 round | Keep the log current |

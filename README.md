@@ -1,6 +1,6 @@
 # Home NAS Hardening and Risk Analysis
 
-**Status:** In progress (Phase 0: baseline) | **Started:** October 2026 | **Last updated:** 30th October 2026
+**Status:** In progress (Phase 0: baseline) | **Started:** October 2026 | **Last updated:** 31st October 2026
 
 A self-hosted NAS built to replace third-party cloud storage, used as a hands-on project in structured security work: define what needs protecting, analyse threats, set numbered requirements, harden the system, and verify every control with evidence.
 
@@ -19,7 +19,7 @@ Full detail on the system, assets, trust boundaries and network design is in [`d
 
 - [x] Scope and assets defined
 - [x] Initial threat analysis drafted
-- [ ] Phase 0: Baseline measurements before any changes (in progress: 12 of 15 tests run, 7 findings so far, see [`docs/05-verification.md`](docs/05-verification.md))
+- [ ] Phase 0: Baseline measurements before any changes (in progress: 14 of 15 tests run, 8 findings so far, see [`docs/05-verification.md`](docs/05-verification.md))
 - [ ] Security requirements written
 - [ ] Phase 1: Hardening and Tailscale remote access
 - [ ] Phase 2: Self-hosted WireGuard and comparison with Tailscale

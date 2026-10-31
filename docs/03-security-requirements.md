@@ -1,6 +1,6 @@
 # 03 – Security Requirements
 
-> **Status:** Draft v0.1 · Last updated: 30th October 2026
+> **Status:** Draft v0.2 · Last updated: 31st October 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) (threats and treatment plan) · [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md) (tests and Phase 0 findings) · [../traceability/requirements-matrix.csv](../traceability/requirements-matrix.csv)
 > **Note:** This is an outline drafted with AI assistance from the treatment plan in document 02, section 8, and the Phase 0 findings in document 05, section 5. Every requirement is **Proposed** until I accept, change or reject it. Priorities, target values and decisions are mine and are left as **[TODO]**. Record what I accepted, changed or rejected in `docs/ai-usage.md`, and meaningful changes in the revision log at the end.
@@ -34,7 +34,7 @@ This document turns each threat treatment into numbered requirements (SR-01 onwa
 | SR-09 | No NAS service is reachable from the internet over IPv4 or IPv6 | T-03 | V-08 not yet run | 1 | V-08 | **[TODO]** | Proposed |
 | SR-10 | Security updates for Debian and openmediavault are installed within **[TODO]** days of release, following a written update routine, with an image of the boot media taken before major upgrades | T-02, T-14 | FND-06 | 1 | V-10 | **[TODO]** | Proposed |
 | SR-11 | Each share is accessible only to the accounts that need it, and guest access is disabled | T-12 | V-11 not yet run | 1 | V-11 | **[TODO]** | Proposed |
-| SR-12 | Data on the SSD is encrypted at rest, with a recorded unlock approach | T-11 | Baseline: no disk encrypted (V-14) | 1 | V-14 | **[TODO]** | Proposed |
+| SR-12 | Data on the SSD is encrypted at rest, with a recorded unlock approach | T-11 | FND-08 | 1 | V-14 | **[TODO]** | Proposed |
 | SR-13 | SSD health is monitored, and a warning reaches me **[TODO: how]** | T-10, T-18 | Baseline: SSD healthy, not yet in use (V-06, V-14) | 1 | V-06, new alert test **[TODO]** | **[TODO]** | Proposed |
 | SR-14 | Installed software is checked for known vulnerabilities at least every 12 hours, and the result is visible to me | T-02, T-06, T-14 | FND-06 | 1 | New test **[TODO]**. Design: D-03 | **[TODO]** | Proposed |
 | SR-15 | Third-party software is reviewed for its privileges and network exposure before it is installed | T-06 | Baseline: no case software installed | 1 | V-04 | **[TODO]** | Proposed |
@@ -63,10 +63,11 @@ These threats are treated in later phases (document 02, section 8). Requirements
 - [ ] SR-02: is HTTPS required for the admin interface, or only evaluated?
 - [ ] SR-06 and SR-10: threshold and number of days
 - [ ] SR-13: how warnings should reach me
-- [ ] Does each Phase 0 finding have a requirement? (FND-01 to FND-07 are mapped above. Once accepted, the SR IDs go into document 05, section 5, and the matrix)
+- [ ] Does each Phase 0 finding have a requirement? (FND-01 to FND-08 are mapped above, but SR-12 covers the SSD only, not the SD card in FND-08 **[TODO]**. Once accepted, the SR IDs go into document 05, section 5, and the matrix)
 
 ## 6. Revision log
 
 | Version | Date | Change | Reason |
 |---|---|---|---|
 | 0.1 | 30th October 2026 | Outline created: SR-01 to SR-16 drafted from the document 02 treatment plan and the Phase 0 findings, all Proposed (drafted with AI assistance) | Prepare requirements while Phase 0 finishes |
+| 0.2 | 31st October 2026 | Section 3: SR-12 linked to FND-08. Section 5: open check updated, SR-12 does not cover the SD card (drafted with AI assistance) | New finding from V-14 |
