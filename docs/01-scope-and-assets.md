@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.10 · Last updated: 29th October 2026
+> **Status:** Draft v0.12 · Last updated: 31st October 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -119,7 +119,7 @@ Record what actually runs and listens, using `ss -tulpn`, then compare it with w
 |---|---|---|---|---|
 | OMV web interface | 80 | Yes | LAN and VPN only | nginx on 80/TCP, all interfaces (IPv4 and IPv6), plain HTTP (V-04) |
 | SSH | 22/TCP | Yes | LAN and VPN only | 22/TCP, all interfaces (IPv4 and IPv6). Root login and password login enabled (V-09) |
-| SMB file sharing | 445/TCP | To be decided (see section 6.2) | LAN and VPN only | Not running: smbd and nmbd inactive and disabled (V-04) |
+| SMB file sharing | 445/TCP | To be decided (see section 6.2) | LAN and VPN only | Not running: smbd and nmbd inactive and disabled (V-04). Shown as enabled in OMV on 31st October 2026, minimum protocol SMB2, guest access not allowed, no shares (V-11). Difference not yet explained **[TODO]** |
 | Tailscale client | Outbound connections, UDP. **SUBJECT TO CHANGE** | Phase 1 | Outbound only, no inbound ports | Not running (V-04) |
 | WireGuard | UDP, port chosen by me | Phase 2 | One UDP port from the internet (documented exception) | Not running (V-04) |
 | Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing | Not installed (owner confirmed 29th October 2026). No service or open port (V-01, V-04) |
@@ -246,7 +246,7 @@ The related threats column links to the threat register in `02-threat-analysis.m
 - The Raspberry Pi 5 limits the performance available for encryption and VPN throughput
 - The SSD is second-hand, so its reliability is unknown
 - One person maintains the system, so routines must be simple enough to follow consistently
-- The ISP may use CGNAT, which would prevent self-hosted WireGuard without extra work, Tailscale may be needed. Traceroute on 27th October 2026 was inconclusive. Not yet confirmed
+- The ISP may use CGNAT, which would prevent self-hosted WireGuard without extra work, Tailscale may be needed. Traceroute on 27th October 2026 was inconclusive. Confirmed on 30th October 2026: the connection is not behind CGNAT (V-07)
 
 ## 11. Dependencies and third parties
 
@@ -287,13 +287,13 @@ The project succeeds when:
 ## 14. Open questions
 
 - [ ] Which data will be stored, and how sensitive is it?
-- [ ] Is my connection behind CGNAT?
+- [x] Is my connection behind CGNAT? No (V-07, 30th October 2026)
 - [ ] Does my router support VLANs or guest network isolation?
 - [ ] Will the SSD be encrypted, and how will it be unlocked after a reboot?
 - [ ] Which backup tool will be used for the phone and the computer?
 - [ ] Is there an offline or off-site copy of the backups?
 - [ ] What does the case vendor software need to run, and does it need network access? (Not installed at baseline, owner confirmed 29th October 2026. Only relevant if it is installed later)
-- [ ] Was the SSD securely wiped before reuse?
+- [x] Was the SSD securely wiped before reuse? Wiped and reimaged (owner confirmed 31st October 2026). Method not recorded, so this does not show that it meets a secure erase standard
 
 ## 15. Revision log
 
@@ -309,3 +309,5 @@ The project succeeds when:
 | 0.8 | 27th October 2026 | Revision log: dates for 0.1 and 0.2 marked as not recorded | Owner confirmed the dates were not recorded |
 | 0.9 | 29th October 2026 | Section 6.3: baseline observed from V-04 and V-09, rows added for services not in the inventory. Section 6.4: Claude Code account noted (drafted with AI assistance) | Phase 0 results |
 | 0.10 | 29th October 2026 | Sections 6.2, 6.3 and 14: case control software not installed. Section 6.3: scan results added to the extra service rows (drafted with AI assistance) | Owner confirmed, V-01 and V-02 results |
+| 0.11 | 30th October 2026 | Sections 10 and 14: CGNAT answered from V-07 (drafted with AI assistance) | Owner check |
+| 0.12 | 31st October 2026 | Section 6.3: SMB row updated from V-11. Section 14: SSD wipe answered (drafted with AI assistance) | Owner results |

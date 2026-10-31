@@ -1,0 +1,12 @@
+# systemd user timer: every 12 hours (00:00 and 12:00 laptop time). Persistent=true runs a missed
+# check when the laptop is next switched on
+[Unit]
+Description=NAS vulnerability dashboard every 12 hours
+
+[Timer]
+OnCalendar=*-*-* 00,12:00:00
+Persistent=true
+RandomizedDelaySec=10min
+
+[Install]
+WantedBy=timers.target

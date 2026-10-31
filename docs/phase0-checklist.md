@@ -1,6 +1,6 @@
 # Phase 0 Checklist
 
-> **Status:** Draft v0.7 · Last updated: 29th October 2026
+> **Status:** Draft v0.10 · Last updated: 31st October 2026
 > **Author:** William Drummond
 > **Related:** [05-verification.md](05-verification.md) (test plan V-01 to V-15) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [../scripts/phase0-collect.sh](../scripts/phase0-collect.sh) · [../evidence/phase0/README.md](../evidence/phase0/README.md)
 > **Note:** Step-by-step procedure for running the Phase 0 tests. Phase 0 is observation only. Placeholders such as `<NAS-IP>` stay as placeholders in this file.
@@ -57,31 +57,37 @@ Save raw output to the raw output location using the same `V-xx_short-descriptio
 
 ### V-07 Router exposure (router admin page)
 
-- [ ] Port forwarding rules: none to the NAS
-- [ ] DMZ host: not set
-- [ ] UPnP: off
-- [ ] Take screenshots to the raw output location. Review them before any are sanitised (addresses, MAC addresses, network names)
+- [x] Port forwarding rules: none to the NAS
+- [x] DMZ host: not set
+- [x] UPnP: off. Checked: on, with no mappings (FND-07)
+- [x] ~~Take screenshots to the raw output location. Review them before any are sanitised (addresses, MAC addresses, network names)~~ Skipped (owner decision, 31st October 2026)
 
 ### V-08 External exposure (outside network)
 
 - [ ] Find the public address from the router status page. Do not record it in the repository
-- [ ] From the outside network: `sudo nmap -sS -p- <PUBLIC-IP> -oN <RAW-DIR>/V-08_external-scan.txt`
-- [ ] Record whether the router's WAN address is a CGNAT address (`100.64.0.0/10`). If it is, note that the scan may not reach the router at all
+- [ ] From the outside network: `sudo env TZ=Europe/London nmap -Pn -sS -p- <PUBLIC-IP> -oN <RAW-DIR>/V-08_external-scan.txt`. `-Pn` because routers usually do not answer ping, so Nmap would otherwise skip the scan
+- [ ] IPv6: on the NAS, note each address from `ip -6 addr show scope global` in the raw output location, not in the repository
+- [ ] IPv6: on the outside network, check it has IPv6 with `curl -6 -s https://ifconfig.me`. If nothing is printed, record that the IPv6 scan could not be run from there
+- [ ] IPv6: for each NAS address, `sudo env TZ=Europe/London nmap -6 -Pn -sS -p- <NAS-IPV6> -oN <RAW-DIR>/V-08_external-scan-ipv6.txt` (number the files if there is more than one address)
+- [ ] Hand the files back: `sudo chown "$USER": <RAW-DIR>/V-08_*`
+- [ ] Record the router's IPv6 firewall setting from the router admin page
+- [ ] Sanitise with `scripts/sanitise.py`. It replaces reverse DNS names, which often contain the address, and flags addresses written with dashes
+- [x] Record whether the router's WAN address is a CGNAT address (`100.64.0.0/10`). If it is, note that the scan may not reach the router at all. Not behind CGNAT
 
 ### V-11 Share permissions (OMV interface)
 
-- [ ] Storage, Shared Folders: list each share and its permissions
-- [ ] Services, SMB/CIFS: whether enabled, and whether guest access is allowed on any share
-- [ ] If no shares exist, record that
+- [x] Storage, Shared Folders: list each share and its permissions
+- [x] Services, SMB/CIFS: whether enabled, and whether guest access is allowed on any share
+- [x] If no shares exist, record that
 
 ### V-13 Default credentials (OMV interface)
 
-- [ ] Try to log in with the publicly documented default OMV admin credentials
-- [ ] Record only whether the login succeeded. If it did, this is a serious finding: record it first, then change the password and log the change with a timestamp (document 05, section 4)
+- [x] Try to log in with the publicly documented default OMV admin credentials
+- [x] Record only whether the login succeeded. If it did, this is a serious finding: record it first, then change the password and log the change with a timestamp (document 05, section 4)
 
 ### V-15 Existing copies of data (manual)
 
-- [ ] For each data type in document 01, section 7.1, record whether another copy exists and where, described in general terms (for example "external drive")
+- [x] For each data type in document 01, section 7.1, record whether another copy exists and where, described in general terms (for example "external drive")
 
 ## 5. After the tests
 
@@ -103,3 +109,6 @@ Save raw output to the raw output location using the same `V-xx_short-descriptio
 | 0.5 | 28th October 2026 | Section 3: run step updated for the safer collection script (default output folder, output handed back to the owner) and a delete step added (drafted with AI assistance) | The first run with `/` as the output folder locked the NAS root folder |
 | 0.6 | 29th October 2026 | Section 3: completed steps ticked. Copy and delete step left open until deletion from the NAS is confirmed | Script-collected tests run |
 | 0.7 | 29th October 2026 | Section 3: copy and delete step ticked. Section 4: V-01 to V-03 ticked, V-01 deviation noted | Owner confirmed deletion. Scans run |
+| 0.8 | 30th October 2026 | Section 4: V-07 and the CGNAT check ticked | Owner results |
+| 0.9 | 30th October 2026 | Section 4, V-08: `-Pn` and UK time added to the scan, IPv6 steps added (owner confirmed), hand-back, router IPv6 firewall and sanitising steps added (drafted with AI assistance) | NAS has public IPv6 addresses |
+| 0.10 | 31st October 2026 | Section 4: V-11, V-13 and V-15 ticked, V-07 screenshots skipped | Owner results. V-13 was done on 28th October 2026 but not ticked |
