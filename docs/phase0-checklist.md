@@ -1,6 +1,6 @@
 # Phase 0 Checklist
 
-> **Status:** Draft v0.10 · Last updated: 31st October 2026
+> **Status:** Draft v0.11 · Last updated: 31st October 2026
 > **Author:** William Drummond
 > **Related:** [05-verification.md](05-verification.md) (test plan V-01 to V-15) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [../scripts/phase0-collect.sh](../scripts/phase0-collect.sh) · [../evidence/phase0/README.md](../evidence/phase0/README.md)
 > **Note:** Step-by-step procedure for running the Phase 0 tests. Phase 0 is observation only. Placeholders such as `<NAS-IP>` stay as placeholders in this file.
@@ -64,10 +64,10 @@ Save raw output to the raw output location using the same `V-xx_short-descriptio
 
 ### V-08 External exposure (outside network)
 
-- [ ] Find the public address from the router status page. Do not record it in the repository
-- [ ] From the outside network: `sudo env TZ=Europe/London nmap -Pn -sS -p- <PUBLIC-IP> -oN <RAW-DIR>/V-08_external-scan.txt`. `-Pn` because routers usually do not answer ping, so Nmap would otherwise skip the scan
+- [x] Find the public address from the router status page. Do not record it in the repository
+- [x] From the outside network: `sudo env TZ=Europe/London nmap -Pn -sS -p- <PUBLIC-IP> -oN <RAW-DIR>/V-08_external-scan.txt`. `-Pn` because routers usually do not answer ping, so Nmap would otherwise skip the scan
 - [ ] IPv6: on the NAS, note each address from `ip -6 addr show scope global` in the raw output location, not in the repository
-- [ ] IPv6: on the outside network, check it has IPv6 with `curl -6 -s https://ifconfig.me`. If nothing is printed, record that the IPv6 scan could not be run from there
+- [x] IPv6: on the outside network, check it has IPv6 with `curl -6 -s https://ifconfig.me`. If nothing is printed, record that the IPv6 scan could not be run from there. No IPv6 on the mobile network (31st October 2026)
 - [ ] IPv6: for each NAS address, `sudo env TZ=Europe/London nmap -6 -Pn -sS -p- <NAS-IPV6> -oN <RAW-DIR>/V-08_external-scan-ipv6.txt` (number the files if there is more than one address)
 - [ ] Hand the files back: `sudo chown "$USER": <RAW-DIR>/V-08_*`
 - [ ] Record the router's IPv6 firewall setting from the router admin page
@@ -112,3 +112,4 @@ Save raw output to the raw output location using the same `V-xx_short-descriptio
 | 0.8 | 30th October 2026 | Section 4: V-07 and the CGNAT check ticked | Owner results |
 | 0.9 | 30th October 2026 | Section 4, V-08: `-Pn` and UK time added to the scan, IPv6 steps added (owner confirmed), hand-back, router IPv6 firewall and sanitising steps added (drafted with AI assistance) | NAS has public IPv6 addresses |
 | 0.10 | 31st October 2026 | Section 4: V-11, V-13 and V-15 ticked, V-07 screenshots skipped | Owner results. V-13 was done on 28th October 2026 but not ticked |
+| 0.11 | 31st October 2026 | Section 4, V-08: IPv4 and mobile IPv6 check steps ticked. IPv6 scan not possible from mobile data. Hand-back and sanitising stay open until the remaining files are done | IPv4 scan run |

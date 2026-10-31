@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.21 · Last updated: 31st October 2026
+> **Status:** Draft v0.22 · Last updated: 31st October 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -45,6 +45,10 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 30th October 2026 | While I was away (asked over a messaging app): tested `scripts/sanitise.py` on made-up IPv6 scan output and fixed two gaps (reverse DNS names that contain the address, and addresses written with dashes). Drafted an IPv6 addition to V-08 and its checklist steps for me to confirm. Drafted an outline of document 03 (SR-01 to SR-16, all Proposed). Drafted D-03 and a vulnerability dashboard script with a 12-hour timer, tested with made-up package data only, not against the NAS. When I first chose to run the dashboard with the Claude Code key, it pointed out that this would break D-02 and my working rules, and I chose a dedicated key instead | Reviewed the staged changes, confirmed the IPv6 addition to V-08, chose option 3 for D-03 and committed them |
 | 30th October 2026 | Answered my questions on cloud storage standards and common practice (checked current ISO/IEC and NIST editions online), and on Wi-Fi or Ethernet for the NAS. Added candidate decisions in document 04 for the NAS network connection and the offsite copy | Asked for the candidate decisions and reviewed the staged changes |
 | 31st October 2026 | Recorded my V-11 and V-15 results and other answers in documents 01, 02, 03 and 05, the checklist, the matrix and the README. Drafted FND-08 from my decision on the SD card. Pointed out that OMV showing SMB as enabled differs from V-04 and V-01. Gave me the commands for V-08 and for investigating the Lynis warning | I checked OMV, supplied the results and made the decisions. Staged changes for me to review |
+| 31st October 2026 | Entered my Pass or fail results in document 05, section 4, and compared them with the document's rule that a confirmed finding is recorded as Fail. It pointed out that my first results for V-03, V-04, V-09, V-12 and V-14 (Pass) conflicted with that rule | I decided the results, changed those five to Fail and reviewed the staged changes |
+| 31st October 2026 | Entered my rating decisions in document 02, section 5.4, and two rating changes in document 05, section 6. Compared them with the risk matrix in document 02, section 4.3. It noted that my list had one value fewer than the table, and advised keeping T-02 High until V-08 had been run | I decided the ratings, supplied T-18, kept T-02 High until V-08 and reviewed the staged changes |
+| 31st October 2026 | Read my sanitised V-08 IPv4 scan, added the evidence header, recorded the partial result in documents 02, 03 and 05, the checklist, the matrix and the README, and drafted FND-09 for the open ports. It did not identify what answers on those ports, which still needs checking | I ran the scan and sanitised the output. Staged changes for me to review |
+| 31st October 2026 | Read my SMB and Lynis check output, explained KRNL-5830 as a false positive, compared it with the baseline log, pointed out that the Lynis log on the NAS came from a later run, and recorded the results in documents 01, 02 and 05 and the matrix | I ran the checks on the NAS, supplied the output, set V-05 to Pass and applied the pending OMV change. Staged changes for me to review |
 
 ## 4. Revision log
 
@@ -71,3 +75,4 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 0.19 | 30th October 2026 | Added log entry for the sanitiser fix, V-08 draft, document 03 outline and D-03 | Keep the log current |
 | 0.20 | 30th October 2026 | Added log entry for the new candidate decisions | Keep the log current |
 | 0.21 | 31st October 2026 | Added log entry for the V-11, V-15 and FND-08 round | Keep the log current |
+| 0.22 | 31st October 2026 | Added log entries for the Pass or fail results, rating decisions, V-08 IPv4 result and the SMB and Lynis checks | Keep the log current |
