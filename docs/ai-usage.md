@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.23 · Last updated: 31st October 2026
+> **Status:** Draft v0.24 · Last updated: 1st November 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -50,6 +50,7 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 31st October 2026 | Read my sanitised V-08 IPv4 scan, added the evidence header, recorded the partial result in documents 02, 03 and 05, the checklist, the matrix and the README, and drafted FND-09 for the open ports. It did not identify what answers on those ports, which still needs checking | I ran the scan and sanitised the output. Staged changes for me to review |
 | 31st October 2026 | Read my SMB and Lynis check output, explained KRNL-5830 as a false positive, compared it with the baseline log, pointed out that the Lynis log on the NAS came from a later run, and recorded the results in documents 01, 02 and 05 and the matrix | I ran the checks on the NAS, supplied the output, set V-05 to Pass and applied the pending OMV change. Staged changes for me to review |
 | 31st October 2026 | Recorded my router re-check, the router's IPv6 settings and my temporary acceptance of the untested IPv6 risk in documents 02 and 05, the checklist and the matrix. Explained that the settings suggest inbound IPv6 is blocked but do not test it | I checked the router and decided to accept the risk until I can run the scan. Staged changes for me to review |
+| 1st November 2026 | Drafted `docs/phase1-checklist.md` from documents 02 to 05, then pointed out three problems in its own draft: Tailscale came after the admin interface was limited to the VPN, the removal of its own SSH key came before the final checks, and the Tailscale section had no tests | I asked for the draft, reviewed the diff and approved the three fixes. The checklist is still a draft, and its steps are not approved until its section 1 is complete |
 
 ## 4. Revision log
 
@@ -78,3 +79,4 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 0.21 | 31st October 2026 | Added log entry for the V-11, V-15 and FND-08 round | Keep the log current |
 | 0.22 | 31st October 2026 | Added log entries for the Pass or fail results, rating decisions, V-08 IPv4 result and the SMB and Lynis checks | Keep the log current |
 | 0.23 | 31st October 2026 | Added log entry for the router IPv6 settings and temporary risk acceptance | Keep the log current |
+| 0.24 | 1st November 2026 | Added log entry for the Phase 1 checklist draft | Keep the log current |
