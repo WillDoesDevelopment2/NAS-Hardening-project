@@ -1,6 +1,6 @@
 # Home NAS Hardening and Risk Analysis
 
-**Status:** In progress (Phase 0: baseline) | **Started:** October 2026 | **Last updated:** 2nd November 2026
+**Status:** In progress (Phase 0 complete, Phase 1 next) | **Started:** October 2026 | **Last updated:** 2nd November 2026
 
 A self-hosted NAS built to replace third-party cloud storage, used as a hands-on project in structured security work: define what needs protecting, analyse threats, set numbered requirements, harden the system, and verify every control with evidence.
 
@@ -19,7 +19,7 @@ Full detail on the system, assets, trust boundaries and network design is in [`d
 
 - [x] Scope and assets defined
 - [x] Initial threat analysis drafted
-- [ ] Phase 0: Baseline measurements before any changes (in progress: all 15 tests run, 9 findings so far, see [`docs/05-verification.md`](docs/05-verification.md))
+- [x] Phase 0: Baseline measurements before any changes (completed 2nd November 2026: all 15 tests run, 9 findings, see [`docs/05-verification.md`](docs/05-verification.md))
 - [ ] Security requirements written
 - [ ] Phase 1: Hardening and Tailscale remote access
 - [ ] Phase 2: Self-hosted WireGuard and comparison with Tailscale
@@ -41,15 +41,14 @@ Reasoning is in [`docs/04-design-decisions.md`](docs/04-design-decisions.md).
 
 ## Top Risks So Far
 
-A snapshot of the highest-rated threats. The ratings are drafts and will change as evidence is collected. The full register, treatment plan and Tailscale trust analysis are in [`docs/02-threat-analysis.md`](docs/02-threat-analysis.md).
+A snapshot of the highest-rated threats. Ratings after the Phase 0 review. They will change as hardening is done. The full register, treatment plan and Tailscale trust analysis are in [`docs/02-threat-analysis.md`](docs/02-threat-analysis.md).
 
-| Risk | Draft rating |
+| Risk | Rating |
 |---|---|
 | OMV admin interface compromised through default or weak credentials | High |
 | Known vulnerability in OMV, Debian or an exposed service | High |
 | Accidental internet exposure (port forward, UPnP) | High |
 | Ransomware or deletion on a client spreading to the NAS | High |
-| SSD failure while the NAS holds the only copy | High |
 
 ## How the Project Works
 

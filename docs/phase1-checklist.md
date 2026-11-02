@@ -1,6 +1,6 @@
 # Phase 1 Checklist
 
-> **Status:** Draft v0.1 · Last updated: 1st November 2026
+> **Status:** Draft v0.2 · Last updated: 2nd November 2026
 > **Author:** William Drummond
 > **Related:** [phase0-checklist.md](phase0-checklist.md) · [03-security-requirements.md](03-security-requirements.md) (SR-01 to SR-16, all Proposed) · [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 > **Note:** Working draft prepared with AI assistance while Phase 0 finishes. Every step depends on requirements and decisions that are still open, and may change once V-08 is complete. No step is approved until section 1 is complete. Placeholders such as `<NAS-IP>` stay as placeholders in this file.
@@ -12,7 +12,7 @@
 Do not change the NAS or the router until every item is ticked.
 
 - [ ] Phase 0 closed in document 05, section 8
-- [ ] Open ports from V-08 (FND-09) identified, and any action added to this checklist
+- [ ] Open ports from V-08 (FND-09) identified, and any action added to this checklist. Router remote administration is off and TR-069 is not shown. Next: `nmap -sV` and `curl` against the public address from mobile data with the VPN off, plus a control scan of a public test host
 - [ ] SR-01 to SR-16 accepted, changed or rejected, with priorities (document 03)
 - [ ] Requirements added for the Phase 1 threats that have none: T-07, T-08, T-16, T-18 (document 03, section 4)
 - [ ] Gaps resolved: the SD card in FND-08 (SR-12 covers the SSD only), and ports answered by the router in FND-09 (SR-09 covers NAS services only)
@@ -36,6 +36,9 @@ Do not change the NAS or the router until every item is ticked.
 - [ ] Network isolation: VLAN or guest network if the router supports it, otherwise accept the risk (T-07)
 - [ ] Whether a UPS is accepted as out of budget (T-18)
 - [ ] Whether rpcbind, mDNS, LLMNR and the DHCPv6 client are needed (FND-04)
+- [ ] Accept or reject D-02
+- [ ] Review the T-11 likelihood (FND-08)
+- [ ] Optional: whether snapshots or versioning are available (input for Phase 3), date of the last system update, NAS temperature, and `sudo ss -tulpn` compared with V-04
 
 ## 3. Router
 
@@ -110,3 +113,4 @@ Do this before any data is stored on the NAS.
 | Version | Date | Change | Reason |
 |---|---|---|---|
 | 0.1 | 1st November 2026 | Checklist drafted from documents 02 to 05, not yet reviewed (drafted with AI assistance) | Owner request to prepare Phase 1 while Phase 0 finishes |
+| 0.2 | 2nd November 2026 | Sections 1 and 2: open items carried over from Phase 0, optional checks marked as optional | Phase 0 closed |

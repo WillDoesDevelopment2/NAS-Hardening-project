@@ -1,6 +1,6 @@
 # Phase 0 Checklist
 
-> **Status:** Draft v0.13 · Last updated: 2nd November 2026
+> **Status:** Draft v0.14 · Last updated: 2nd November 2026
 > **Author:** William Drummond
 > **Related:** [05-verification.md](05-verification.md) (test plan V-01 to V-15) · [04-design-decisions.md](04-design-decisions.md) (D-01 baseline definition) · [../scripts/phase0-collect.sh](../scripts/phase0-collect.sh) · [../evidence/phase0/README.md](../evidence/phase0/README.md)
 > **Note:** Step-by-step procedure for running the Phase 0 tests. Phase 0 is observation only. Placeholders such as `<NAS-IP>` stay as placeholders in this file.
@@ -91,12 +91,12 @@ Save raw output to the raw output location using the same `V-xx_short-descriptio
 
 ## 5. After the tests
 
-- [ ] Write one Phase 0 log row per test in document 05, section 7
-- [ ] Sanitise each raw file using document 05, section 2.4, and the header in `evidence/phase0/README.md`
-- [ ] Copy sanitised files into `evidence/phase0/`
-- [ ] Fill in the Actual result and Pass or fail columns in document 05, section 4
-- [ ] Record findings as FND-xx in document 05, section 5, and any rating changes in section 6
-- [ ] Fill in the Baseline observed column in document 01, section 6.3, and the Baseline result column in the matrix
+- [x] Write one Phase 0 log row per test in document 05, section 7
+- [x] Sanitise each raw file using document 05, section 2.4, and the header in `evidence/phase0/README.md`
+- [x] Copy sanitised files into `evidence/phase0/`
+- [x] Fill in the Actual result and Pass or fail columns in document 05, section 4
+- [x] Record findings as FND-xx in document 05, section 5, and any rating changes in section 6
+- [x] Fill in the Baseline observed column in document 01, section 6.3, and the Baseline result column in the matrix
 
 ## 6. Revision log
 
@@ -115,3 +115,4 @@ Save raw output to the raw output location using the same `V-xx_short-descriptio
 | 0.11 | 31st October 2026 | Section 4, V-08: IPv4 and mobile IPv6 check steps ticked. IPv6 scan not possible from mobile data. Hand-back and sanitising stay open until the remaining files are done | IPv4 scan run |
 | 0.12 | 31st October 2026 | Section 4, V-08: router IPv6 setting ticked | Owner check |
 | 0.13 | 2nd November 2026 | Section 4, V-08: IPv6 address, scan, hand-back and sanitising steps ticked, VPN method noted | IPv6 scan run |
+| 0.14 | 2nd November 2026 | Section 5 ticked. Phase 0 complete | Owner closed Phase 0 |

@@ -1,6 +1,6 @@
 # AI Usage
 
-> **Status:** Draft v0.25 · Last updated: 2nd November 2026
+> **Status:** Draft v0.26 · Last updated: 2nd November 2026
 > **Author:** William Drummond
 > **Related:** [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md)
 
@@ -52,6 +52,7 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 31st October 2026 | Recorded my router re-check, the router's IPv6 settings and my temporary acceptance of the untested IPv6 risk in documents 02 and 05, the checklist and the matrix. Explained that the settings suggest inbound IPv6 is blocked but do not test it | I checked the router and decided to accept the risk until I can run the scan. Staged changes for me to review |
 | 1st November 2026 | Drafted `docs/phase1-checklist.md` from documents 02 to 05, then pointed out three problems in its own draft: Tailscale came after the admin interface was limited to the VPN, the removal of its own SSH key came before the final checks, and the Tailscale section had no tests | I asked for the draft, reviewed the diff and approved the three fixes. The checklist is still a draft, and its steps are not approved until its section 1 is complete |
 | 2nd November 2026 | Suggested other ways to scan IPv6 from outside, worked through the VPN having no IPv6 at first, used control scans to show that an all-open result came from the VPN path (it stopped with the VPN's accelerator and malware filter off), and gave a forced route so the scan from the home Wi-Fi went through the VPN. Found that my first sanitised IPv6 files still held the NAS addresses and my home folder path, re-ran them through `scripts/sanitise.py`, added the headers and recorded the result in documents 02 and 05, the checklist, the matrix and the README | I ran the scans, changed the VPN settings and checked the routes. I did not run tcpdump. I set V-08 to Fail and reviewed the staged changes |
+| 2nd November 2026 | Pointed out that only the ratings were needed to meet the Phase 0 completion check, and proposed moving the rest to Phase 1. Chose the likelihood and impact scores that give the Low ratings for T-06 and T-10, and wrote their reasons from its earlier suggestions. Filled in the effect on rating and the proposed requirement for each finding, updated the register, README and checklists, and moved open items to the Phase 1 checklist | I decided T-02 High, T-03 High and T-19 Medium, accepted the suggested reasons and closed Phase 0. I asked for future phases to stay to the point, with optional investigation marked as optional. Staged changes for me to review |
 
 ## 4. Revision log
 
@@ -82,3 +83,4 @@ Claude Code (Anthropic), working in the local repository under written rules: no
 | 0.23 | 31st October 2026 | Added log entry for the router IPv6 settings and temporary risk acceptance | Keep the log current |
 | 0.24 | 1st November 2026 | Added log entry for the Phase 1 checklist draft | Keep the log current |
 | 0.25 | 2nd November 2026 | Added log entry for the V-08 IPv6 scan | Keep the log current |
+| 0.26 | 2nd November 2026 | Added log entry for closing Phase 0 | Keep the log current |
