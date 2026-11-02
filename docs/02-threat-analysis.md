@@ -1,6 +1,6 @@
 # 02 – Threat Analysis
 
-> **Status:** Draft v0.11 · Last updated: 31st October 2026
+> **Status:** Draft v0.12 · Last updated: 2nd November 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (asset IDs, data flows, trust boundaries and phases used here) · 03-security-requirements.md (requirements derived from this analysis, not yet written) · [05-verification.md](05-verification.md) (tests that confirm each treatment)
 > **Note:** This is a starting draft prepared with AI assistance. Every rating and treatment is a proposal. Review each one, change anything that does not match your setup or your own judgement, replace anything in **[TODO]** or square brackets, and record what you accepted, changed or rejected in `docs/ai-usage.md`. Record meaningful changes in the revision log at the end.
@@ -179,7 +179,7 @@ What the Phase 0 tests in document 05, section 4, have shown for each threat. Ra
 | T-13 | V-01, V-02, V-04, V-05, V-11 | rpcbind, LLMNR and mDNS listen on all interfaces and are reachable from the LAN (FND-04). HTTP admin interface. SMB not running (V-01, V-04, re-checked 31st October 2026), although OMV shows it as enabled (V-11). Bluetooth running | Medium, no change (owner decision, 31st October 2026) |
 | T-14 | V-05, V-10 | 12 pending updates, none from a security suite. Unattended upgrades enabled, but none installed. openmediavault update pending (FND-06) | Medium, no change (owner decision, 31st October 2026) |
 | T-18 | V-05, V-06 | 179 unsafe shutdowns over the SSD's life, not attributable to the NAS as the SSD was used in a laptop before. The Lynis reboot warning is a false positive (V-05, investigated 31st October 2026) | Medium, no change (owner decision, 31st October 2026) |
-| T-03, T-19 | V-07, V-08 | V-07: no port forwards, no DMZ host, DDNS off, not behind CGNAT. UPnP is on, with no mappings (FND-07). The NAS has public IPv6 addresses, so exposure depends on the router's IPv6 firewall. V-08 IPv4: 80, 443, 7547, 8080 and 8443/TCP open on the public address, not yet identified, and the NAS ports 22, 111 and 5355 not open (FND-09). V-08 IPv6 could not be run, as the mobile network has no IPv6, so IPv6 exposure is not confirmed. Router: no IPv6 pinholes, not yet tested. Risk temporarily accepted until the scan is run, by 2nd November 2026 (owner decision, 31st October 2026) | Waiting for V-08 |
+| T-03, T-19 | V-07, V-08 | V-07: no port forwards, no DMZ host, DDNS off, not behind CGNAT. UPnP is on, with no mappings (FND-07). The NAS has public IPv6 addresses, so exposure depends on the router's IPv6 firewall. V-08 IPv4: 80, 443, 7547, 8080 and 8443/TCP open on the public address, not yet identified, and the NAS ports 22, 111 and 5355 not open (FND-09). V-08 IPv6 (1st to 2nd November 2026, through a VPN, as the mobile network has no IPv6): all ports filtered on both NAS addresses, matching the router setting of no IPv6 pinholes. Not confirmed with tcpdump that the probes reached the home network. The temporary risk acceptance is closed | Waiting for V-08 (IPv6 done, open IPv4 ports not yet identified) |
 
 ## 6. High-rated threats in detail
 
@@ -346,3 +346,4 @@ Residual risk after Phase 4, and any risk accepted knowingly, is recorded in `07
 | 0.9 | 31st October 2026 | Sections 5.4 and 11: T-10, T-11 and the only-copy question updated, nothing is stored on the NAS yet (drafted with AI assistance) | Owner correction |
 | 0.10 | 31st October 2026 | Section 5.4: rating decisions recorded for T-04, T-06, T-10 to T-14 and T-18. T-06 and T-10 change, register not yet updated. T-02 stays High until V-08. V-08 IPv4 result added for T-03 and T-19. SMB re-check and Lynis result added for T-12, T-13 and T-18 (drafted with AI assistance) | Owner decisions and results |
 | 0.11 | 31st October 2026 | Section 5.4: router IPv6 settings and temporary risk acceptance added for T-03 and T-19. Section 11: router question answered (drafted with AI assistance) | Owner check and decision |
+| 0.12 | 2nd November 2026 | Section 5.4: V-08 IPv6 result added for T-03 and T-19, temporary risk acceptance closed (drafted with AI assistance) | IPv6 scan run |

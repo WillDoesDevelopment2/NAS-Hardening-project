@@ -1,0 +1,15 @@
+Test ID: V-08
+Date: Sun Nov  1 23:32:53 2026 GMT (UK time)
+Command: nmap -6 -Pn -sS -e proton0 -p- <NAS-IPV6> (<IPV6-1> below is global IPv6 address 1 of the NAS)
+Run from: Laptop on the home Wi-Fi, with all traffic to the NAS forced through a VPN that has IPv6 (VPN Accelerator and NetShield off). A /128 route for each NAS address via the VPN interface was added before the scan and still showed the VPN interface after it. tcpdump on the NAS was not run
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<IPV6-1>, <USER>)
+Edited: Placeholders made consistent and header added by hand after sanitising. Replaces an earlier run with the VPN settings on, which reported every port open and was discarded
+----------------------------------------
+# Nmap 7.94SVN scan initiated Sun Nov  1 23:32:53 2026 as: nmap -6 -Pn -sS -e proton0 -p- -oN /home/<USER>/NAS-Evidence/phase0/manual/V-08_external-scan-ipv6-1-rerun.txt <IPV6-1>
+Nmap scan report for <IPV6-1>
+Host is up.
+All 65535 scanned ports on <IPV6-1> are in ignored states.
+Not shown: 65535 filtered tcp ports (no-response)
+
+# Nmap done at Mon Nov  2 03:11:49 2026 -- 1 IP address (1 host up) scanned in 13135.85 seconds
