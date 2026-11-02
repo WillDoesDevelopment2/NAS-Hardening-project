@@ -1,6 +1,6 @@
 # 03 – Security Requirements
 
-> **Status:** Draft v0.2 · Last updated: 31st October 2026
+> **Status:** Draft v0.4 · Last updated: 2nd November 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) · [02-threat-analysis.md](02-threat-analysis.md) (threats and treatment plan) · [04-design-decisions.md](04-design-decisions.md) · [05-verification.md](05-verification.md) (tests and Phase 0 findings) · [../traceability/requirements-matrix.csv](../traceability/requirements-matrix.csv)
 > **Note:** This is an outline drafted with AI assistance from the treatment plan in document 02, section 8, and the Phase 0 findings in document 05, section 5. Every requirement is **Proposed** until I accept, change or reject it. Priorities, target values and decisions are mine and are left as **[TODO]**. Record what I accepted, changed or rejected in `docs/ai-usage.md`, and meaningful changes in the revision log at the end.
@@ -31,9 +31,9 @@ This document turns each threat treatment into numbered requirements (SR-01 onwa
 | SR-06 | Repeated failed SSH logins are limited or blocked **[TODO: threshold]** | T-04 | Baseline: no fail2ban or similar service (V-04) | 1 | New test **[TODO]** | **[TODO]** | Proposed |
 | SR-07 | Only services listed in the service inventory (document 01, section 6.3) listen on network interfaces. Services that are not needed are disabled | T-13, T-02 | FND-04 | 1 | V-01, V-02, V-04 | **[TODO]** | Proposed |
 | SR-08 | The router has no port forwards to the NAS, no DMZ host and UPnP disabled | T-03, T-19 | FND-07 | 1 | V-07 | **[TODO]** | Proposed |
-| SR-09 | No NAS service is reachable from the internet over IPv4 or IPv6 | T-03 | V-08 not yet run | 1 | V-08 | **[TODO]** | Proposed |
+| SR-09 | No NAS service is reachable from the internet over IPv4 or IPv6 | T-03 | FND-09 | 1 | V-08 | **[TODO]** | Proposed |
 | SR-10 | Security updates for Debian and openmediavault are installed within **[TODO]** days of release, following a written update routine, with an image of the boot media taken before major upgrades | T-02, T-14 | FND-06 | 1 | V-10 | **[TODO]** | Proposed |
-| SR-11 | Each share is accessible only to the accounts that need it, and guest access is disabled | T-12 | V-11 not yet run | 1 | V-11 | **[TODO]** | Proposed |
+| SR-11 | Each share is accessible only to the accounts that need it, and guest access is disabled | T-12 | Baseline: no shares, SMB enabled with guest access not allowed (V-11) | 1 | V-11 | **[TODO]** | Proposed |
 | SR-12 | Data on the SSD is encrypted at rest, with a recorded unlock approach | T-11 | FND-08 | 1 | V-14 | **[TODO]** | Proposed |
 | SR-13 | SSD health is monitored, and a warning reaches me **[TODO: how]** | T-10, T-18 | Baseline: SSD healthy, not yet in use (V-06, V-14) | 1 | V-06, new alert test **[TODO]** | **[TODO]** | Proposed |
 | SR-14 | Installed software is checked for known vulnerabilities at least every 12 hours, and the result is visible to me | T-02, T-06, T-14 | FND-06 | 1 | New test **[TODO]**. Design: D-03 | **[TODO]** | Proposed |
@@ -50,7 +50,7 @@ These threats are treated in later phases (document 02, section 8). Requirements
 | T-07 Lateral movement on the LAN | 1 | Depends on router support for VLAN or guest isolation **[TODO: owner to check]** |
 | T-08 Lost or compromised client device | 1, 2 | Per-device access and a revocation procedure |
 | T-09 Accidental deletion or overwrite | 3 | Snapshots or versioning |
-| T-10 SSD fails while the NAS holds the only copy | 3 | Second copy and restore test. V-15 not yet run. SR-13 covers monitoring only |
+| T-10 SSD fails while the NAS holds the only copy | 3 | Second copy and restore test. Nothing stored on the NAS yet (V-15). SR-13 covers monitoring only |
 | T-15 Backup keys lost or backups cannot be restored | 3 | |
 | T-16 Tailscale account takeover | 1, 2 | |
 | T-17 VPN key mismanagement | 2 | |
@@ -63,7 +63,7 @@ These threats are treated in later phases (document 02, section 8). Requirements
 - [ ] SR-02: is HTTPS required for the admin interface, or only evaluated?
 - [ ] SR-06 and SR-10: threshold and number of days
 - [ ] SR-13: how warnings should reach me
-- [ ] Does each Phase 0 finding have a requirement? (FND-01 to FND-08 are mapped above, but SR-12 covers the SSD only, not the SD card in FND-08 **[TODO]**. Once accepted, the SR IDs go into document 05, section 5, and the matrix)
+- [ ] Does each Phase 0 finding have a requirement? (FND-01 to FND-09 are mapped above, but SR-12 covers the SSD only, not the SD card in FND-08, and SR-09 covers NAS services only, not ports answered by the router in FND-09 **[TODO]**. Once accepted, the SR IDs go into document 05, section 5, and the matrix)
 
 ## 6. Revision log
 
@@ -71,3 +71,5 @@ These threats are treated in later phases (document 02, section 8). Requirements
 |---|---|---|---|
 | 0.1 | 30th October 2026 | Outline created: SR-01 to SR-16 drafted from the document 02 treatment plan and the Phase 0 findings, all Proposed (drafted with AI assistance) | Prepare requirements while Phase 0 finishes |
 | 0.2 | 31st October 2026 | Section 3: SR-12 linked to FND-08. Section 5: open check updated, SR-12 does not cover the SD card (drafted with AI assistance) | New finding from V-14 |
+| 0.3 | 31st October 2026 | Section 3: SR-09 linked to FND-09. Section 5: open check updated (drafted with AI assistance) | New finding from V-08 |
+| 0.4 | 2nd November 2026 | Sections 3 and 4: out-of-date notes on V-11 and V-15 replaced with the results | Phase 0 complete |

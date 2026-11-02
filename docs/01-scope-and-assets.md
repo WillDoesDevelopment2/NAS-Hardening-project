@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.12 · Last updated: 31st October 2026
+> **Status:** Draft v0.13 · Last updated: 31st October 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -119,7 +119,7 @@ Record what actually runs and listens, using `ss -tulpn`, then compare it with w
 |---|---|---|---|---|
 | OMV web interface | 80 | Yes | LAN and VPN only | nginx on 80/TCP, all interfaces (IPv4 and IPv6), plain HTTP (V-04) |
 | SSH | 22/TCP | Yes | LAN and VPN only | 22/TCP, all interfaces (IPv4 and IPv6). Root login and password login enabled (V-09) |
-| SMB file sharing | 445/TCP | To be decided (see section 6.2) | LAN and VPN only | Not running: smbd and nmbd inactive and disabled (V-04). Shown as enabled in OMV on 31st October 2026, minimum protocol SMB2, guest access not allowed, no shares (V-11). Difference not yet explained **[TODO]** |
+| SMB file sharing | 445/TCP | To be decided (see section 6.2) | LAN and VPN only | Not running: smbd and nmbd inactive and disabled (V-04). Shown as enabled in OMV on 31st October 2026, minimum protocol SMB2, guest access not allowed, no shares (V-11). Re-checked on the NAS the same day: inactive and disabled, nothing listening on 139 or 445. Still inactive after the pending OMV change was applied |
 | Tailscale client | Outbound connections, UDP. **SUBJECT TO CHANGE** | Phase 1 | Outbound only, no inbound ports | Not running (V-04) |
 | WireGuard | UDP, port chosen by me | Phase 2 | One UDP port from the internet (documented exception) | Not running (V-04) |
 | Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing | Not installed (owner confirmed 29th October 2026). No service or open port (V-01, V-04) |
@@ -311,3 +311,4 @@ The project succeeds when:
 | 0.10 | 29th October 2026 | Sections 6.2, 6.3 and 14: case control software not installed. Section 6.3: scan results added to the extra service rows (drafted with AI assistance) | Owner confirmed, V-01 and V-02 results |
 | 0.11 | 30th October 2026 | Sections 10 and 14: CGNAT answered from V-07 (drafted with AI assistance) | Owner check |
 | 0.12 | 31st October 2026 | Section 6.3: SMB row updated from V-11. Section 14: SSD wipe answered (drafted with AI assistance) | Owner results |
+| 0.13 | 31st October 2026 | Section 6.3: SMB re-check added (drafted with AI assistance) | Owner results |
