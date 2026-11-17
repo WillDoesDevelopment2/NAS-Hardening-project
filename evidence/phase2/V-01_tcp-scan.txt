@@ -1,0 +1,15 @@
+# V-01, run by Claude Code from the laptop on the LAN, 10th November 2026, 14:11 UK time (the laptop clock in the nmap header is not on UK time)
+# Nmap 7.94SVN scan initiated Wed Nov 11 01:11:41 2026 as: nmap -sT -p- -oN V-01_tcp-scan_2026-11-10_1411.txt <NAS-IP>
+Nmap scan report for <USER>.lan (<NAS-IP>)
+Host is up (0.015s latency).
+Not shown: 65531 closed tcp ports (conn-refused)
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+443/tcp open  https
+445/tcp open  microsoft-ds
+
+# Nmap done at Wed Nov 11 01:11:46 2026 -- 1 IP address (1 host up) scanned in 4.87 seconds
+
+# Port 80 check: curl http://<NAS-IP>/
+HTTP 301 -> https://<NAS-IP>:443/

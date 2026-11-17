@@ -1,0 +1,55 @@
+Owner ran on the NAS, 6th November 2026, pasted into Claude Code:
+  sudo journalctl -b -1 -n 25 --no-pager
+  sudo journalctl -b -p err --no-pager
+Full output kept in the session transcript. Key lines:
+- Previous boot ends 23:58:41 with units stopping in order, journal rotate and sync requested
+- var-log.mount: Mount process exited, status=32; Failed unmounting var-log.mount
+- This boot: kernel hwmon: Undervoltage detected! (fake clock time, early boot)
+- Timed out waiting for device by-uuid of the Btrfs file system (90 s, SSD still locked)
+- systemd-networkd-wait-online timeout (twice, second at 00:14)
+- monit: /srv file system not mounted, 00:02:01 to 00:03:32 (before unlock)
+- OMV web login as admin from a Tailscale address at 00:02:36
+- No ext4, Btrfs or fsck errors
+
+== Raw: journalctl -b -1 -n 25
+Nov 05 23:58:40 <USER> systemd[1]: var-cache-apt-archives.mount: Deactivated successfully.
+Nov 05 23:58:40 <USER> systemd[1]: Unmounted var-cache-apt-archives.mount - /var/cache/apt/archives.
+Nov 05 23:58:41 <USER> systemd[1]: var-cache-samba.mount: Deactivated successfully.
+Nov 05 23:58:41 <USER> systemd[1]: Unmounted var-cache-samba.mount - /var/cache/samba.
+Nov 05 23:58:41 <USER> systemd[1]: var-lib-apt-lists.mount: Deactivated successfully.
+Nov 05 23:58:41 <USER> systemd[1]: Unmounted var-lib-apt-lists.mount - /var/lib/apt/lists.
+Nov 05 23:58:41 <USER> systemd[1]: var-lib-dpkg-updates.mount: Deactivated successfully.
+Nov 05 23:58:41 <USER> systemd[1]: Unmounted var-lib-dpkg-updates.mount - /var/lib/dpkg/updates.
+Nov 05 23:58:41 <USER> systemd[1]: var-lib-monit.mount: Deactivated successfully.
+Nov 05 23:58:41 <USER> systemd[1]: Unmounted var-lib-monit.mount - /var/lib/monit.
+Nov 05 23:58:41 <USER> systemd[1]: var-lib-openmediavault-rrd.mount: Deactivated successfully.
+Nov 05 23:58:41 <USER> systemd[1]: Unmounted var-lib-openmediavault-rrd.mount - /var/lib/openmediavault/rrd.
+Nov 05 23:58:41 <USER> systemd[1]: var-lib-rrdcached.mount: Deactivated successfully.
+Nov 05 23:58:41 <USER> systemd[1]: Unmounted var-lib-rrdcached.mount - /var/lib/rrdcached.
+Nov 05 23:58:41 <USER> systemd[1]: var-log.mount: Mount process exited, code=exited, status=32/n/a
+Nov 05 23:58:41 <USER> systemd[1]: Failed unmounting var-log.mount.
+Nov 05 23:58:41 <USER> systemd[1]: var-tmp.mount: Deactivated successfully.
+Nov 05 23:58:41 <USER> systemd[1]: Unmounted var-tmp.mount.
+Nov 05 23:58:41 <USER> systemd[1]: systemd-fsck@dev-disk-by\x2dpartuuid-<PARTUUID>.service: Deactivated successfully.
+Nov 05 23:58:41 <USER> systemd[1]: Stopped systemd-fsck@dev-disk-by\x2dpartuuid-<PARTUUID>.service - File System Check on /dev/disk/by-partuuid/<PARTUUID>.
+Nov 05 23:58:41 <USER> systemd[1]: Removed slice system-systemd\x2dfsck.slice - Slice /system/systemd-fsck.
+Nov 05 23:58:41 <USER> systemd-journald[695]: System Journal is 152M, max 1G, 872M free.
+Nov 05 23:58:41 <USER> systemd-journald[695]: Received client request to rotate journal, rotating.
+Nov 05 23:58:41 <USER> systemd-journald[695]: Vacuuming done, freed 0B of archived journals.
+Nov 05 23:58:41 <USER> systemd-journald[695]: Received client request to sync journal.
+
+== Raw: journalctl -b -p err
+Oct 26 15:39:10 <USER> systemd-modules-load[323]: Failed to find module 'softdog'
+Oct 26 15:39:11 <USER> systemd-udevd[371]: /usr/lib/udev/rules.d/90-alsa-restore.rules:18 GOTO="alsa_restore_std" has no matching label, ignoring.
+Oct 26 15:39:11 <USER> systemd-udevd[371]: /usr/lib/udev/rules.d/90-alsa-restore.rules:22 GOTO="alsa_restore_std" has no matching label, ignoring.
+Oct 26 15:39:13 <USER> kernel: hwmon hwmon4: Undervoltage detected!
+Oct 26 15:39:14 <USER> wpa_supplicant[828]: nl80211: kernel reports: Registration to specific type not supported
+Oct 26 15:39:16 <USER> wpa_supplicant[828]: bgscan simple: Failed to enable signal strength monitoring
+Oct 26 15:39:17 <USER> resolvconf[1060]: Failed to resolve interface "NetworkManager": No such device
+Oct 26 15:39:18 <USER> resolvconf[1161]: Failed to resolve interface "NetworkManager": No such device
+Oct 26 15:40:40 <USER> systemd[1]: Timed out waiting for device dev-disk-by\x2duuid-<UUID-4>.device.
+Oct 26 15:41:11 <USER> systemd-networkd-wait-online[456]: Timeout occurred while waiting for network connectivity.
+Oct 26 15:41:11 <USER> systemd[1]: Failed to start systemd-networkd-wait-online.service - Wait for Network to be Configured.
+Nov 06 00:02:01 to 00:03:32 <USER> monit[1233]: /srv/dev-disk-by-uuid-<UUID-4> not mounted / not a mountpoint (repeated, see transcript)
+Nov 06 00:02:36 <USER> openmediavault-webgui[1519]: Authorized login from <TAILSCALE address> (username=admin, Firefox)
+Nov 06 00:14:32 <USER> systemd-networkd-wait-online[6042]: Timeout occurred while waiting for network connectivity.

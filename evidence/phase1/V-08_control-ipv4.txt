@@ -1,0 +1,20 @@
+Test ID: V-08
+Date: Sat Nov 7 12:50:22 2026 GMT (UK time)
+Command: nmap -Pn -sS -e <VPN-INTERFACE> -p 22,80,7547,31337 scanme.nmap.org (<RDNS-NAME-1> below is scanme.nmap.org, a public test host)
+Run from: Laptop outside the home network, through a commercial VPN over WireGuard (accelerator and malware filter off, IPv6 on), Tailscale stopped. Routes to the three targets checked through the VPN interface at 12:50 UK time
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<RDNS-NAME-1>, <IP-1>, <IPV6-1>, <USER>). Output file path removed from the command line
+Edited: Header added by Claude Code, 8th November 2026. Control scan run just before the V-08 scans. Earlier controls the same day are not used (document 05, section 7)
+----------------------------------------
+# Nmap 7.94SVN scan initiated Sat Nov  7 12:50:22 2026 as: nmap -Pn -sS -e proton0 -p 22,80,7547,31337 scanme.nmap.org
+Nmap scan report for <RDNS-NAME-1> (<IP-1>)
+Host is up (0.17s latency).
+Other addresses for scanme.nmap.org (not scanned): <IPV6-1>
+
+PORT      STATE  SERVICE
+22/tcp    open   ssh
+80/tcp    open   http
+7547/tcp  closed cwmp
+31337/tcp closed Elite
+
+# Nmap done at Sat Nov  7 12:50:35 2026 -- 1 IP address (1 host up) scanned in 13.25 seconds

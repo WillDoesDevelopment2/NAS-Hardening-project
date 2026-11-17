@@ -1,0 +1,56 @@
+Test ID: V-04
+Date: 2026-11-04 14:26:52 GMT
+Command: sudo ss -tulpn; systemctl list-units --type=service --state=running; systemctl is-active and is-enabled for rpcbind.service, rpcbind.socket, avahi-daemon.service, avahi-daemon.socket and bluetooth.service; resolvectl status (Protocols lines)
+Run from: Claude Code over SSH (D-02), with the owner's approval. After the checklist section 6 service changes, before HTTPS
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (IPv6 address x1)
+----------------------------------------
+# V-04 run Wed Nov 4 14:26:52 GMT 2026
+Netid State  Recv-Q Send-Q               Local Address:Port Peer Address:PortProcess                                                                                                                         
+udp   UNCONN 0      0                       127.0.0.54:53        0.0.0.0:*    users:(("systemd-resolve",pid=370,fd=15))                                                                                      
+udp   UNCONN 0      0                       127.0.0.53:53        0.0.0.0:*    users:(("systemd-resolve",pid=370,fd=13))                                                                                      
+udp   UNCONN 0      0                        127.0.0.1:323       0.0.0.0:*    users:(("chronyd",pid=1168,fd=5))                                                                                              
+udp   UNCONN 0      0                            [::1]:323             *:*    users:(("chronyd",pid=1168,fd=6))                                                                                              
+udp   UNCONN 0      0      [<IPV6-1>]:546             *:*    users:(("NetworkManager",pid=814,fd=28))                                                                                       
+tcp   LISTEN 0      4096                    127.0.0.54:53        0.0.0.0:*    users:(("systemd-resolve",pid=370,fd=16))                                                                                      
+tcp   LISTEN 0      4096                 127.0.0.53%lo:53        0.0.0.0:*    users:(("systemd-resolve",pid=370,fd=14))                                                                                      
+tcp   LISTEN 0      511                        0.0.0.0:80        0.0.0.0:*    users:(("nginx",pid=1178,fd=7),("nginx",pid=1177,fd=7),("nginx",pid=1176,fd=7),("nginx",pid=1175,fd=7),("nginx",pid=1174,fd=7))
+tcp   LISTEN 0      128                        0.0.0.0:22        0.0.0.0:*    users:(("sshd",pid=977,fd=6))                                                                                                  
+tcp   LISTEN 0      511                           [::]:80           [::]:*    users:(("nginx",pid=1178,fd=8),("nginx",pid=1177,fd=8),("nginx",pid=1176,fd=8),("nginx",pid=1175,fd=8),("nginx",pid=1174,fd=8))
+tcp   LISTEN 0      128                           [::]:22           [::]:*    users:(("sshd",pid=977,fd=7))                                                                                                  
+## services
+  chrony.service                 loaded active running chrony, an NTP client/server
+  cron.service                   loaded active running Regular background program processing daemon
+  dbus.service                   loaded active running D-Bus System Message Bus
+  fail2ban.service               loaded active running Fail2Ban Service
+  getty@tty1.service             loaded active running Getty on tty1
+  monit.service                  loaded active running Pro-active monitoring utility for unix systems
+  NetworkManager.service         loaded active running Network Manager
+  nginx.service                  loaded active running A high performance web server and a reverse proxy server
+  openmediavault-engined.service loaded active running The OpenMediaVault engine daemon that processes the RPC request
+  php8.4-fpm.service             loaded active running The PHP 8.4 FastCGI Process Manager
+  rsyslog.service                loaded active running System Logging Service
+  serial-getty@ttyAMA10.service  loaded active running Serial Getty on ttyAMA10
+  ssh.service                    loaded active running OpenBSD Secure Shell server
+  systemd-journald.service       loaded active running Journal Service
+  systemd-logind.service         loaded active running User Login Management
+  systemd-networkd.service       loaded active running Network Configuration
+  systemd-resolved.service       loaded active running Network Name Resolution
+  systemd-udevd.service          loaded active running Rule-based Manager for Device Events and Files
+  unattended-upgrades.service    loaded active running Unattended Upgrades Shutdown
+  user@1000.service              loaded active running User Manager for UID 1000
+  user@1001.service              loaded active running User Manager for UID 1001
+  wpa_supplicant.service         loaded active running WPA supplicant
+## states
+inactive
+inactive
+inactive
+inactive
+inactive
+enabled
+disabled
+masked
+disabled
+         Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+         Protocols: -DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported

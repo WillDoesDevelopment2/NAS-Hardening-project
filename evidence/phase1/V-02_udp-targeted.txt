@@ -1,0 +1,18 @@
+Test ID: V-02
+Date: 2026-11-04 15:50 GMT
+Command: sudo nmap -sU -p 111,5353,5355 <NAS-IP> (the three ports turned off under D-13; 5355 is not in the top 100)
+Run from: Laptop on the home LAN (Wi-Fi), run by the owner with sudo. After the checklist section 6 changes
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<NAS-IP>, <USER>, MAC address). Output file path removed from the command line. The nmap timestamps are in the laptop's time zone (AEDT, UK time + 11 hours)
+----------------------------------------
+# Nmap 7.94SVN scan initiated Thu Nov  5 02:50:58 2026 as: nmap -sU -p 111,5353,5355 <NAS-IP>
+Nmap scan report for <NAS-IP>
+Host is up (0.052s latency).
+
+PORT     STATE  SERVICE
+111/udp  closed rpcbind
+5353/udp closed zeroconf
+5355/udp closed llmnr
+MAC Address: <MAC-1> (Unknown)
+
+# Nmap done at Thu Nov  5 02:50:58 2026 -- 1 IP address (1 host up) scanned in 0.38 seconds

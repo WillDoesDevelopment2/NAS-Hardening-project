@@ -1,0 +1,15 @@
+Test ID: V-08
+Date: Sat Nov 7 13:13:30 2026 GMT (UK time)
+Command: nmap -Pn -sS -e <VPN-INTERFACE> -p- --stats-every 15m <PUBLIC-IP> (<PUBLIC-IP> is the address scanned as the home public IPv4 address. It differs from the address used in Phase 0. The owner confirmed on 8th November 2026 that it was the home public address on 7th November 2026)
+Run from: Laptop outside the home network, through a commercial VPN over WireGuard (accelerator and malware filter off, IPv6 on), Tailscale stopped. Routes to the three targets checked through the VPN interface at 12:50 UK time
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<PUBLIC-IP>, <USER>). Output file path removed from the command line
+Edited: Header added by Claude Code, 8th November 2026. Run in parallel with the two IPv6 scans. tcpdump on the NAS was not run
+----------------------------------------
+# Nmap 7.94SVN scan initiated Sat Nov  7 13:13:30 2026 as: nmap -Pn -sS -e proton0 -p- --stats-every 15m <PUBLIC-IP>
+Nmap scan report for <PUBLIC-IP>
+Host is up.
+All 65535 scanned ports on <PUBLIC-IP> are in ignored states.
+Not shown: 65535 filtered tcp ports (no-response)
+
+# Nmap done at Sat Nov  7 16:52:25 2026 -- 1 IP address (1 host up) scanned in 13135.39 seconds

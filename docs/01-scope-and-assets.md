@@ -1,6 +1,6 @@
 # 01 – Scope and Assets
 
-> **Status:** Draft v0.13 · Last updated: 31st October 2026
+> **Status:** Draft v0.20 · Last updated: 15th November 2026
 > **Author:** William Drummond
 > **Related:** [02-threat-analysis.md](02-threat-analysis.md) (uses the asset IDs, trust boundaries and phases defined here)
 > **Note:** This is a starting draft.
@@ -115,20 +115,22 @@ These guide decisions throughout the project, and I will refer back to them when
 
 Record what actually runs and listens, using `ss -tulpn`, then compare it with what should. Anything unexpected is a finding.
 
-| Service | Typical port | Needed? | Reachable from (target) | Baseline observed **IN PROCESS** |
-|---|---|---|---|---|
-| OMV web interface | 80 | Yes | LAN and VPN only | nginx on 80/TCP, all interfaces (IPv4 and IPv6), plain HTTP (V-04) |
-| SSH | 22/TCP | Yes | LAN and VPN only | 22/TCP, all interfaces (IPv4 and IPv6). Root login and password login enabled (V-09) |
-| SMB file sharing | 445/TCP | To be decided (see section 6.2) | LAN and VPN only | Not running: smbd and nmbd inactive and disabled (V-04). Shown as enabled in OMV on 31st October 2026, minimum protocol SMB2, guest access not allowed, no shares (V-11). Re-checked on the NAS the same day: inactive and disabled, nothing listening on 139 or 445. Still inactive after the pending OMV change was applied |
-| Tailscale client | Outbound connections, UDP. **SUBJECT TO CHANGE** | Phase 1 | Outbound only, no inbound ports | Not running (V-04) |
-| WireGuard | UDP, port chosen by me | Phase 2 | One UDP port from the internet (documented exception) | Not running (V-04) |
-| Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing | Not installed (owner confirmed 29th October 2026). No service or open port (V-01, V-04) |
-| Other (discovery services, media services, etc.) | |  |  | See the rows below |
-| rpcbind | 111/TCP and UDP | **[TODO]** | | All interfaces, open from the LAN (V-01, V-02, V-04, FND-04) |
-| mDNS (Avahi) | 5353/UDP and one random high UDP port | **[TODO]** | | All interfaces, 5353 open from the LAN (V-02, V-04, FND-04) |
-| LLMNR (systemd-resolved) | 5355/TCP and UDP | **[TODO]** | | All interfaces, 5355/TCP open from the LAN (V-01, V-04, FND-04) |
-| DHCPv6 client (NetworkManager) | 546/UDP | **[TODO]** | | Link-local address (V-04, FND-04) |
-| DNS stub resolver, chrony | 53, 323 | | | Localhost only (V-04) |
+| Service | Typical port | Needed? | Reachable from (target) | Baseline observed **IN PROCESS** | Phase 1 (4th November 2026, V-01, V-04) |
+|---|---|---|---|---|---|
+| OMV web interface | 80 | Yes | LAN and VPN only | nginx on 80/TCP, all interfaces (IPv4 and IPv6), plain HTTP (V-04) | HTTPS on 443 with a self-signed certificate. 80 only redirects to HTTPS (D-04, V-21) |
+| SSH | 22/TCP | Yes | LAN and VPN only | 22/TCP, all interfaces (IPv4 and IPv6). Root login and password login enabled (V-09) | 22/TCP. Root login and password login off, keys only. fail2ban (D-07) |
+| SMB file sharing | 445/TCP | To be decided (see section 6.2) | LAN and VPN only | Not running: smbd and nmbd inactive and disabled (V-04). Shown as enabled in OMV on 31st October 2026, minimum protocol SMB2, guest access not allowed, no shares (V-11). Re-checked on the NAS the same day: inactive and disabled, nothing listening on 139 or 445. Still inactive after the pending OMV change was applied | smbd on 445/TCP, all interfaces (IPv4 and IPv6). SMB 3 only, encryption required, no guest access, one share for `<DAILY-USER>` (D-05, D-15, V-11). Reached over Tailscale through the access rules. 139/TCP closed with `smb ports = 445` (FND-11). nmbd off (V-04, 6th November 2026) |
+| Tailscale client | 41641/UDP, and outbound connections to Tailscale | Phase 1 | Accepted (owner, 5th November 2026): 41641/UDP from the LAN only, as the router forwards nothing and UPnP is off (V-07, V-08). Peer API on Tailscale addresses only. Was "outbound only, no inbound ports", which V-04 showed is not how the client works | Not running (V-04) | tailscaled on 41641/UDP, all interfaces (IPv4 and IPv6), for WireGuard traffic. Two TCP ports for Tailscale's peer API, on the Tailscale addresses only. Logging to Tailscale off (V-04, 5th November 2026) |
+| WireGuard | UDP, port chosen by me | Phase 2. Kept on the home network for the laptop only (D-16, 12th November 2026). **Turned off on 15th November 2026** (D-16 change), as the NAS is reachable only over Tailscale. Files kept for a rollback | One UDP port from the internet (documented exception). Not used: no port forward, so the home network only (D-16, D-19) | Not running (V-04) | Phase 2 (10th November 2026): `<WG-PORT>`/UDP, all interfaces (IPv4 and IPv6), kernel socket (V-04). `open\|filtered` from the LAN (V-02). No router forward. Firewall on `wg0` allows only TCP 22, 443 and 445 from peers (D-18). 15th November 2026: port no longer listening (V-04) |
+| Case control software | Local only. **TO BE CONFIRMED** | Optional | Nothing | Not installed (owner confirmed 29th October 2026). No service or open port (V-01, V-04) | Not installed |
+| Raspberry Pi Connect (`rpi-connect-lite`) | Outbound connections to Raspberry Pi's service, no listening port | No. Tailscale is the remote access method | Nothing | Installed with the Raspberry Pi OS base, not noticed until the Phase 1 upgrade (V-10). Not seen by V-01 or V-04, as it does not listen | Removed with `apt remove --purge` (5th November 2026), confirmed gone |
+| Other (discovery services, media services, etc.) | |  |  | See the rows below |  |
+| rpcbind | 111/TCP and UDP | No (D-13) | | All interfaces, open from the LAN (V-01, V-02, V-04, FND-04) | Off: disabled and masked (D-13) |
+| mDNS (Avahi) | 5353/UDP and one random high UDP port | No, unless Apple devices need it (D-13) | | All interfaces, 5353 open from the LAN (V-02, V-04, FND-04) | Off: OMV Zeroconf setting off, service disabled (D-13) |
+| LLMNR (systemd-resolved) | 5355/TCP and UDP | No (D-13) | | All interfaces, 5355/TCP open from the LAN (V-01, V-04, FND-04) | Off: `LLMNR=no` (D-13) |
+| WS-Discovery (`wsdd-server`) | 3702/UDP, 5357/TCP and random high UDP ports | No. Only lets Windows list the NAS under Network | | Not running | Started by OMV with SMB, on the LAN, Tailscale and link-local addresses (V-04, 6th November 2026). Off: `OMV_WSDD_ENABLED="0"`, service disabled (FND-11) |
+| DHCPv6 client (NetworkManager) | 546/UDP | Yes (D-13) | | Link-local address (V-04, FND-04) | Kept, link-local only (D-13) |
+| DNS stub resolver, chrony | 53, 323 | | | Localhost only (V-04) | Localhost only |
 
 ### 6.4 Users and roles
 
@@ -290,8 +292,8 @@ The project succeeds when:
 - [x] Is my connection behind CGNAT? No (V-07, 30th October 2026)
 - [ ] Does my router support VLANs or guest network isolation?
 - [ ] Will the SSD be encrypted, and how will it be unlocked after a reboot?
-- [ ] Which backup tool will be used for the phone and the computer?
-- [ ] Is there an offline or off-site copy of the backups?
+- [ ] Which backup tool will be used for the phone and the computer? Computer: BorgBackup over SSH (D-21, 12th November 2026). Phone: deferred (D-22)
+- [ ] Is there an offline or off-site copy of the backups? Not in Phase 3, as an accepted risk (D-27, 12th November 2026)
 - [ ] What does the case vendor software need to run, and does it need network access? (Not installed at baseline, owner confirmed 29th October 2026. Only relevant if it is installed later)
 - [x] Was the SSD securely wiped before reuse? Wiped and reimaged (owner confirmed 31st October 2026). Method not recorded, so this does not show that it meets a secure erase standard
 
@@ -312,3 +314,10 @@ The project succeeds when:
 | 0.11 | 30th October 2026 | Sections 10 and 14: CGNAT answered from V-07 (drafted with AI assistance) | Owner check |
 | 0.12 | 31st October 2026 | Section 6.3: SMB row updated from V-11. Section 14: SSD wipe answered (drafted with AI assistance) | Owner results |
 | 0.13 | 31st October 2026 | Section 6.3: SMB re-check added (drafted with AI assistance) | Owner results |
+| 0.14 | 4th November 2026 | Section 6.3: Phase 1 column added from V-01 and V-04, needed column filled in from D-13 (drafted with AI assistance) | Phase 1 service changes |
+| 0.15 | 5th November 2026 | Section 6.3: Tailscale row from V-04 after the install, target changed from "no inbound ports" to LAN only for 41641/UDP, accepted by the owner (drafted with AI assistance) | Tailscale installed |
+| 0.16 | 5th November 2026 | Section 6.3: Raspberry Pi Connect row added, found during the upgrade and removed (drafted with AI assistance) | Owner decision |
+| 0.17 | 6th November 2026 | Section 6.3: SMB row updated, WS-Discovery row added (drafted with AI assistance) | V-04 re-run after SMB |
+| 0.18 | 12th November 2026 | Section 6.3: WireGuard row from the Phase 2 V-04 and V-02 results, home network only (drafted with AI assistance) | Phase 2 closed (D-16) |
+| 0.19 | 12th November 2026 | Section 14: backup tool and off-site copy answered by D-21, D-22 and D-27 (drafted with AI assistance) | Phase 3 plan |
+| 0.20 | 15th November 2026 | Section 6.3: WireGuard row marked as turned off, the NAS being reachable only over Tailscale (drafted with AI assistance) | D-16 change, V-04 |

@@ -1,0 +1,47 @@
+== V-51 2026-11-17 10:25 GMT (after restarting sshd with the D-32 settings)
+-- 1 laptop key login
+LOGIN OK
+u0_a474
+-- 2 password login refused
+debug1: Authentications that can continue: publickey
+x@<IP-1>: Permission denied (publickey).
+-- 3 bound address, checked on the phone itself
+wifi address found: 
+127.0.0.1:8022 refused
+<IP-1>:8022 open
+-- 4 remote port forward refused
+Error: remote port forwarding failed for listen port 0
+exit 255
+-- 5 effective settings (sshd -T)
+Port 8022
+ListenAddress <IP-1>:8022
+PubkeyAuthentication yes
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+X11Forwarding no
+AllowTcpForwarding no
+AllowAgentForwarding no
+PermitTunnel no
+-- 6 sshd processes
+      00:20 sshd
+      00:00 /data/data/com.termux/files/usr/libexec/sshd-session -R
+      00:00 /data/data/com.termux/files/usr/libexec/sshd-session -R
+wifi address found: yes
+wifi:8022 refused
+-- 7 after pkill sshd (10:29 GMT)
+8022 OPEN
+ssh exit 0
+-- 8 owner approved: list sshd, stop it, re-check (10:32 GMT)
+22814       00:17 sshd
+22819       00:00 /data/data/com.termux/files/usr/libexec/sshd-session -R
+22821       00:00 /data/data/com.termux/files/usr/libexec/sshd-session -R
+22822       00:00 /data/data/com.termux/files/usr/bin/bash -c ps -eo pid,etime,args | grep "[s]shd"; pkill -x sshd
+ssh exit 0
+bash: connect: Connection refused
+bash: line 1: /dev/tcp/<IP-1>/8022: Connection refused
+8022 not answering (exit 1)
+ssh: connect to host <IP-1> port 8022: Connection refused
+login exit 255
+10:32:49 8022 not answering
+10:33:09 8022 not answering
+10:33:29 8022 not answering

@@ -1,0 +1,19 @@
+== V-51 2026-11-17 10:24 GMT
+-- 1 laptop key login
+LOGIN OK
+uid=10474(u0_a474) gid=10474(u0_a474) groups=10474(u0_a474),3003(inet),9997(everybody),20474(u0_a474_cache),50474(all_a474) context=u:r:untrusted_app_27:s0:c218,c257,c512,c768
+aarch64
+-- 2 password login refused (key auth disabled for this attempt)
+x@<IP-1>: Permission denied (publickey,password,keyboard-interactive).
+exit 255
+-- 3 phone's Wi-Fi address, port 8022
+bash: connect: No route to host
+bash: line 1: /dev/tcp/<IP-2>/8022: No route to host
+not reachable (exit 1)
+-- 4 port forward refused
+Error: remote port forwarding failed for listen port 0
+exit 255
+-- 5 effective server settings
+-- 6 listeners on the phone
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      

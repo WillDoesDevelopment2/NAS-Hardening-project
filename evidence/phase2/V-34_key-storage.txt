@@ -1,0 +1,11 @@
+# V-34, run by the owner on the NAS and pasted into the Claude Code session, 10th November 2026 (UK time)
+$ sudo ls -l /etc/wireguard
+total 16
+-rw------- 1 root root  45 Nov  9 16:33 nas.key
+-rw-r--r-- 1 root root  45 Nov  9 16:33 nas.pub
+-rw------- 1 root root 485 Nov  9 17:09 wg0-firewall.nft
+-rw------- 1 root root 359 Nov 10 11:25 wg0.conf
+$ sudo stat -c '%A %U %G %s %n' /etc/wireguard/nas.key /etc/wireguard/wg0.conf /etc/wireguard/wg0-firewall.nft
+-rw------- root root 45 /etc/wireguard/nas.key
+-rw------- root root 359 /etc/wireguard/wg0.conf
+-rw------- root root 485 /etc/wireguard/wg0-firewall.nft

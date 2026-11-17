@@ -1,0 +1,25 @@
+Test ID: V-04
+Date: 2026-11-05 00:02 GMT
+Command: sudo ss -tulpn
+Run from: Claude Code over SSH (D-02), with the owner's approval. After Tailscale was installed and the NAS joined the tailnet (checklist section 5)
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (IPv4 address x1, IPv6 address x2). Tailscale addresses renamed <TAILSCALE-IPV4> and <TAILSCALE-IPV6>, the link-local address kept as <IPV6-1>
+----------------------------------------
+Netid State  Recv-Q Send-Q                          Local Address:Port  Peer Address:PortProcess                                                                                                                              
+udp   UNCONN 0      0                                  127.0.0.54:53         0.0.0.0:*    users:(("systemd-resolve",pid=5680,fd=16))                                                                                          
+udp   UNCONN 0      0                                  127.0.0.53:53         0.0.0.0:*    users:(("systemd-resolve",pid=5680,fd=14))                                                                                          
+udp   UNCONN 0      0                                   127.0.0.1:323        0.0.0.0:*    users:(("chronyd",pid=1168,fd=5))                                                                                                   
+udp   UNCONN 0      0                                     0.0.0.0:41641      0.0.0.0:*    users:(("tailscaled",pid=5531,fd=17))                                                                                               
+udp   UNCONN 0      0                                       [::1]:323              *:*    users:(("chronyd",pid=1168,fd=6))                                                                                                   
+udp   UNCONN 0      0                 [<IPV6-1>]:546              *:*    users:(("NetworkManager",pid=814,fd=28))                                                                                            
+udp   UNCONN 0      0                                           *:41641            *:*    users:(("tailscaled",pid=5531,fd=16))                                                                                               
+tcp   LISTEN 0      4096                               127.0.0.54:53         0.0.0.0:*    users:(("systemd-resolve",pid=5680,fd=17))                                                                                          
+tcp   LISTEN 0      4096                            127.0.0.53%lo:53         0.0.0.0:*    users:(("systemd-resolve",pid=5680,fd=15))                                                                                          
+tcp   LISTEN 0      4096                  <TAILSCALE-IPV4>%tailscale0:50458      0.0.0.0:*    users:(("tailscaled",pid=5531,fd=22))                                                                                               
+tcp   LISTEN 0      511                                   0.0.0.0:80         0.0.0.0:*    users:(("nginx",pid=4144,fd=7),("nginx",pid=4143,fd=7),("nginx",pid=4142,fd=7),("nginx",pid=4141,fd=7),("nginx",pid=4140,fd=7))     
+tcp   LISTEN 0      128                                   0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=977,fd=6))                                                                                                       
+tcp   LISTEN 0      511                                   0.0.0.0:443        0.0.0.0:*    users:(("nginx",pid=4144,fd=9),("nginx",pid=4143,fd=9),("nginx",pid=4142,fd=9),("nginx",pid=4141,fd=9),("nginx",pid=4140,fd=9))     
+tcp   LISTEN 0      4096   [<TAILSCALE-IPV6>]%tailscale0:65175         [::]:*    users:(("tailscaled",pid=5531,fd=24))                                                                                               
+tcp   LISTEN 0      511                                      [::]:80            [::]:*    users:(("nginx",pid=4144,fd=8),("nginx",pid=4143,fd=8),("nginx",pid=4142,fd=8),("nginx",pid=4141,fd=8),("nginx",pid=4140,fd=8))     
+tcp   LISTEN 0      128                                      [::]:22            [::]:*    users:(("sshd",pid=977,fd=7))                                                                                                       
+tcp   LISTEN 0      511                                      [::]:443           [::]:*    users:(("nginx",pid=4144,fd=10),("nginx",pid=4143,fd=10),("nginx",pid=4142,fd=10),("nginx",pid=4141,fd=10),("nginx",pid=4140,fd=10))

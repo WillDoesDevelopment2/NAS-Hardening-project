@@ -91,3 +91,7 @@ desktop.ini
 *~
 *.bak
 *.orig
+
+# Python cache
+__pycache__/
+*.pyc

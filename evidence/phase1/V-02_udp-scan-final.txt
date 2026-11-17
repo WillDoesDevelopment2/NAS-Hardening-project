@@ -1,0 +1,28 @@
+Test ID: V-02
+Date: 2026-11-09 about 12:29 to 12:31 GMT (targeted scan started 12:31; the top-100 scan took 103 seconds and ran just before it)
+Command: sudo nmap -sU --top-ports 100 <NAS-IP>, then sudo nmap -sU -p 111,5353,5355 <NAS-IP>
+Run from: Laptop on the home LAN (Wi-Fi), the owner (needs sudo on the laptop). Final check, after SMB and the FND-11 fix
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<NAS-IP>, <USER>, <MAC-1>). Output pasted by the owner into Claude Code, saved by Claude Code. The start of the top-100 output was not included in the paste. The targeted scan stamped its start in the laptop's time zone (AEDT, UK time + 11 hours)
+----------------------------------------
+# sudo nmap -sU --top-ports 100 <NAS-IP>
+Nmap scan report for <USER>.lan (<NAS-IP>)
+Host is up (0.015s latency).
+All 100 scanned ports on <USER>.lan (<NAS-IP>) are in ignored states.
+Not shown: 100 closed udp ports (port-unreach)
+MAC Address: <MAC-1> (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 102.90 seconds
+
+# sudo nmap -sU -p 111,5353,5355 <NAS-IP>
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-09 23:31 AEDT
+Nmap scan report for <USER>.lan (<NAS-IP>)
+Host is up (0.037s latency).
+
+PORT     STATE  SERVICE
+111/udp  closed rpcbind
+5353/udp closed zeroconf
+5355/udp closed llmnr
+MAC Address: <MAC-1> (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.36 seconds

@@ -1,0 +1,38 @@
+Test ID: V-08 (FND-09 follow-up)
+Date: Mon Nov 2 14:01:23 2026 GMT (UK time)
+Command: nmap -Pn -sS -sV -p 80,443,7547,8080,8443 <PUBLIC-IP> (<ROUTER-IP> below is the home public IPv4 address)
+Run from: Laptop on mobile data, through a VPN with its accelerator and malware filter off. The NAS was switched off for the SD card image
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<RDNS-NAME-1>)
+Edited: The address and home folder path were replaced by hand before the script was run. Header added by hand
+----------------------------------------
+# Nmap 7.94SVN scan initiated Mon Nov  2 14:01:23 2026 as: nmap -Pn -sS -sV -p 80,443,7547,8080,8443 -oN /NAS-Evidence/phase1/V-08_external-services-vpn.txt <ROUTER-IP>
+Nmap scan report for <RDNS-NAME-1> (<ROUTER-IP>)
+Host is up (0.063s latency).
+
+PORT     STATE    SERVICE    VERSION
+80/tcp   filtered http
+443/tcp  filtered https
+7547/tcp open     cwmp?
+8080/tcp filtered http-proxy
+8443/tcp filtered https-alt
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port7547-TCP:V=7.94SVN%I=7%D=11/2%Time=6AE897BA%P=x86_64-pc-linux-gnu%r
+SF:(NULL,4A,"HTTP/1\.1\x20503\x20Service\x20Unavailable\r\nConnection:\x20
+SF:close\r\nContent-Length:\x200\r\n\r\n")%r(GenericLines,4A,"HTTP/1\.1\x2
+SF:0503\x20Service\x20Unavailable\r\nConnection:\x20close\r\nContent-Lengt
+SF:h:\x200\r\n\r\n")%r(GetRequest,4A,"HTTP/1\.1\x20503\x20Service\x20Unava
+SF:ilable\r\nConnection:\x20close\r\nContent-Length:\x200\r\n\r\n")%r(HTTP
+SF:Options,4A,"HTTP/1\.1\x20503\x20Service\x20Unavailable\r\nConnection:\x
+SF:20close\r\nContent-Length:\x200\r\n\r\n")%r(RTSPRequest,4A,"HTTP/1\.1\x
+SF:20503\x20Service\x20Unavailable\r\nConnection:\x20close\r\nContent-Leng
+SF:th:\x200\r\n\r\n")%r(Help,4A,"HTTP/1\.1\x20503\x20Service\x20Unavailabl
+SF:e\r\nConnection:\x20close\r\nContent-Length:\x200\r\n\r\n")%r(FourOhFou
+SF:rRequest,4A,"HTTP/1\.1\x20503\x20Service\x20Unavailable\r\nConnection:\
+SF:x20close\r\nContent-Length:\x200\r\n\r\n")%r(LPDString,4A,"HTTP/1\.1\x2
+SF:0503\x20Service\x20Unavailable\r\nConnection:\x20close\r\nContent-Lengt
+SF:h:\x200\r\n\r\n")%r(SIPOptions,4A,"HTTP/1\.1\x20503\x20Service\x20Unava
+SF:ilable\r\nConnection:\x20close\r\nContent-Length:\x200\r\n\r\n");
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Nov  2 14:03:02 2026 -- 1 IP address (1 host up) scanned in 99.50 seconds

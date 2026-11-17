@@ -1,0 +1,32 @@
+Test ID: V-21 (supporting check, the owner tested in a browser)
+Date: 2026-11-04 14:42 GMT
+Command: curl -D - http://<NAS-IP>/ ; curl -k -w '%{http_code} %{ssl_verify_result}' https://<NAS-IP>/ ; openssl s_client -connect <NAS-IP>:443 (protocol, cipher, subject, issuer, dates)
+Run from: Laptop on the home LAN (Wi-Fi), Claude Code, with the owner's approval
+Status: Sanitised
+Sanitised by: scripts/sanitise.py. NAS address and certificate name replaced by hand. ssl_verify_result 18 means self-signed, as expected (D-04)
+----------------------------------------
+## curl http
+HTTP/1.1 301 Moved Permanently
+Server: nginx
+Date: Wed, 04 Nov 2026 14:42:55 GMT
+Content-Type: text/html
+Content-Length: 162
+Connection: keep-alive
+Location: https://<NAS-IP>:443/
+Strict-Transport-Security: max-age=15768000; includeSubDomains
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Permissions-Policy: microphone=(), camera=(), geolocation=(), payment=()
+
+## curl https
+200 18
+## tls
+   v:NotBefore: Nov  4 14:38:16 2026 GMT; NotAfter: Nov  1 14:38:16 2036 GMT
+subject=C = GB, CN = <NAS-NAME>
+issuer=C = GB, CN = <NAS-NAME>
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+notBefore=Nov  4 14:38:16 2026 GMT
+notAfter=Nov  1 14:38:16 2036 GMT
+subject=C = GB, CN = <NAS-NAME>

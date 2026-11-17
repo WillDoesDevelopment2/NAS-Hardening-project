@@ -1,0 +1,26 @@
+== run from the laptop over D-32 at 2026-11-17 10:25 GMT
+== V-45 2026-11-17 11:25:23 CET
+--- key nas-photos
+ok    set-up copy to v45/
+PASS  1 shell, no command (refused, exit 1): /usr/bin/rrsync error: Not invoked via sshd
+PASS  2 run a command (id) (refused, exit 1): /usr/bin/rrsync error: SSH_ORIGINAL_COMMAND does not run rsync
+PASS  3 sftp (refused, exit 255): Connection closed
+PASS  4a remote port forward (refused, exit 255): Error: remote port forwarding failed for listen port 0
+PASS  4b local port forward (nothing reached)
+PASS  5 write outside its folder (refused, exit 12): /usr/bin/rrsync error: do not use .. in arg (anchor the path at the root of your restricted dir)
+PASS  6 read back from the NAS (refused, exit 12): /usr/bin/rrsync error: reading from write-only server is not allowed
+PASS  7 rsync --delete (refused, exit 12): /usr/bin/rrsync error: option --delete has been disabled on this server.
+info  8 overwrite sent, exit 0 (result checked on the NAS)
+--- key nas-files
+ok    set-up copy to v45/
+PASS  1 shell, no command (refused, exit 1): /usr/bin/rrsync error: Not invoked via sshd
+PASS  2 run a command (id) (refused, exit 1): /usr/bin/rrsync error: SSH_ORIGINAL_COMMAND does not run rsync
+PASS  3 sftp (refused, exit 255): Connection closed
+PASS  4a remote port forward (refused, exit 255): Error: remote port forwarding failed for listen port 0
+PASS  4b local port forward (nothing reached)
+PASS  5 write outside its folder (refused, exit 12): /usr/bin/rrsync error: do not use .. in arg (anchor the path at the root of your restricted dir)
+PASS  6 read back from the NAS (refused, exit 12): /usr/bin/rrsync error: reading from write-only server is not allowed
+PASS  7 rsync --delete (refused, exit 12): /usr/bin/rrsync error: option --delete has been disabled on this server.
+info  8 overwrite sent, exit 0 (result checked on the NAS)
+== done 11:25:52. Results also in /data/data/com.termux/files/home/v45-result.txt
+exit 0

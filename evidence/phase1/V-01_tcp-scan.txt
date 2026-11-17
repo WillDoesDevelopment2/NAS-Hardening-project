@@ -1,0 +1,17 @@
+Test ID: V-01
+Date: 2026-11-04 14:42 GMT
+Command: nmap -sT -p- <NAS-IP> (connect scan, run without sudo)
+Run from: Laptop on the home LAN (Wi-Fi), Claude Code, with the owner's approval. After the checklist section 6 changes, including HTTPS
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<NAS-IP>, <USER>). Output file path removed from the command line
+----------------------------------------
+# Nmap 7.94SVN scan initiated Wed Nov  4 14:42:50 2026 as: nmap -sT -p- <NAS-IP>
+Nmap scan report for <NAS-IP>
+Host is up (0.016s latency).
+Not shown: 65532 closed tcp ports (conn-refused)
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+443/tcp open  https
+
+# Nmap done at Wed Nov  4 14:42:55 2026 -- 1 IP address (1 host up) scanned in 4.59 seconds

@@ -1,0 +1,40 @@
+Test ID: V-10
+Date: 2026-11-09 12:18 GMT
+Command: apt list --upgradable; ls -l /var/lib/apt/lists/*InRelease; tail -40 /var/log/apt/history.log; ls /var/run/reboot-required; dpkg-query -W openssh-server nginx samba openmediavault
+Run from: Claude Code over SSH through Tailscale (D-02), with the owner's approval. Final check. The unattended-upgrades log could not be read by the Claude Code account (permission denied), so the apt history is used for automatic updates
+Status: Sanitised by hand
+Sanitised by: Claude Code. Exact package versions removed or reduced to the major version, the account name in the apt history replaced. Raw output kept in ~/NAS-Evidence/phase1/
+----------------------------------------
+# apt list --upgradable (10 packages, none from Debian security)
+Raspberry Pi repository, kernel 6.x point update (Raspberry Pi build):
+  libcpupower1, linux-base-rpi-2712, linux-base-rpi-v8, linux-cpupower, linux-headers-rpi-2712,
+  linux-headers-rpi-v8, linux-image-rpi-2712, linux-image-rpi-v8, linux-libc-dev
+openmediavault repository:
+  openmediavault 8.x (minor update)
+
+# security-only
+(none)
+
+# package lists last refreshed (InRelease files)
+Debian trixie-security:   2026-11-09 03:02 GMT
+Debian trixie-updates:    2026-11-09 02:10 GMT
+Debian trixie-backports:  2026-11-09 02:10 GMT
+Raspberry Pi trixie:      2026-11-07 02:48 GMT
+Tailscale trixie:         2026-11-06 00:04 GMT
+openmediavault:           2026-11-06 17:27 GMT
+omv-extras:               2026-11-08 22:37 GMT
+
+# apt history since the last V-10 run, summarised
+2026-11-05 13:00  apt remove --purge   Purge: rpi-connect-lite (<ADMIN-USER>)
+2026-11-05 15:42  apt-get install      Install: openmediavault-luksencryption, cryptsetup, cryptsetup-bin, systemd-cryptsetup
+2026-11-08 06:28  unattended-upgrade   Upgrade: zlib1g (Debian security update)
+2026-11-09 06:02  unattended-upgrade   Upgrade: vim-common, vim-tiny (Debian security update)
+
+# reboot required
+ls: cannot access '/var/run/reboot-required': No such file or directory
+
+# installed versions (major only)
+openmediavault 8.x
+openssh-server 10.x
+nginx 1.x
+samba 4.x

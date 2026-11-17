@@ -1,0 +1,24 @@
+Test ID: V-12
+Date: 2026-11-04 13:24 GMT
+Command: getent group sudo _ssh openmediavault-admin; sudo cat /etc/sudoers (comments removed); sudo ls -l /etc/sudoers.d
+Run from: Claude Code over SSH (D-02), with the owner's approval. After the checklist section 4 account changes
+Status: Sanitised
+Sanitised by: scripts/sanitise.py
+----------------------------------------
+sudo:x:27:<USER>
+_ssh:x:101:<USER>,<Claude-User>
+openmediavault-admin:x:980:admin
+Defaults	env_reset
+Defaults	mail_badpass
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Defaults	use_pty
+root	ALL=(ALL:ALL) ALL
+%sudo	ALL=(ALL:ALL) ALL
+@includedir /etc/sudoers.d
+total 24
+-r--r----- 1 root root   36 Apr 29  2019 010_at-export
+-r--r----- 1 root root   44 Jun 19  2024 010_dpkg-threads
+-r--r----- 1 root root   31 Jul 25  2023 010_global-tty
+-r--r----- 1 root root  211 Mar 18  2022 010_proxy
+-r--r----- 1 root root 1068 Apr 11  2026 README
+-rw-r----- 1 root root  444 Nov  2 13:39 claude-readonly

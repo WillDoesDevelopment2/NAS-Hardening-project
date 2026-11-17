@@ -1,0 +1,9 @@
+# V-02, run by the owner from the laptop on the LAN, 10th November 2026, about 15:40 UK time (the laptop clock in the nmap header is not on UK time)
+# Nmap 7.94SVN scan initiated Wed Nov 11 02:40:41 2026 as: nmap -sU --top-ports 100 -oN V-02_udp-scan_2026-11-10.txt <NAS-IP>
+Nmap scan report for <USER>.lan (<NAS-IP>)
+Host is up (0.014s latency).
+All 100 scanned ports on <USER>.lan (<NAS-IP>) are in ignored states.
+Not shown: 100 closed udp ports (port-unreach)
+MAC Address: <MAC-1> (Unknown)
+
+# Nmap done at Wed Nov 11 02:42:24 2026 -- 1 IP address (1 host up) scanned in 103.45 seconds

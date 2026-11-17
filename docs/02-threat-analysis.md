@@ -1,6 +1,6 @@
 # 02 – Threat Analysis
 
-> **Status:** Draft v0.13 · Last updated: 2nd November 2026
+> **Status:** Draft v0.17 · Last updated: 4th November 2026
 > **Author:** William Drummond
 > **Related:** [01-scope-and-assets.md](01-scope-and-assets.md) (asset IDs, data flows, trust boundaries and phases used here) · 03-security-requirements.md (requirements derived from this analysis, not yet written) · [05-verification.md](05-verification.md) (tests that confirm each treatment)
 > **Note:** This is a starting draft prepared with AI assistance. Every rating and treatment is a proposal. Review each one, change anything that does not match your setup or your own judgement, replace anything in **[TODO]** or square brackets, and record what you accepted, changed or rejected in `docs/ai-usage.md`. Record meaningful changes in the revision log at the end.
@@ -179,7 +179,7 @@ What the Phase 0 tests in document 05, section 4, have shown for each threat. Ra
 | T-13 | V-01, V-02, V-04, V-05, V-11 | rpcbind, LLMNR and mDNS listen on all interfaces and are reachable from the LAN (FND-04). HTTP admin interface. SMB not running (V-01, V-04, re-checked 31st October 2026), although OMV shows it as enabled (V-11). Bluetooth running | Medium, no change (owner decision, 31st October 2026) |
 | T-14 | V-05, V-10 | 12 pending updates, none from a security suite. Unattended upgrades enabled, but none installed. openmediavault update pending (FND-06) | Medium, no change (owner decision, 31st October 2026) |
 | T-18 | V-05, V-06 | 179 unsafe shutdowns over the SSD's life, not attributable to the NAS as the SSD was used in a laptop before. The Lynis reboot warning is a false positive (V-05, investigated 31st October 2026) | Medium, no change (owner decision, 31st October 2026) |
-| T-03, T-19 | V-07, V-08 | V-07: no port forwards, no DMZ host, DDNS off, not behind CGNAT. UPnP is on, with no mappings (FND-07). The NAS has public IPv6 addresses, so exposure depends on the router's IPv6 firewall. V-08 IPv4: 80, 443, 7547, 8080 and 8443/TCP open on the public address, not yet identified, and the NAS ports 22, 111 and 5355 not open (FND-09). V-08 IPv6 (1st to 2nd November 2026, through a VPN, as the mobile network has no IPv6): all ports filtered on both NAS addresses, matching the router setting of no IPv6 pinholes. Not confirmed with tcpdump that the probes reached the home network. The temporary risk acceptance is closed | T-03 High and T-19 Medium, no change (owner decision, 2nd November 2026). Review once FND-09 is identified in Phase 1 |
+| T-03, T-19 | V-07, V-08 | V-07: no port forwards, no DMZ host, DDNS off, not behind CGNAT. UPnP is on, with no mappings (FND-07). The NAS has public IPv6 addresses, so exposure depends on the router's IPv6 firewall. V-08 IPv4: 80, 443, 7547, 8080 and 8443/TCP open on the public address, not yet identified, and the NAS ports 22, 111 and 5355 not open (FND-09). V-08 IPv6 (1st to 2nd November 2026, through a VPN, as the mobile network has no IPv6): all ports filtered on both NAS addresses, matching the router setting of no IPv6 pinholes. Not confirmed with tcpdump that the probes reached the home network. The temporary risk acceptance is closed | T-03 High and T-19 Medium, no change (owner decision, 2nd November 2026). FND-09 identified in Phase 1: only 7547 is open, on the router, most likely the ISP's TR-069 management, and its risk is accepted (owner decision, 2nd November 2026). The other four ports came from the mobile network |
 
 ## 6. High-rated threats in detail
 
@@ -221,7 +221,7 @@ What the Phase 0 tests in document 05, section 4, have shown for each threat. Ra
 
 ## 7. Tailscale trust analysis
 
-This section supports threat T-16 and the Phase 1 to Phase 2 comparison. Statements were checked against the Tailscale documentation on 27th October 2026 (sources in section 7.5). Features and defaults change, so check again before Phase 1 **[TODO]**.
+This section supports threat T-16 and the Phase 1 to Phase 2 comparison. Statements were checked against the Tailscale documentation on 27th October 2026 and again on 4th November 2026, before setting up Tailscale in Phase 1 (sources in section 7.5). Features and defaults change, so check again before the Phase 2 comparison.
 
 ### 7.1 What Tailscale does
 
@@ -234,30 +234,31 @@ This section supports threat T-16 and the Phase 1 to Phase 2 comparison. Stateme
 | Item | Trust placed in the vendor or provider | Impact if that trust fails |
 |---|---|---|
 | Coordination service | To distribute only the correct public keys and not add devices to my network | An attacker or a malicious operator could add a device that I did not approve |
-| Identity provider account | To authenticate me correctly | Account takeover lets an attacker add devices to my tailnet |
+| Identity provider account | To authenticate me correctly. A new tailnet cannot be created with a passkey (passkey login is in beta and only works through an invitation), so the tailnet owner signs in through an identity provider such as Apple, Google, GitHub or Microsoft | Account takeover lets an attacker add devices to my tailnet |
 | Relay servers | To pass traffic without being able to read it | Metadata exposure (who connects, when). Content stays encrypted. The DERP documentation does not say what metadata a relay can see |
 | Tailscale client software | To behave correctly on my NAS and clients | A flaw in the client could affect the device it runs on |
-| Metadata held by the vendor | By default each client sends its logs to Tailscale, including open and close events for connections. Client logging can be turned off per device (`--no-logs-no-support`), but Tailscale may then not be able to give support | Privacy exposure, not data exposure |
+| Metadata held by the vendor | By default each client sends its logs to Tailscale, including open and close events for connections. Client logging can be turned off per device (`--no-logs-no-support`, or `TS_NO_LOGS_NO_SUPPORT=true` in `/etc/default/tailscaled` on Linux), but Tailscale may then not be able to give support | Privacy exposure, not data exposure |
 
 ### 7.3 Risks and mitigations
 
 | Risk | Mitigation to evaluate | Residual position |
 |---|---|---|
-| Identity provider account takeover | Tailscale has no passwords of its own, so login depends on the identity provider. Strong unique password and multi-factor authentication there, or a passkey. Device approval or Tailnet Lock for new devices (they cannot both be enabled, see below) | Reduced, depends on one account |
-| Unwanted device added to the tailnet | Device approval or Tailnet Lock, key expiry (180 days by default, can be turned off per device), and access rules that allow only the NAS ports I need from the devices I choose. The default policy allows all traffic between devices, so rules must be written | Reduced |
-| Compromised or malicious coordination service | Evaluate Tailnet Lock: new devices must be signed by trusted keys held on my own devices, so the coordination service cannot add devices by itself. It needs at least two signing devices, its disablement secrets must be stored safely (without them the tailnet may not be recoverable), and it cannot be used together with device approval **[TODO: decide between device approval and Tailnet Lock]**. Keep OMV and SSH authentication in place, so a tailnet device alone is not enough | Partly accepted. This is the main reason to compare against self-hosted WireGuard in Phase 2 |
+| Identity provider account takeover | Tailscale has no passwords of its own, so login depends on the identity provider. Strong unique password and multi-factor authentication there, or a passkey. A second admin user who signs in with a passkey, invited once the tailnet exists, gives a way back in if the identity provider blocks the owner's login. Device approval for new devices (D-14) | Reduced, depends on one account |
+| Unwanted device added to the tailnet | Device approval or Tailnet Lock, key expiry (180 days by default, can be turned off per device), and access rules that allow only the NAS ports I need from the devices I choose. The default policy allows all traffic between devices, so rules must be written. Tailscale now recommends grants over the older ACL syntax. Tagging a device turns off its key expiry by default | Reduced |
+| Compromised or malicious coordination service | Evaluate Tailnet Lock: new devices must be signed by trusted keys held on my own devices, so the coordination service cannot add devices by itself. It needs at least two signing devices, its disablement secrets must be stored safely (without them the tailnet may not be recoverable), and it cannot be used together with device approval. Decided: device approval for Phase 1 (D-14), Tailnet Lock is part of the Phase 2 comparison. Keep OMV and SSH authentication in place, so a tailnet device alone is not enough | Partly accepted. This is the main reason to compare against self-hosted WireGuard in Phase 2 |
 | Metadata exposure | Neutral device names. Accept the remainder | Accepted |
 | Vendor outage or account lockout | LAN access still works. During a coordination service outage, existing tailnet connections mostly keep working, as access rules are cached on each device, but new devices cannot be added and keys cannot be refreshed, so access is gradually lost as keys expire. Self-hosted WireGuard as an alternative path in Phase 2 | Accepted, linked to T-17 and A-08 |
-| Extra features widening the attack surface | Do not enable features I do not need. Keep SSH as OpenSSH with keys unless there is a reason to change **[TODO: decide]** | Reduced |
+| Extra features widening the attack surface | Do not enable features I do not need. Keep SSH as OpenSSH with keys. Tailscale SSH is not turned on (D-14) | Reduced |
 
 ### 7.4 Questions for the Phase 2 comparison
 
 - What does self-hosted WireGuard remove from the trust list above, and what new work does it add (key management, one open UDP port, CGNAT handling)?
 - Is the extra control worth the extra maintenance for a single-person home system?
+- Tailscale cannot be set up without an account at a large identity provider (GitHub chosen, 4th November 2026). WireGuard needs none. How much weight does removing that dependency carry? (owner, 4th November 2026: a strong reason to move to WireGuard if possible)
 
 ### 7.5 Sources
 
-Checked on 27th October 2026. Pages from the Tailscale website only.
+Checked on 27th October 2026 and 4th November 2026. Pages from the Tailscale website only.
 
 | Topic | Source |
 |---|---|
@@ -270,6 +271,11 @@ Checked on 27th October 2026. Pages from the Tailscale website only.
 | Default allow-all policy, rules enforced on each device | [Access control lists](https://tailscale.com/kb/1018/acls) |
 | No Tailscale passwords, MFA and passkeys | [Identity providers](https://tailscale.com/kb/1013/sso-providers) |
 | Client logging and opt-out | [Logging](https://tailscale.com/kb/1011/log-mgmt) |
+| A tailnet cannot be created with a passkey, passkey login is in beta | [Passkeys](https://tailscale.com/docs/integrations/identity/passkeys) |
+| Backup admin who signs in with a passkey | [Admin account with passkey login](https://tailscale.com/kb/1341/tailnet-passkey-admin) |
+| Grants are the recommended policy syntax | [Grants](https://tailscale.com/kb/1324/grants) |
+| Tags, and key expiry off by default on tagged devices | [Tags](https://tailscale.com/kb/1068/tags) |
+| Debian 13 package source and signing key | [Tailscale packages](https://pkgs.tailscale.com/stable/#linux) |
 
 ## 8. Treatment plan
 
@@ -294,7 +300,7 @@ Treatment options are **Reduce** (add a control), **Avoid** (remove the cause), 
 | T-15 | Reduce | Keep backup keys in two separate places, document the restore procedure, test it | 3 | 5.17, 8.13, 8.24 |
 | T-16 | Reduce, Accept | Multi-factor authentication on the identity provider, device approval, access rules, key expiry, evaluate Tailnet Lock, compare with WireGuard | 1, 2 | 5.19, 5.23, 8.5 |
 | T-17 | Reduce | Key management procedure covering generation, storage, rotation and revocation, with a revocation test | 2 | 5.17, 8.24 |
-| T-18 | Reduce, Accept | Adequate power supply, temperature monitoring, safe shutdown routine, image of boot media. A UPS is accepted as out of budget **[TODO: confirm]** | 1 | 7.11, 7.13, 8.13 |
+| T-18 | Reduce, Accept | Adequate power supply, temperature monitoring, safe shutdown routine, image of boot media. A UPS is accepted as out of budget (owner, D-12) | 1 | 7.11, 7.13, 8.13 |
 | T-19 | Reduce (verify only) | Disable UPnP, change default router credentials, record firmware version, no port forwards | 1 | 8.9, 8.20 |
 | T-20 | Reduce | Backup success and failure notifications, periodic restore tests | 3 | 8.13, 8.15, 8.16 |
 | T-21 | Reduce | Placeholder values, a pre-commit review checklist, secret scanning, rotate any secret that is ever exposed | All | 8.12 |
@@ -326,8 +332,8 @@ Residual risk after Phase 4, and any risk accepted knowingly, is recorded in `07
 - [x] Is my connection behind CGNAT? No (V-07, 30th October 2026)
 - [x] Does the NAS currently hold the only copy of any data? No. Nothing is stored on the NAS yet (V-14, V-15, 31st October 2026)
 - [x] Is the SSD encrypted, and how was it wiped before reuse? Not encrypted and not yet in use (V-14). Wiped and reimaged before reuse (owner confirmed 31st October 2026, method not recorded). V-14 showed no partitions or file system on 28th October 2026
-- [ ] Which identity provider will be used for Tailscale, and which multi-factor options does it support?
-- [ ] Will Tailnet Lock be used, and what does it cost in extra maintenance?
+- [x] Which identity provider will be used for Tailscale, and which multi-factor options does it support? A passkey alone cannot create the tailnet (4th November 2026), so an identity provider is needed. GitHub (owner, 4th November 2026), where the project documentation is already kept. Its multi-factor options include passkeys and authenticator apps. Which one is used is recorded in V-19
+- [x] Will Tailnet Lock be used, and what does it cost in extra maintenance? Not in Phase 1: device approval instead (D-14). Tailnet Lock needs two signing devices and safely stored disablement secrets. Reconsidered in the Phase 2 comparison
 - [ ] Does OMV offer multi-factor authentication for the admin interface, or will the VPN act as the gate?
 - [x] Does the case vendor software need root access or network access? Not installed at baseline (owner confirmed 29th October 2026). Revisit only if it is installed
 - [ ] Which secret-scanning approach will protect the repository?
@@ -349,3 +355,7 @@ Residual risk after Phase 4, and any risk accepted knowingly, is recorded in `07
 | 0.11 | 31st October 2026 | Section 5.4: router IPv6 settings and temporary risk acceptance added for T-03 and T-19. Section 11: router question answered (drafted with AI assistance) | Owner check and decision |
 | 0.12 | 2nd November 2026 | Section 5.4: V-08 IPv6 result added for T-03 and T-19, temporary risk acceptance closed (drafted with AI assistance) | IPv6 scan run |
 | 0.13 | 2nd November 2026 | Section 5.1: T-06 (L, M) and T-10 (M, L) rated Low. Section 5.3: A-07 now Medium. Section 5.4: final Phase 0 decisions for T-02, T-03 and T-19, reasons for T-06 and T-10. Section 6: T-10 rating after Phase 0 noted (drafted with AI assistance) | Owner decisions, Phase 0 complete |
+| 0.14 | 2nd November 2026 | Section 8: UPS decision confirmed (D-12) | Owner decision for Phase 1 |
+| 0.15 | 2nd November 2026 | Section 5.4: FND-09 result and risk acceptance added for T-03 and T-19 (drafted with AI assistance) | Owner results and decision |
+| 0.16 | 4th November 2026 | Section 7: Tailscale statements checked again before the install, passkey limit, backup passkey admin, grants, tags and Linux logging opt-out added, device approval chosen (D-14), sources added. Section 9: Tailnet Lock question answered (drafted with AI assistance) | Phase 1 checklist section 5 |
+| 0.17 | 4th November 2026 | Section 7.4: identity provider dependence added as a Phase 2 question. Section 9: GitHub chosen as the Tailscale identity provider | Owner decision |

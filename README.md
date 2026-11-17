@@ -1,6 +1,6 @@
 # Home NAS Hardening and Risk Analysis
 
-**Status:** In progress (Phase 0 complete, Phase 1 next) | **Started:** October 2026 | **Last updated:** 2nd November 2026
+**Status:** In progress (Phase 2: WireGuard) | **Started:** October 2026 | **Last updated:** 9th November 2026
 
 A self-hosted NAS built to replace third-party cloud storage, used as a hands-on project in structured security work: define what needs protecting, analyse threats, set numbered requirements, harden the system, and verify every control with evidence.
 
@@ -20,8 +20,8 @@ Full detail on the system, assets, trust boundaries and network design is in [`d
 - [x] Scope and assets defined
 - [x] Initial threat analysis drafted
 - [x] Phase 0: Baseline measurements before any changes (completed 2nd November 2026: all 15 tests run, 9 findings, see [`docs/05-verification.md`](docs/05-verification.md))
-- [ ] Security requirements written
-- [ ] Phase 1: Hardening and Tailscale remote access
+- [x] Security requirements written
+- [x] Phase 1: Hardening and Tailscale remote access (completed 9th November 2026, see [`docs/05-verification.md`](docs/05-verification.md). Changes: accounts, SSH, unneeded services off, HTTPS, Tailscale with device approval, encrypted SSD, SMB 3 share, update routine and vulnerability dashboard. Final checks done on 9th November 2026, including the external scan over IPv4 and IPv6. SD card image of the hardened system postponed)
 - [ ] Phase 2: Self-hosted WireGuard and comparison with Tailscale
 - [ ] Phase 3: Automated phone and computer backups, with restore test
 - [ ] Phase 4: Final verification, root cause analysis, residual risk and tutorial
@@ -41,7 +41,7 @@ Reasoning is in [`docs/04-design-decisions.md`](docs/04-design-decisions.md).
 
 ## Top Risks So Far
 
-A snapshot of the highest-rated threats. Ratings after the Phase 0 review. They will change as hardening is done. The full register, treatment plan and Tailscale trust analysis are in [`docs/02-threat-analysis.md`](docs/02-threat-analysis.md).
+A snapshot of the highest-rated threats. Ratings after the Phase 0 review. They describe the baseline before hardening; residual risk is recorded at the end of Phase 4. The full register, treatment plan and Tailscale trust analysis are in [`docs/02-threat-analysis.md`](docs/02-threat-analysis.md).
 
 | Risk | Rating |
 |---|---|

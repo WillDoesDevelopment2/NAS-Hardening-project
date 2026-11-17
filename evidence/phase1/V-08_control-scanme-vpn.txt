@@ -1,0 +1,21 @@
+Test ID: V-08 (FND-09 follow-up)
+Date: Mon Nov 2 14:07:09 2026 GMT (UK time)
+Command: nmap -Pn -sS -p 80,443,7547,8080,8443 scanme.nmap.org (<RDNS-NAME-1> below is scanme.nmap.org, a public test host)
+Run from: Same VPN connection as V-08_external-services-vpn.txt
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<RDNS-NAME-1>, <IP-1>, <IPV6-1>)
+Edited: The home folder path was removed by hand before the script was run. Header added by hand
+----------------------------------------
+# Nmap 7.94SVN scan initiated Mon Nov  2 14:07:09 2026 as: nmap -Pn -sS -p 80,443,7547,8080,8443 -oN /NAS-Evidence/phase1/V-08_control-scanme-vpn.txt scanme.nmap.org
+Nmap scan report for <RDNS-NAME-1> (<IP-1>)
+Host is up (0.30s latency).
+Other addresses for scanme.nmap.org (not scanned): <IPV6-1>
+
+PORT     STATE  SERVICE
+80/tcp   open   http
+443/tcp  closed https
+7547/tcp closed cwmp
+8080/tcp closed http-proxy
+8443/tcp closed https-alt
+
+# Nmap done at Mon Nov  2 14:07:10 2026 -- 1 IP address (1 host up) scanned in 0.63 seconds

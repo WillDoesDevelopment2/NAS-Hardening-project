@@ -1,0 +1,34 @@
+Test ID: V-01
+Date: 2026-11-09 12:17:53 GMT
+Command: nmap -sT -p- <NAS-IP> (connect scan, run without sudo), then curl -sS -o /dev/null -D - http://<NAS-IP>/ for port 80
+Run from: Laptop on the home LAN (Wi-Fi), Claude Code, with the owner's approval. Final check, after SMB and the FND-11 fix
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<NAS-IP>, <USER>). Output file path removed from the command line
+----------------------------------------
+# Nmap 7.94SVN scan initiated Mon Nov  9 12:17:53 2026 as: nmap -sT -p- <NAS-IP>
+Nmap scan report for <USER>.lan (<NAS-IP>)
+Host is up (0.014s latency).
+Not shown: 65531 closed tcp ports (conn-refused)
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+443/tcp open  https
+445/tcp open  microsoft-ds
+
+# Nmap done at Mon Nov  9 12:17:58 2026 -- 1 IP address (1 host up) scanned in 4.90 seconds
+
+# curl, port 80 (response headers)
+HTTP/1.1 301 Moved Permanently
+Server: nginx
+Date: Mon, 09 Nov 2026 12:18:23 GMT
+Content-Type: text/html
+Content-Length: 162
+Connection: keep-alive
+Location: https://<NAS-IP>:443/
+Strict-Transport-Security: max-age=15768000; includeSubDomains
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Permissions-Policy: microphone=(), camera=(), geolocation=(), payment=()
+

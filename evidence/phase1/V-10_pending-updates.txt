@@ -1,0 +1,56 @@
+Test ID: V-10
+Date: 2026-11-05 12:49 GMT
+Command: apt list --upgradable; ls -l /var/lib/apt/lists/*InRelease; tail -40 /var/log/apt/history.log; ls /var/run/reboot-required; dpkg-query -W (selected packages)
+Run from: Claude Code over SSH (D-02), with the owner's approval. After the owner ran omv-upgrade at 12:40 GMT. The unattended-upgrades log and configuration were read by the owner and by Claude Code the same day (summary below)
+Status: Sanitised by hand
+Sanitised by: Claude Code. Exact package versions removed or reduced to the major version, the account name in the apt history replaced. Raw output kept in ~/NAS-Evidence/phase1/
+----------------------------------------
+# apt list --upgradable
+Listing...
+(no packages listed)
+
+# security-only
+(none)
+
+# package lists last refreshed (InRelease files)
+Debian trixie-security:   2026-11-04 21:43 GMT
+Debian trixie-updates:    2026-11-05 08:08 GMT
+Debian trixie-backports:  2026-11-05 08:08 GMT
+Raspberry Pi trixie:      2026-11-05 07:33 GMT
+Tailscale trixie:         2026-11-05 00:11 GMT
+openmediavault:           2026-11-02 10:05 GMT
+omv-extras:               2026-11-03 00:00 GMT
+
+# apt history, summarised
+2026-11-02 06:26  unattended-upgrade   Upgrade: vim-common, vim-tiny (Debian security update)
+2026-11-04 13:21  apt install          Install: fail2ban, python3-systemd (<ADMIN-USER>)
+2026-11-04 17:09  apt-get install      Install: tailscale (<ADMIN-USER>)
+2026-11-04 23:59  apt-get install      Install: tailscale-archive-keyring (<ADMIN-USER>)
+2026-11-05 00:11  apt-get install      Reinstall: tailscale-archive-keyring (<ADMIN-USER>)
+2026-11-05 06:28  unattended-upgrade   Upgrade: apt, libapt-pkg7.0, apt-utils
+2026-11-05 12:40  omv-upgrade          Upgrade (12 packages): openmediavault 8.x (minor update), tzdata, linux-base,
+                  (apt-get dist-upgrade) rpi-eeprom, raspi-config, raspi-config-core, rpicam-apps-core, rpicam-apps-lite,
+                                       librpicam-app1, libcamera-ipa, libcamera0.7, rpi-connect-lite
+
+# reboot required
+ls: cannot access '/var/run/reboot-required': No such file or directory
+
+# installed versions (major only)
+openmediavault 8.x
+openssh-server 10.x
+nginx 1.x
+samba 4.x
+tailscale 1.x
+kernel 6.x (Raspberry Pi build)
+
+# unattended-upgrades (owner and Claude Code, 2026-11-05)
+/etc/apt/apt.conf.d/20auto-upgrades: Update-Package-Lists "1", Unattended-Upgrade "1"
+/etc/apt/apt.conf.d/95openmediavault-periodic: Unattended-Upgrade "0", overridden by
+/etc/apt/apt.conf.d/98openmediavault-periodic-custom: Unattended-Upgrade "1"
+/etc/apt/apt.conf.d/95openmediavault-unattended-upgrade: OMV's settings (no 50unattended-upgrades file)
+/etc/apt/apt.conf.d/98openmediavault-unattended-upgrade-mail: Unattended-Upgrade::Mail "root"
+apt-daily.timer and apt-daily-upgrade.timer: active, last run 2026-11-05 about 10:21 GMT
+unattended-upgrades.log, 2026-11-05 10:21:
+  Allowed origins are: origin=Debian,codename=trixie,label=Debian-Security, origin=Debian,codename=trixie-security,label=Debian-Security
+  No packages found that can be upgraded unattended and no pending auto-removals
+  An earlier run ended with a traceback in send_summary_mail: BrokenPipeError: [Errno 32] Broken pipe (FND-10)

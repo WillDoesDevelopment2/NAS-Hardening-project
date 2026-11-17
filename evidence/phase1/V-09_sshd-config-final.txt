@@ -1,0 +1,21 @@
+Test ID: V-09
+Date: 2026-11-06 14:36 GMT
+Command: sudo sshd -T | grep -iE '^(permitrootlogin|passwordauthentication|pubkeyauthentication|kbdinteractiveauthentication|allowusers|allowgroups|port|listenaddress|x11forwarding|allowtcpforwarding|allowagentforwarding|maxauthtries|permitemptypasswords) '
+Run from: Claude Code over SSH (D-02) through Tailscale, with the owner's approval. Phase 1 final checks
+Status: Sanitised
+Sanitised by: scripts/sanitise.py
+----------------------------------------
+port 22
+listenaddress [::]:22
+listenaddress 0.0.0.0:22
+maxauthtries 6
+permitrootlogin no
+pubkeyauthentication yes
+passwordauthentication no
+kbdinteractiveauthentication no
+x11forwarding yes
+permitemptypasswords no
+allowtcpforwarding no
+allowagentforwarding yes
+allowgroups root
+allowgroups _ssh

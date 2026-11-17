@@ -1,0 +1,15 @@
+Test ID: V-02
+Date: 2026-11-04 15:47 GMT
+Command: sudo nmap -sU --top-ports 100 <NAS-IP>
+Run from: Laptop on the home LAN (Wi-Fi), run by the owner with sudo. After the checklist section 6 changes
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<NAS-IP>, <USER>, MAC address). Output file path removed from the command line. The nmap timestamps are in the laptop's time zone (AEDT, UK time + 11 hours)
+----------------------------------------
+# Nmap 7.94SVN scan initiated Thu Nov  5 02:47:07 2026 as: nmap -sU --top-ports 100 <NAS-IP>
+Nmap scan report for <NAS-IP>
+Host is up (0.022s latency).
+All 100 scanned ports on <NAS-IP> are in ignored states.
+Not shown: 100 closed udp ports (port-unreach)
+MAC Address: <MAC-1> (Unknown)
+
+# Nmap done at Thu Nov  5 02:48:46 2026 -- 1 IP address (1 host up) scanned in 99.03 seconds

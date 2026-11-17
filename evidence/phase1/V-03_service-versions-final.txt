@@ -1,0 +1,20 @@
+Test ID: V-03
+Date: 2026-11-09 12:17:58 GMT
+Command: nmap -sV <NAS-IP>
+Run from: Laptop on the home LAN (Wi-Fi), Claude Code, with the owner's approval. Final check, after SMB and the FND-11 fix
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (<NAS-IP>, <USER>). Output file path removed. Exact OpenSSH version reduced to the major version. The Samba version Nmap shows (4.6.2) is its generic match for Samba 4 over SMB 2 and 3, not the installed version, and is reduced to 4.x
+----------------------------------------
+# Nmap 7.94SVN scan initiated Mon Nov  9 12:17:58 2026 as: nmap -sV <NAS-IP>
+Nmap scan report for <USER>.lan (<NAS-IP>)
+Host is up (0.0062s latency).
+Not shown: 996 closed tcp ports (conn-refused)
+PORT    STATE SERVICE     VERSION
+22/tcp  open  ssh         OpenSSH 10.x Debian (protocol 2.0)
+80/tcp  open  http        nginx
+443/tcp open  ssl/http    nginx
+445/tcp open  netbios-ssn Samba smbd 4.x
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Nov  9 12:18:12 2026 -- 1 IP address (1 host up) scanned in 13.37 seconds

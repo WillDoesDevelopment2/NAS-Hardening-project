@@ -1,0 +1,16 @@
+Test ID: V-09
+Date: 2026-11-04 12:52:38 GMT
+Command: sshd -T | grep -iE '^(permitrootlogin|passwordauthentication|pubkeyauthentication|kbdinteractiveauthentication|allowusers|allowgroups|port|listenaddress) '
+Run from: Claude Code over SSH (D-02), with the owner's approval. After the checklist section 4 SSH changes
+Status: Sanitised
+Sanitised by: scripts/sanitise.py (nothing replaced)
+----------------------------------------
+port 22
+listenaddress [::]:22
+listenaddress 0.0.0.0:22
+permitrootlogin no
+pubkeyauthentication yes
+passwordauthentication no
+kbdinteractiveauthentication no
+allowgroups root
+allowgroups _ssh

@@ -1,0 +1,27 @@
+== V-12 2026-11-15 14:57 GMT
+-- getent group sudo _ssh
+sudo:x:27:<USER>
+_ssh:x:101:<USER>,<Claude-User>,<MONITOR-USER>,<BACKUP-USER>
+-- accounts with a login shell
+root:x:0:0:root:/root:/bin/bash
+sync:x:4:65534:sync:/bin:/bin/sync
+<USER>:x:1000:100:Raspberry Pi OS:/home/<USER>:/bin/bash
+<Claude-User>:x:1001:100::/home/<Claude-User>:/usr/bin/bash
+<MONITOR-USER>:x:1003:100::/home/<MONITOR-USER>:/usr/bin/bash
+<BACKUP-USER>:x:1004:100::/home/<BACKUP-USER>:/usr/bin/sh
+-- sudo cat /etc/sudoers (non-comment lines)
+Defaults	env_reset
+Defaults	mail_badpass
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Defaults	use_pty
+root	ALL=(ALL:ALL) ALL
+%sudo	ALL=(ALL:ALL) ALL
+@includedir /etc/sudoers.d
+-- sudo ls -l /etc/sudoers.d
+total 24
+-r--r----- 1 root root   36 Apr 29  2019 010_at-export
+-r--r----- 1 root root   44 Jun 19  2024 010_dpkg-threads
+-r--r----- 1 root root   31 Jul 25  2023 010_global-tty
+-r--r----- 1 root root  211 Mar 18  2022 010_proxy
+-r--r----- 1 root root 1068 Apr 11  2026 README
+-rw-r----- 1 root root  444 Nov  2 13:39 claude-readonly
